@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media Center - The Official Egyptian Real Estate Platform</title>
+    <title>منصة مصر العقارية - The Official Egyptian Real Estate Platform</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=1">
     <style>
         .tabs-header {
             display: flex;
@@ -305,16 +305,16 @@
     <main class="section bg-gray" style="padding-top: calc(var(--header-height) + var(--space-8)); min-height: 80vh;">
         <div class="container">
             <div class="text-center mb-12" style="margin-bottom: var(--space-10);">
-                <h1 data-i18n="media_title">Media Center</h1>
-                <p class="text-gray mt-2" data-i18n="media_subtitle">Latest news, videos, and resources from the real
-                    estate market</p>
+                <h1 data-i18n="media_center_title">Media Center</h1>
+                <p data-i18n="media_center_subtitle">Stay updated with the latest news, regulations, and resources from
+                    the Egyptian Real Estate Authority.</p>
             </div>
 
             <div class="tabs-header">
-                <button class="tab-btn active" onclick="switchTab('news')" data-i18n="media_tab_news">News</button>
-                <button class="tab-btn" onclick="switchTab('videos')" data-i18n="media_tab_videos">Videos</button>
-                <button class="tab-btn" onclick="switchTab('downloads')"
-                    data-i18n="media_tab_downloads">Downloads</button>
+                <div class="tab-btn active" onclick="switchTab('news')" data-i18n="media_tab_news">News & Updates</div>
+                <div class="tab-btn" onclick="switchTab('downloads')" data-i18n="media_tab_downloads">Downloads & Forms
+                </div>
+                <div class="tab-btn" onclick="switchTab('videos')" data-i18n="media_tab_videos">Video Gallery</div>
             </div>
 
             <!-- News Tab -->
@@ -325,10 +325,10 @@
                             class="media-img">
                         <div class="media-body">
                             <div class="media-date">Oct 15, 2025</div>
-                            <h3 class="media-title">New Housing Projects Announced in New Capital</h3>
-                            <p class="media-excerpt">The Ministry of Housing has announced the launch of 5 new
-                                residential projects...</p>
-                            <a href="#" class="text-primary font-bold" data-i18n="read_more">Read More →</a>
+                            <h3 class="media-title" data-i18n="media_news_3_title">Housing Projects Update</h3>
+                            <p class="media-excerpt" data-i18n="media_news_3_excerpt">Progress report on the new
+                                administrative capital and surrounding developments.</p>
+                            <a href="#" class="btn btn-primary btn-sm" data-i18n="media_read_more">Read More</a>
                         </div>
                     </div>
                     <div class="media-card">
@@ -336,10 +336,10 @@
                             class="media-img">
                         <div class="media-body">
                             <div class="media-date">Oct 10, 2025</div>
-                            <h3 class="media-title">Market Trends: Real Estate Prices Stabilizing</h3>
-                            <p class="media-excerpt">Recent reports indicate a stabilization in property prices across
-                                major cities...</p>
-                            <a href="#" class="text-primary font-bold" data-i18n="read_more">Read More →</a>
+                            <h3 class="media-title" data-i18n="media_news_1_title">New Real Estate Registration Law</h3>
+                            <p class="media-excerpt" data-i18n="media_news_1_excerpt">The new law simplifies the
+                                property registration process and reduces fees for citizens.</p>
+                            <a href="#" class="btn btn-primary btn-sm" data-i18n="media_read_more">Read More</a>
                         </div>
                     </div>
                     <div class="media-card">
@@ -347,10 +347,11 @@
                             class="media-img">
                         <div class="media-body">
                             <div class="media-date">Oct 05, 2025</div>
-                            <h3 class="media-title">Investment Opportunities in North Coast</h3>
-                            <p class="media-excerpt">Why the North Coast remains a top destination for real estate
-                                investors...</p>
-                            <a href="#" class="text-primary font-bold" data-i18n="read_more">Read More →</a>
+                            <h3 class="media-title" data-i18n="media_news_2_title">Digital Transformation in Real Estate
+                            </h3>
+                            <p class="media-excerpt" data-i18n="media_news_2_excerpt">Launching the new digital platform
+                                for all real estate services in Egypt.</p>
+                            <a href="#" class="btn btn-primary btn-sm" data-i18n="media_read_more">Read More</a>
                         </div>
                     </div>
                 </div>

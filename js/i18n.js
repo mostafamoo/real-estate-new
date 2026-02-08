@@ -5,8 +5,29 @@
 
 const translations = {
     "en": {
-        // Header
-        "nav_home": "Home",
+        // ... existing translations ...
+
+        // Media Center
+        "media_center_title": "Media Center",
+        "media_center_subtitle": "Stay updated with the latest news, regulations, and resources from the Egyptian Real Estate Authority.",
+        "media_tab_news": "News & Updates",
+        "media_tab_downloads": "Downloads & Forms",
+        "media_tab_videos": "Video Gallery",
+        "media_read_more": "Read More",
+        "media_download": "Download",
+        "media_watch": "Watch Video",
+        "media_news_1_title": "New Real Estate Registration Law",
+        "media_news_1_excerpt": "The new law simplifies the property registration process and reduces fees for citizens.",
+        "media_news_2_title": "Digital Transformation in Real Estate",
+        "media_news_2_excerpt": "Launching the new digital platform for all real estate services in Egypt.",
+        "media_news_3_title": "Housing Projects Update",
+        "media_news_3_excerpt": "Progress report on the new administrative capital and surrounding developments.",
+        "media_dl_1_title": "Property Registration Form (PDF)",
+        "media_dl_1_desc": "Official form for registering residential properties.",
+        "media_dl_2_title": "Agent License Application",
+        "media_dl_2_desc": "Application form for new real estate agents.",
+        "media_dl_3_title": "Real Estate Investment Guide 2024",
+        "media_dl_3_desc": "Comprehensive guide for foreign and local investors.",
         "nav_buy": "Buy",
         "nav_sell": "Sell",
         "nav_rent": "Rent",
@@ -457,6 +478,27 @@ const translations = {
         "btn_contact_support": "Contact Support"
     },
     "ar": {
+        // Media Center
+        "media_center_title": "المركز الإعلامي",
+        "media_center_subtitle": "تابع أحدث الأخبار واللوائح والموارد من الهيئة العامة للعقار.",
+        "media_tab_news": "الأخبار والتحديثات",
+        "media_tab_downloads": "الملفات والنماذج",
+        "media_tab_videos": "مكتبة الفيديو",
+        "media_read_more": "اقرأ المزيد",
+        "media_download": "تحميل",
+        "media_watch": "شاهد الفيديو",
+        "media_news_1_title": "قانون التسجيل العقاري الجديد",
+        "media_news_1_excerpt": "القانون الجديد يبسط إجراءات تسجيل العقارات ويخفض الرسوم على المواطنين.",
+        "media_news_2_title": "التحول الرقمي في القطاع العقاري",
+        "media_news_2_excerpt": "إطلاق المنصة الرقمية الجديدة لجميع الخدمات العقارية في مصر.",
+        "media_news_3_title": "تحديثات مشاريع الإسكان",
+        "media_news_3_excerpt": "تقرير مرحلي عن العاصمة الإدارية الجديدة والتطورات المحيطة بها.",
+        "media_dl_1_title": "نموذج تسجيل عقار (PDF)",
+        "media_dl_1_desc": "النموذج الرسمي لتسجيل العقارات السكنية.",
+        "media_dl_2_title": "طلب ترخيص وكيل عقاري",
+        "media_dl_2_desc": "نموذج طلب للوكلاء العقاريين الجدد.",
+        "media_dl_3_title": "دليل الاستثمار العقاري ٢٠٢٤",
+        "media_dl_3_desc": "دليل شامل للمستثمرين الأجانب والمحليين.",
         // Header
         "nav_home": "الرئيسية",
         "nav_buy": "شراء",

@@ -32,8 +32,8 @@
     --info: #3498DB;
 
     /* Typography */
-    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-display: 'Outfit', var(--font-primary);
+    --font-primary: 'Cairo', 'Tajawal', 'Inter', sans-serif;
+    --font-display: 'Cairo', 'Tajawal', sans-serif;
 
     /* Font Sizes */
     --text-xs: 0.75rem;
@@ -745,10 +745,7 @@ h6 {
     /* Let simple flex layout handle it */
 }
 
-gap: var(--space-4);
-margin-left: auto;
-/* Pushes actions to the right in flex container */
-}
+
 
 .logo {
     display: flex;
