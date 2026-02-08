@@ -118,6 +118,8 @@
                 <a href="search.html?type=buy" class="nav-link" data-i18n="nav_buy">Buy</a>
                 <a href="search.html?type=rent" class="nav-link" data-i18n="nav_rent">Rent</a>
                 <a href="agents.html" class="nav-link" data-i18n="nav_agents">Agents</a>
+                <a href="housing-projects.html" class="nav-link active" data-i18n="nav_projects">Projects</a>
+                <a href="media-center.html" class="nav-link" data-i18n="nav_media">Media Center</a>
                 <a href="become-agent.html" class="nav-link" data-i18n="nav_become_agent">For Agents</a>
                 <a href="sell.html" class="nav-link" data-i18n="nav_sell">Sell</a>
                 <a href="calculator.html" class="nav-link" data-i18n="nav_mortgage">Mortgage</a>
@@ -213,6 +215,9 @@
                     <a href="register.html" class="nav-link" data-i18n="nav_register">Register</a>
                 </div>
 
+                <a href="become-agent.html" class="btn"
+                    style="background: transparent; border: 1px solid var(--primary); color: var(--primary); margin-inline-end: 8px;"
+                    data-i18n="nav_agent_cta">Be an Agent</a>
                 <a href="sell.html" class="btn btn-primary btn-cta text-white" data-i18n="nav_sell_cta">Sell Your
                     Property</a>
                 <!-- Comparison Button (Header) -->
@@ -247,7 +252,7 @@
         <div class="container">
             <div class="grid grid-cols-3" style="gap: var(--space-8);">
 
-                <!-- Project 1 -->
+                <!-- Project 1: JANNA -->
                 <div class="project-card">
                     <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80" alt="Janna"
                         class="project-img">
@@ -255,26 +260,28 @@
                         <span class="project-badge open" data-i18n="status_open">Now Open</span>
                         <h3 class="project-title" data-i18n="project_janna">JANNA Luxury Housing</h3>
                         <div class="project-location">
-                            <i class="fas fa-map-marker-alt text-primary"></i> <span
-                                data-i18n="loc_new_cairo_shiekh_zayed">New Cairo, Sheikh Zayed, 6th of October</span>
+                            <i class="fas fa-map-marker-alt text-primary"></i> <span data-i18n="loc_janna">New Cairo,
+                                Sheikh Zayed, 6th of October</span>
                         </div>
-                        <p class="text-gray text-sm mb-4" data-i18n="desc_janna">High-end residential compounds with
-                            swimming pools, landscaping, and full services.</p>
+                        <p class="text-gray text-sm mb-4" data-i18n="desc_janna">Luxury residential compounds featuring
+                            swimming pools, vast landscaping, and high-end finishing. Designed for those seeking a
+                            premium lifestyle.</p>
                         <div class="project-stats">
                             <div class="stat-box">
                                 <span class="stat-value">100-150m²</span>
                                 <span class="stat-label-sm" data-i18n="label_areas">Areas</span>
                             </div>
-                            <div class="stat-box"> <!-- Placeholder price -->
-                                <span class="stat-value">EGP 11,500</span>
+                            <div class="stat-box">
+                                <span class="stat-value">EGP 11,500+</span>
                                 <span class="stat-label-sm" data-i18n="label_meter_price">Per Meter Start</span>
                             </div>
                         </div>
-                        <a href="#" class="btn btn-primary w-full mt-auto" data-i18n="btn_view_details">View Details</a>
+                        <button class="btn btn-primary w-full mt-auto" onclick="openProjectModal('janna')"
+                            data-i18n="btn_view_details">View Details</button>
                     </div>
                 </div>
 
-                <!-- Project 2 -->
+                <!-- Project 2: Sakan Misr -->
                 <div class="project-card">
                     <img src="https://images.unsplash.com/photo-1460317442991-0ec2aa247f7b?w=600&q=80" alt="Sakan Misr"
                         class="project-img">
@@ -282,26 +289,28 @@
                         <span class="project-badge open" data-i18n="status_open">Now Open</span>
                         <h3 class="project-title" data-i18n="project_sakan_misr">Sakan Misr</h3>
                         <div class="project-location">
-                            <i class="fas fa-map-marker-alt text-primary"></i> <span data-i18n="loc_various">12 New
-                                Cities</span>
+                            <i class="fas fa-map-marker-alt text-primary"></i> <span data-i18n="loc_sakan">New Cairo,
+                                October, El Shorouk</span>
                         </div>
-                        <p class="text-gray text-sm mb-4" data-i18n="desc_sakan">Middle-income housing surrounded by
-                            green fences and commercial services.</p>
+                        <p class="text-gray text-sm mb-4" data-i18n="desc_sakan">High-quality middle-income housing with
+                            distinct architectural styles, surrounded by green fences for privacy and integrated
+                            commercial services.</p>
                         <div class="project-stats">
                             <div class="stat-box">
                                 <span class="stat-value">106-118m²</span>
                                 <span class="stat-label-sm" data-i18n="label_areas">Areas</span>
                             </div>
                             <div class="stat-box">
-                                <span class="stat-value">EGP 7,500</span>
+                                <span class="stat-value">EGP 7,500+</span>
                                 <span class="stat-label-sm" data-i18n="label_meter_price">Per Meter Start</span>
                             </div>
                         </div>
-                        <a href="#" class="btn btn-primary w-full mt-auto" data-i18n="btn_view_details">View Details</a>
+                        <button class="btn btn-primary w-full mt-auto" onclick="openProjectModal('sakan')"
+                            data-i18n="btn_view_details">View Details</button>
                     </div>
                 </div>
 
-                <!-- Project 3 -->
+                <!-- Project 3: Dar Misr -->
                 <div class="project-card">
                     <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80" alt="Dar Misr"
                         class="project-img">
@@ -309,28 +318,52 @@
                         <span class="project-badge closed" data-i18n="status_closed">Closed</span>
                         <h3 class="project-title" data-i18n="project_dar_misr">Dar Misr</h3>
                         <div class="project-location">
-                            <i class="fas fa-map-marker-alt text-primary"></i> <span
-                                data-i18n="loc_new_damietta_obour">New Damietta, Obour</span>
+                            <i class="fas fa-map-marker-alt text-primary"></i> <span data-i18n="loc_dar">New Damietta,
+                                Obour, 15th of May</span>
                         </div>
-                        <p class="text-gray text-sm mb-4" data-i18n="desc_dar">Gated communities offering privacy and
-                            security for middle-income families.</p>
+                        <p class="text-gray text-sm mb-4" data-i18n="desc_dar">Affordable gated communities offering
+                            24/7 security, green areas, and a family-friendly environment for middle-income citizens.
+                        </p>
                         <div class="project-stats">
                             <div class="stat-box">
                                 <span class="stat-value">100-140m²</span>
                                 <span class="stat-label-sm" data-i18n="label_areas">Areas</span>
                             </div>
                             <div class="stat-box">
-                                <span class="stat-value">EGP 8,500</span>
+                                <span class="stat-value">EGP 8,500+</span>
                                 <span class="stat-label-sm" data-i18n="label_meter_price">Per Meter Start</span>
                             </div>
                         </div>
-                        <a href="#" class="btn btn-secondary w-full mt-auto" data-i18n="btn_notify">Notify Me</a>
+                        <button class="btn btn-secondary w-full mt-auto" onclick="openProjectModal('dar')"
+                            data-i18n="btn_notify">Notify Me</button>
                     </div>
                 </div>
 
             </div>
         </div>
     </section>
+
+    <!-- Project Details Modal -->
+    <div class="tour-modal" id="projectModal" style="display: none; align-items: center; justify-content: center;">
+        <div class="tour-modal-content"
+            style="max-width: 500px; background: white; padding: 2rem; border-radius: 12px; position: relative;">
+            <button class="tour-modal-close" onclick="closeProjectModal()"
+                style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            <h2 id="modalTitle" class="text-2xl font-bold mb-4">Project Details</h2>
+            <div id="modalContent">
+                <p class="text-gray mb-6">Detailed information about bookings and dates will appear here.</p>
+                <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 mb-6">
+                    <h4 class="font-bold text-primary mb-2" data-i18n="modal_requirements">Requirements</h4>
+                    <ul class="text-sm list-disc list-inside text-gray-700">
+                        <li data-i18n="req_nationality">Egyptian Nationality</li>
+                        <li data-i18n="req_age">Age 21+</li>
+                        <li data-i18n="req_family">One unit per family</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="btn btn-primary w-full" onclick="closeProjectModal()" data-i18n="btn_close">Close</button>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -355,6 +388,34 @@
             if (typeof ComparisonManager !== 'undefined') {
                 ComparisonManager.updateUI();
             }
+        });
+
+        function openProjectModal(projectId) {
+            const modal = document.getElementById('projectModal');
+            const title = document.getElementById('modalTitle');
+
+            // Simple content mapping (In a real app, fetch from API or object)
+            // Using i18n keys would be better, but for this demo interaction we'll set keys or generic text
+            // We'll rely on the existing static logic for now, or just show the modal.
+
+            // To make it feel real, let's just show the proper title
+            if (projectId === 'janna') title.textContent = 'JANNA Luxury Housing';
+            if (projectId === 'sakan') title.textContent = 'Sakan Misr';
+            if (projectId === 'dar') title.textContent = 'Dar Misr';
+
+            modal.style.display = 'flex';
+            modal.classList.add('active'); // Re-use animations if they exist
+        }
+
+        function closeProjectModal() {
+            const modal = document.getElementById('projectModal');
+            modal.style.display = 'none';
+            modal.classList.remove('active');
+        }
+
+        // Close on background click
+        document.getElementById('projectModal').addEventListener('click', function (e) {
+            if (e.target === this) closeProjectModal();
         });
     </script>
     <!-- Floating WhatsApp Button -->

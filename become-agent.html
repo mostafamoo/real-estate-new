@@ -77,6 +77,8 @@
                 <a href="search.html?type=buy" class="nav-link" data-i18n="nav_buy">Buy</a>
                 <a href="search.html?type=rent" class="nav-link" data-i18n="nav_rent">Rent</a>
                 <a href="agents.html" class="nav-link" data-i18n="nav_agents">Agents</a>
+                <a href="housing-projects.html" class="nav-link" data-i18n="nav_projects">Projects</a>
+                <a href="media-center.html" class="nav-link" data-i18n="nav_media">Media Center</a>
                 <a href="become-agent.html" class="nav-link active" data-i18n="nav_become_agent">For Agents</a>
                 <a href="sell.html" class="nav-link" data-i18n="nav_sell">Sell</a>
                 <a href="calculator.html" class="nav-link" data-i18n="nav_mortgage">Mortgage</a>
@@ -172,6 +174,9 @@
                     <a href="register.html" class="nav-link" data-i18n="nav_register">Register</a>
                 </div>
 
+                <a href="become-agent.html" class="btn"
+                    style="background: transparent; border: 1px solid var(--primary); color: var(--primary); margin-inline-end: 8px;"
+                    data-i18n="nav_agent_cta">Be an Agent</a>
                 <a href="sell.html" class="btn btn-primary btn-cta text-white" data-i18n="nav_sell_cta">Sell Your
                     Property</a>
                 <!-- Comparison Button (Header) -->
@@ -204,8 +209,19 @@
         <div class="container">
             <div class="registration-form">
                 <h2 class="text-center mb-6" data-i18n="agent_form_title">Agent Registration</h2>
-                <form
-                    onsubmit="event.preventDefault(); alert('Registration submitted successfully! We will contact you shortly.');">
+
+                <!-- Success Message (Hidden by default) -->
+                <div id="successMessage"
+                    class="hidden text-center p-8 bg-green-50 rounded-lg border border-green-200 mb-6">
+                    <div class="text-green-500 text-5xl mb-4">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2" data-i18n="msg_agent_success">Thank you for your
+                        application!</h3>
+                    <p class="text-gray-600">We will review your details and contact you shortly.</p>
+                </div>
+
+                <form id="agentForm">
                     <div class="grid grid-cols-2 gap-4">
                         <div class="form-group">
                             <label class="form-label" data-i18n="form_first_name">First Name</label>
@@ -252,7 +268,8 @@
                         </label>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-full btn-lg" data-i18n="btn_register_agent">Create
+                    <button type="submit" id="submitBtn" class="btn btn-primary w-full btn-lg"
+                        data-i18n="btn_register_agent">Create
                         Account</button>
 
                     <p class="text-center mt-4 text-sm text-gray">
@@ -308,6 +325,34 @@
             }
             if (typeof ComparisonManager !== 'undefined') {
                 ComparisonManager.updateUI();
+            }
+
+            // Agent Form Handling
+            const agentForm = document.getElementById('agentForm');
+            if (agentForm) {
+                agentForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const btn = document.getElementById('submitBtn');
+                    const originalText = btn.innerHTML;
+                    const lang = localStorage.getItem('preferredLanguage') || 'en';
+                    const sendingText = lang === 'ar' ? 'جاري الإرسال...' : 'Sending...';
+
+                    // Show loading state
+                    btn.disabled = true;
+                    btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${sendingText}`;
+
+                    // Simulate API call
+                    setTimeout(() => {
+                        // Hide form, show success
+                        agentForm.style.display = 'none';
+                        const successMsg = document.getElementById('successMessage');
+                        successMsg.classList.remove('hidden');
+                        successMsg.style.display = 'block';
+
+                        // Scroll to top of form area
+                        document.querySelector('.registration-form').scrollIntoView({ behavior: 'smooth' });
+                    }, 1500);
+                });
             }
         });
     </script>

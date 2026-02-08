@@ -696,11 +696,58 @@ h6 {
 
 .header-inner {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     height: 100%;
     gap: var(--space-4);
+    position: relative;
+    /* Essential for absolute centering */
+    gap: var(--space-4);
     /* Ensure separation between Logo, Nav, and Actions */
+}
+
+/* Align Logo to the start (left) */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-shrink: 0;
+}
+
+/* Center the Nav Menu */
+.nav-menu {
+    position: static;
+    transform: none;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0 auto;
+    /* Center in available space */
+}
+
+.nav-link {
+    font-size: 0.95rem;
+}
+
+/* Hide redundant links to save space and prevent overlap */
+.nav-menu .nav-link[href="sell.html"],
+.nav-menu .nav-link[href="index.html"],
+.nav-menu .nav-link[href="become-agent.html"] {
+    display: none;
+}
+
+/* Align Actions to the end (right) */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-left: 0;
+    /* Let simple flex layout handle it */
+}
+
+gap: var(--space-4);
+margin-left: auto;
+/* Pushes actions to the right in flex container */
 }
 
 .logo {
