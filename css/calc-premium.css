@@ -1,0 +1,373 @@
+/* ========== PREMIUM MORTGAGE CALCULATOR STYLES ========== */
+
+.calc-page-wrapper {
+    background-color: #f7f9fc;
+    min-height: calc(100vh - 80px);
+    padding-bottom: var(--space-12);
+    /* Remove padding-top as we now have a hero */
+}
+
+/* New Hero Section */
+.calc-hero {
+    position: relative;
+    height: 450px;
+    background-color: #0f172a;
+    /* Fallback color */
+    background-image: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    /* Parallax effect */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -80px;
+    /* Pull behind fixed header if transparent, or just sit top */
+    padding-top: 80px;
+    /* Compensate for header */
+}
+
+.calc-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.7) 100%);
+    z-index: 1;
+}
+
+.calc-hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+.calc-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    transform: translateY(-40px);
+    /* Push text up slightly */
+}
+
+.calc-hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: var(--space-4);
+    letter-spacing: -0.5px;
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.calc-hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--gray-300);
+    margin-bottom: 0;
+    font-weight: 500;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Overlay Card Style */
+.calc-card {
+    position: relative;
+    z-index: 10;
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    /* Stronger shadow */
+    overflow: hidden;
+    max-width: 1100px;
+    margin: -100px auto 0;
+    /* Negative margin to overlap hero */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* MLS Search Row */
+.calc-search-row {
+    padding: var(--space-8);
+    border-bottom: 1px solid var(--gray-200);
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.mls-search-box {
+    display: flex;
+    align-items: center;
+    background: var(--gray-50);
+    border: 2px solid var(--gray-200);
+    border-radius: 50px;
+    padding: 6px 6px 6px 24px;
+    width: 100%;
+    max-width: 600px;
+    transition: all 0.3s ease;
+}
+
+.mls-search-box:focus-within {
+    border-color: var(--primary);
+    background: var(--white);
+    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.1);
+}
+
+.search-icon {
+    color: var(--gray-400);
+    margin-right: var(--space-3);
+    font-size: 1.2rem;
+}
+
+.mls-search-input {
+    border: none;
+    background: transparent;
+    flex: 1;
+    font-size: 1.1rem;
+    color: var(--gray-900);
+    outline: none;
+    font-weight: 500;
+}
+
+.mls-search-btn {
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: 12px 32px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mls-search-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.mls-feedback {
+    height: 24px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.feedback-error {
+    color: var(--error);
+}
+
+.feedback-success {
+    color: var(--success);
+}
+
+/* Main Grid Layout */
+.calc-content-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    min-height: 600px;
+}
+
+/* Left Side: Inputs */
+.calc-inputs-col {
+    padding: var(--space-10);
+}
+
+.calc-section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: var(--space-8);
+    display: flex;
+    align-items: center;
+}
+
+.calc-section-title::before {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 24px;
+    background: var(--primary);
+    margin-right: var(--space-3);
+    border-radius: 2px;
+}
+
+.form-group {
+    margin-bottom: var(--space-6);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: var(--space-2);
+    font-weight: 600;
+    color: var(--gray-700);
+    font-size: 0.95rem;
+}
+
+.input-wrapper {
+    position: relative;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 0 var(--space-4);
+    display: flex;
+    align-items: center;
+    height: 56px;
+    /* Taller inputs */
+    transition: all 0.2s;
+}
+
+.input-wrapper:focus-within {
+    border-color: var(--primary);
+    background: var(--white);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.input-wrapper input,
+.input-wrapper select {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-900);
+    outline: none;
+    height: 100%;
+}
+
+.form-range {
+    width: 100%;
+    margin-top: var(--space-3);
+    accent-color: var(--primary);
+    height: 6px;
+    background: var(--gray-200);
+    border-radius: 3px;
+    appearance: none;
+}
+
+.form-range::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--primary);
+    border: 2px solid var(--white);
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.form-range::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+/* Right Side: Results (Dark Mode) */
+.calc-results-col {
+    background: #0f172a;
+    /* Dark Navy */
+    color: var(--white);
+    padding: var(--space-10);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    box-shadow: inset 10px 0 30px rgba(0, 0, 0, 0.2);
+}
+
+.calc-results-col .calc-section-title {
+    color: var(--white);
+    margin-bottom: var(--space-6);
+}
+
+.total-amount {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    /* Pop color */
+    margin-bottom: var(--space-2);
+    line-height: 1;
+}
+
+.eligibility-badge {
+    margin-bottom: var(--space-8);
+    height: 32px;
+}
+
+.eligibility-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tag-success {
+    background: rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.4);
+}
+
+.tag-error {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.breakdown-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+.breakdown-label {
+    color: var(--gray-400);
+}
+
+.breakdown-value {
+    font-weight: 600;
+}
+
+.chart-placeholder {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    text-align: center;
+    color: var(--gray-400);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    margin-top: auto;
+}
+
+/* Helper Grid */
+.grid-cols-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .calc-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .calc-card {
+        margin-top: -50px;
+        margin-left: var(--space-4);
+        margin-right: var(--space-4);
+    }
+
+    .calc-hero-title {
+        font-size: 2.5rem;
+    }
+}

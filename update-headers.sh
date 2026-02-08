@@ -1,0 +1,92 @@
+#!/bin/bash
+# Script to update headers in all HTML files
+
+PAGES=(
+    "about.html"
+    "agents.html"
+    "become-agent.html"
+    "calculator.html"
+    "compare.html"
+    "contact.html"
+    "dashboard.html"
+    "help.html"
+    "housing-projects.html"
+    "media-center.html"
+    "property.html"
+    "rent.html"
+    "saved-homes.html"
+    "search.html"
+    "sell.html"
+)
+
+# The new nav-actions HTML to inject
+NEW_NAV_ACTIONS='                <!-- Notifications Bell -->
+                <div class="notifications-wrapper auth-only" style="position: relative; display: none;">
+                    <button class="btn btn-ghost btn-icon" id="notificationsBtn" onclick="toggleNotifications()"
+                        title="الإشعارات">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge"
+                            style="position: absolute; top: 0; right: 0; background: var(--primary); color: white; font-size: 10px; padding: 2px 6px; border-radius: 50%; display: none;">0</span>
+                    </button>
+                    <div id="notificationsDropdown" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 1000; min-width: 320px; max-height: 400px; overflow-y: auto;">
+                        <div style="padding: 16px; border-bottom: 1px solid #eee; font-weight: 600;">
+                            <span data-i18n="notifications_title">Notifications</span>
+                        </div>
+                        <div id="notificationsList">
+                            <div style="padding: 24px; text-align: center; color: #999;">No notifications</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Menu (Logged In) -->
+                <div class="user-menu auth-only" style="position: relative; display: none;">
+                    <button class="btn btn-ghost" onclick="toggleUserMenu()"
+                        style="display: flex; align-items: center; gap: 8px;">
+                        <div
+                            style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center;">
+                            <span class="user-initial">U</span>
+                        </div>
+                        <span class="user-display-name">User</span>
+                        <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+                    </button>
+                    <div id="userMenu" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; min-width: 180px; overflow: hidden;">
+                        <a href="profile.html"
+                            style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">
+                            <i class="fas fa-user" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_profile">Profile</span>
+                        </a>
+                        <a href="dashboard.html"
+                            style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">
+                            <i class="fas fa-th-large" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_dashboard">Dashboard</span>
+                        </a>
+                        <a href="#" onclick="Auth.logout(); return false;"
+                            style="display: block; padding: 12px 16px; color: var(--primary); text-decoration: none;">
+                            <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_logout">Log Out</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Guest Auth Links -->
+                <div class="auth-links guest-only">
+                    <i class="fas fa-user-circle"></i>
+                    <a href="login.html" class="nav-link" data-i18n="nav_login">Log In</a>
+                    <span class="divider">/</span>
+                    <a href="register.html" class="nav-link" data-i18n="nav_register">Register</a>
+                </div>
+
+                <a href="sell.html" class="btn btn-primary btn-cta text-white" data-i18n="nav_sell_cta">Sell Your
+                    Property</a>
+                <!-- Comparison Button (Header) -->
+                <a href="compare.html" class="btn btn-ghost btn-icon" title="Compare Properties"
+                    style="display: flex; align-items: center; gap: 5px;">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span data-i18n="nav_compare">Compare</span>
+                    <span id="header-compare-count" class="badge badge-sm badge-primary"
+                        style="display: none; font-size: 0.7rem; padding: 2px 5px; border-radius: 50%;">0</span>
+                </a>'
+
+echo "Header update script created. Run manually to update files."

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرسائل - منصة مصر العقارية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .messages-container {
+            margin-top: var(--header-height);
+            display: flex;
+            height: calc(100vh - var(--header-height));
+            overflow: hidden;
+            background: var(--off-white);
+        }
+
+        /* Sidebar */
+        .messages-sidebar {
+            width: 350px;
+            background: var(--white);
+            border-right: 1px solid var(--gray-200);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            padding: var(--space-6);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .sidebar-header h2 {
+            font-size: var(--text-2xl);
+            margin-bottom: var(--space-4);
+        }
+
+        .search-chat {
+            position: relative;
+        }
+
+        .search-chat input {
+            width: 100%;
+            padding: var(--space-3) var(--space-4) var(--space-3) 40px;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--gray-200);
+            background: var(--gray-50);
+            font-size: var(--text-sm);
+        }
+
+        .search-chat i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+        }
+
+        .chat-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .chat-item {
+            display: flex;
+            gap: var(--space-4);
+            padding: var(--space-4) var(--space-6);
+            border-bottom: 1px solid var(--gray-50);
+            cursor: pointer;
+            transition: background 0.2s;
+            align-items: center;
+        }
+
+        .chat-item:hover {
+            background: var(--gray-50);
+        }
+
+        .chat-item.active {
+            background: rgba(230, 57, 70, 0.05);
+            border-left: 3px solid var(--primary);
+        }
+
+        .chat-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gray-200);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .status-dot {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--white);
+            background: var(--gray-300);
+        }
+
+        .status-dot.online {
+            background: #10b981;
+        }
+
+        .chat-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chat-name-time {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+
+        .chat-name {
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: var(--text-base);
+        }
+
+        .chat-time {
+            font-size: var(--text-xs);
+            color: var(--gray-400);
+        }
+
+        .chat-preview {
+            font-size: var(--text-sm);
+            color: var(--gray-600);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Chat Content */
+        .messages-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--white);
+            position: relative;
+        }
+
+        .chat-header {
+            padding: var(--space-4) var(--space-8);
+            border-bottom: 1px solid var(--gray-100);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .active-user {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .active-user h3 {
+            font-size: var(--text-lg);
+            margin-bottom: 2px;
+        }
+
+        .active-user p {
+            font-size: var(--text-xs);
+            color: #10b981;
+            font-weight: 500;
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: var(--space-2);
+        }
+
+        .chat-history {
+            flex: 1;
+            padding: var(--space-8);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+            background: #fdfdfd;
+        }
+
+        .message-row {
+            display: flex;
+            flex-direction: column;
+            max-width: 70%;
+        }
+
+        .message-row.sent {
+            align-self: flex-end;
+            align-items: flex-end;
+        }
+
+        .message-row.received {
+            align-self: flex-start;
+            align-items: flex-start;
+        }
+
+        .message-bubble {
+            padding: var(--space-4) var(--space-5);
+            border-radius: 18px;
+            font-size: var(--text-md);
+            line-height: 1.6;
+            margin-bottom: 4px;
+        }
+
+        .received .message-bubble {
+            background: var(--gray-100);
+            color: var(--secondary);
+            border-bottom-left-radius: 4px;
+        }
+
+        .sent .message-bubble {
+            background: var(--primary);
+            color: var(--white);
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-time {
+            font-size: var(--text-xs);
+            color: var(--gray-400);
+        }
+
+        .chat-input-area {
+            padding: var(--space-6) var(--space-8);
+            border-top: 1px solid var(--gray-100);
+            display: flex;
+            gap: var(--space-4);
+            align-items: center;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: var(--space-4) 50px var(--space-4) var(--space-5);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--gray-200);
+            background: var(--gray-50);
+            font-size: var(--text-md);
+        }
+
+        .input-actions {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 12px;
+            color: var(--gray-400);
+        }
+
+        .btn-send {
+            width: 54px;
+            height: 54px;
+            border-radius: var(--radius-md);
+            background: var(--primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.2s;
+        }
+
+        .btn-send:hover {
+            background: #d62839;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+        }
+
+        /* RTL Specifics */
+        [dir="rtl"] .messages-sidebar {
+            border-right: none;
+            border-left: 1px solid var(--gray-200);
+        }
+
+        [dir="rtl"] .search-chat i {
+            left: auto;
+            right: 15px;
+        }
+
+        [dir="rtl"] .search-chat input {
+            padding: var(--space-3) 40px var(--space-3) var(--space-4);
+        }
+
+        [dir="rtl"] .chat-item.active {
+            border-left: none;
+            border-right: 3px solid var(--primary);
+        }
+
+        [dir="rtl"] .received .message-bubble {
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 4px;
+        }
+
+        [dir="rtl"] .sent .message-bubble {
+            border-bottom-right-radius: 18px;
+            border-bottom-left-radius: 4px;
+        }
+
+        [dir="rtl"] .input-actions {
+            right: auto;
+            left: 15px;
+        }
+
+        [dir="rtl"] .input-wrapper input {
+            padding: var(--space-4) var(--space-5) var(--space-4) 50px;
+        }
+
+        @media (max-width: 992px) {
+            .messages-sidebar {
+                width: 80px;
+            }
+
+            .sidebar-header,
+            .chat-info {
+                display: none;
+            }
+
+            .chat-item {
+                justify-content: center;
+                padding: var(--space-4) 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="Logo">
+            </a>
+
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link" data-i18n="nav_home">Home</a>
+                <a href="search.html?type=buy" class="nav-link" data-i18n="nav_buy">Buy</a>
+                <a href="search.html?type=rent" class="nav-link" data-i18n="nav_rent">Rent</a>
+                <a href="agents.html" class="nav-link" data-i18n="nav_agents">Agents</a>
+                <a href="become-agent.html" class="nav-link" data-i18n="nav_become_agent">For Agents</a>
+                <a href="sell.html" class="nav-link" data-i18n="nav_sell">Sell</a>
+                <a href="calculator.html" class="nav-link" data-i18n="nav_mortgage">Mortgage</a>
+            </nav>
+
+            <div class="nav-actions">
+                <!-- Language Switcher -->
+                <div class="lang-switcher" style="margin-right: 0.5rem; position: relative;">
+                    <button class="btn btn-ghost"
+                        onclick="document.getElementById('lang-menu').style.display = document.getElementById('lang-menu').style.display === 'block' ? 'none' : 'block'"
+                        style="padding: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="lang-menu" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; min-width: 140px; overflow: hidden;">
+                        <a href="#"
+                            onclick="I18n.setLanguage('en'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">English</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('ar'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">العربية</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('de'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">Deutsch</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('ru'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none;">Русский</a>
+                    </div>
+                </div>
+
+                <!-- Notifications Bell -->
+                <div class="notifications-wrapper auth-only" style="position: relative; display: none;">
+                    <button class="btn btn-ghost btn-icon" id="notificationsBtn" onclick="toggleNotifications()"
+                        title="الإشعارات">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge"
+                            style="position: absolute; top: 0; right: 0; background: var(--primary); color: white; font-size: 10px; padding: 2px 6px; border-radius: 50%; display: none;">0</span>
+                    </button>
+                    <div id="notificationsDropdown" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 1000; min-width: 320px; max-height: 400px; overflow-y: auto;">
+                        <div style="padding: 16px; border-bottom: 1px solid #eee; font-weight: 600;">
+                            <span data-i18n="notifications_title">Notifications</span>
+                        </div>
+                        <div id="notificationsList">
+                            <div style="padding: 24px; text-align: center; color: #999;">No notifications</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Menu (Logged In) -->
+                <div class="user-menu auth-only" style="position: relative; display: none;">
+                    <button class="btn btn-ghost" onclick="toggleUserMenu()"
+                        style="display: flex; align-items: center; gap: 8px;">
+                        <div
+                            style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center;">
+                            <span class="user-initial">U</span>
+                        </div>
+                        <span class="user-display-name">User</span>
+                        <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+                    </button>
+                    <div id="userMenu" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; min-width: 220px; overflow: hidden;">
+                        <a href="profile.html"
+                            style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">
+                            <i class="fas fa-user" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_profile">Profile</span>
+                        </a>
+                        <a href="dashboard.html"
+                            style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">
+                            <i class="fas fa-th-large" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_dashboard">Dashboard</span>
+                        </a>
+                        <a href="#" onclick="Auth.logout(); return false;"
+                            style="display: block; padding: 12px 16px; color: var(--primary); text-decoration: none;">
+                            <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_logout">Log Out</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Guest Auth Links -->
+                <div class="auth-links guest-only">
+                    <i class="fas fa-user-circle"></i>
+                    <a href="login.html" class="nav-link" data-i18n="nav_login">Log In</a>
+                    <span class="divider">/</span>
+                    <a href="register.html" class="nav-link" data-i18n="nav_register">Register</a>
+                </div>
+
+                <a href="sell.html" class="btn btn-primary btn-cta text-white" data-i18n="nav_sell_cta">Sell Your
+                    Property</a>
+                <!-- Comparison Button (Header) -->
+                <a href="compare.html" class="btn btn-ghost btn-icon" title="Compare Properties"
+                    style="display: flex; align-items: center; gap: 5px;">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span data-i18n="nav_compare">Compare</span>
+                    <span id="header-compare-count" class="badge badge-sm badge-primary"
+                        style="display: none; font-size: 0.7rem; padding: 2px 5px; border-radius: 50%;">0</span>
+                </a>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="messages-container">
+        <aside class="messages-sidebar">
+            <div class="sidebar-header">
+                <h2 data-i18n="dash_messages">Messages</h2>
+                <div class="search-chat">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search conversations..."
+                        data-i18n-placeholder="messages_search_placeholder">
+                </div>
+            </div>
+            <div class="chat-list" id="chatList">
+                <!-- Mock Chats -->
+                <div class="chat-item active">
+                    <div class="chat-avatar">
+                        <img src="https://ui-avatars.com/api/?name=Ahmed+K&background=E63946&color=fff" alt=""
+                            style="width: 100%; border-radius: 50%;">
+                        <span class="status-dot online"></span>
+                    </div>
+                    <div class="chat-info">
+                        <div class="chat-name-time">
+                            <span class="chat-name">Ahmed Kamel</span>
+                            <span class="chat-time">10:45 AM</span>
+                        </div>
+                        <div class="chat-preview">هل العقار لا يزال متاحاً للمعاينة؟</div>
+                    </div>
+                </div>
+                <div class="chat-item">
+                    <div class="chat-avatar">
+                        <img src="https://ui-avatars.com/api/?name=Sarah+M&background=1d3557&color=fff" alt=""
+                            style="width: 100%; border-radius: 50%;">
+                        <span class="status-dot"></span>
+                    </div>
+                    <div class="chat-info">
+                        <div class="chat-name-time">
+                            <span class="chat-name">Sarah Mansour</span>
+                            <span class="chat-time">Yesterday</span>
+                        </div>
+                        <div class="chat-preview">شكراً لك، سأتواصل معك غداً.</div>
+                    </div>
+                </div>
+                <div class="chat-item">
+                    <div class="chat-avatar">
+                        <img src="https://ui-avatars.com/api/?name=Agent+Property&background=f1faee&color=1d3557" alt=""
+                            style="width: 100%; border-radius: 50%;">
+                        <span class="status-dot online"></span>
+                    </div>
+                    <div class="chat-info">
+                        <div class="chat-name-time">
+                            <span class="chat-name">Dina Real Estate</span>
+                            <span class="chat-time">2 days ago</span>
+                        </div>
+                        <div class="chat-preview">We have a new listing in Zayed...</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="messages-content">
+            <div class="chat-header">
+                <div class="active-user">
+                    <div class="chat-avatar" style="width: 40px; height: 40px;">
+                        <img src="https://ui-avatars.com/api/?name=Ahmed+K&background=E63946&color=fff" alt=""
+                            style="width: 100%; border-radius: 50%;">
+                    </div>
+                    <div>
+                        <h3>Ahmed Kamel</h3>
+                        <p data-i18n="chat_online">Online</p>
+                    </div>
+                </div>
+                <div class="chat-actions">
+                    <button class="btn btn-ghost btn-icon"><i class="fas fa-phone"></i></button>
+                    <button class="btn btn-ghost btn-icon"><i class="fas fa-video"></i></button>
+                    <button class="btn btn-ghost btn-icon"><i class="fas fa-info-circle"></i></button>
+                </div>
+            </div>
+
+            <div class="chat-history" id="chatHistory">
+                <div class="message-row received">
+                    <div class="message-bubble">مرحباً، لقد رأيت إعلانك لفيلا التجمع الخامس. هل هي لا تزال متاحة؟</div>
+                    <span class="message-time">10:30 AM</span>
+                </div>
+                <div class="message-row sent">
+                    <div class="message-bubble">أهلاً بك يا أستاذ أحمد. نعم، الفيلا لا تزال متاحة. هل تود تحديد موعد
+                        للمعاينة؟</div>
+                    <span class="message-time">10:32 AM</span>
+                </div>
+                <div class="message-row received">
+                    <div class="message-bubble">نعم، هل يمكننا الحضور يوم الخميس القادم الساعة 5 مساءً؟</div>
+                    <span class="message-time">10:35 AM</span>
+                </div>
+                <div class="message-row sent">
+                    <div class="message-bubble">بالتأكيد، تم تأكيد الموعد. سأرسل لك الموقع الدقيق عبر واتساب الآن.</div>
+                    <span class="message-time">10:40 AM</span>
+                </div>
+                <div class="message-row received">
+                    <div class="message-bubble">ممتاز، شكراً جزيلاً. في انتظار الموقع.</div>
+                    <span class="message-time">10:45 AM</span>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <button class="btn btn-ghost btn-icon"><i class="fas fa-plus"></i></button>
+                <div class="input-wrapper">
+                    <input type="text" id="messageInput" placeholder="Type a message..."
+                        data-i18n-placeholder="chat_placeholder">
+                    <div class="input-actions">
+                        <i class="far fa-smile"></i>
+                        <i class="fas fa-paperclip"></i>
+                    </div>
+                </div>
+                <button class="btn-send" id="sendBtn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const history = document.getElementById('chatHistory');
+            const input = document.getElementById('messageInput');
+            const sendBtn = document.getElementById('sendBtn');
+
+            // Scroll to bottom
+            history.scrollTop = history.scrollHeight;
+
+            function sendMessage() {
+                const text = input.value.trim();
+                if (!text) return;
+
+                const row = document.createElement('div');
+                row.className = 'message-row sent';
+                row.innerHTML = `
+                    <div class="message-bubble">${text}</div>
+                    <span class="message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                `;
+                history.appendChild(row);
+                input.value = '';
+                history.scrollTop = history.scrollHeight;
+            }
+
+            sendBtn.addEventListener('click', sendMessage);
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendMessage();
+            });
+
+            // RTL Handling
+            if (document.documentElement.lang === 'ar' || document.body.classList.contains('rtl')) {
+                document.body.setAttribute('dir', 'rtl');
+            }
+        });
+    </script>
+</body>
+
+</html>

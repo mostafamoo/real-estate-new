@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Center - The Official Egyptian Real Estate Platform</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .tabs-header {
+            display: flex;
+            justify-content: center;
+            border-bottom: 2px solid var(--gray-200);
+            margin-bottom: var(--space-8);
+            gap: var(--space-4);
+        }
+
+        .tab-btn {
+            padding: var(--space-4) var(--space-8);
+            font-weight: var(--font-semibold);
+            color: var(--gray-600);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: var(--text-lg);
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .media-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.2s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .media-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .media-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .media-body {
+            padding: var(--space-5);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .media-date {
+            font-size: var(--text-sm);
+            color: var(--gray-500);
+            margin-bottom: var(--space-2);
+        }
+
+        .media-title {
+            font-size: var(--text-lg);
+            font-weight: var(--font-bold);
+            margin-bottom: var(--space-2);
+            color: var(--secondary);
+        }
+
+        .media-excerpt {
+            color: var(--gray-600);
+            font-size: var(--text-sm);
+            margin-bottom: var(--space-4);
+            flex: 1;
+        }
+
+        .download-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-4);
+            background: var(--white);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--gray-200);
+            margin-bottom: var(--space-3);
+            transition: all 0.2s;
+        }
+
+        .download-item:hover {
+            border-color: var(--primary);
+            background: var(--off-white);
+        }
+
+        .download-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .download-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(230, 57, 70, 0.1);
+            color: var(--primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        /* Video Container */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: var(--radius-lg);
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="Logo">
+            </a>
+
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link" data-i18n="nav_home">Home</a>
+                <a href="search.html?type=buy" class="nav-link" data-i18n="nav_buy">Buy</a>
+                <a href="search.html?type=rent" class="nav-link" data-i18n="nav_rent">Rent</a>
+                <a href="agents.html" class="nav-link" data-i18n="nav_agents">Agents</a>
+                <a href="become-agent.html" class="nav-link" data-i18n="nav_become_agent">For Agents</a>
+                <a href="sell.html" class="nav-link" data-i18n="nav_sell">Sell</a>
+                <a href="calculator.html" class="nav-link" data-i18n="nav_mortgage">Mortgage</a>
+            </nav>
+
+            <div class="nav-actions">
+                <!-- Language Switcher -->
+                <div class="lang-switcher" style="margin-right: 0.5rem; position: relative;">
+                    <button class="btn btn-ghost"
+                        onclick="document.getElementById('lang-menu').style.display = document.getElementById('lang-menu').style.display === 'block' ? 'none' : 'block'"
+                        style="padding: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="lang-menu" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; min-width: 140px; overflow: hidden;">
+                        <a href="#"
+                            onclick="I18n.setLanguage('en'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">English</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('ar'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">العربية</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('de'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">Deutsch</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('ru'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none;">Русский</a>
+                    </div>
+                </div>
+
+                <!-- Notifications Bell -->
+                <div class="notifications-wrapper auth-only" style="position: relative; display: none;">
+                    <button class="btn btn-ghost btn-icon" id="notificationsBtn" onclick="toggleNotifications()"
+                        title="الإشعارات">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge"
+                            style="position: absolute; top: 0; right: 0; background: var(--primary); color: white; font-size: 10px; padding: 2px 6px; border-radius: 50%; display: none;">0</span>
+                    </button>
+                    <div id="notificationsDropdown" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 1000; min-width: 320px; max-height: 400px; overflow-y: auto;">
+                        <div style="padding: 16px; border-bottom: 1px solid #eee; font-weight: 600;">
+                            <span data-i18n="notifications_title">Notifications</span>
+                        </div>
+                        <div id="notificationsList">
+                            <div style="padding: 24px; text-align: center; color: #999;">No notifications</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Menu (Logged In) -->
+                <div class="user-menu auth-only" style="position: relative; display: none;">
+                    <button class="btn btn-ghost" onclick="toggleUserMenu()"
+                        style="display: flex; align-items: center; gap: 8px;">
+                        <div
+                            style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center;">
+                            <span class="user-initial">U</span>
+                        </div>
+                        <span class="user-display-name">User</span>
+                        <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+                    </button>
+                    <div id="userMenu" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; min-width: 220px; overflow: hidden;">
+                        <a href="profile.html"
+                            style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">
+                            <i class="fas fa-user" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_profile">Profile</span>
+                        </a>
+                        <a href="dashboard.html"
+                            style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">
+                            <i class="fas fa-th-large" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_dashboard">Dashboard</span>
+                        </a>
+                        <a href="#" onclick="Auth.logout(); return false;"
+                            style="display: block; padding: 12px 16px; color: var(--primary); text-decoration: none;">
+                            <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_logout">Log Out</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Guest Auth Links -->
+                <div class="auth-links guest-only">
+                    <i class="fas fa-user-circle"></i>
+                    <a href="login.html" class="nav-link" data-i18n="nav_login">Log In</a>
+                    <span class="divider">/</span>
+                    <a href="register.html" class="nav-link" data-i18n="nav_register">Register</a>
+                </div>
+
+                <a href="sell.html" class="btn btn-primary btn-cta text-white" data-i18n="nav_sell_cta">Sell Your
+                    Property</a>
+                <!-- Comparison Button (Header) -->
+                <a href="compare.html" class="btn btn-ghost btn-icon" title="Compare Properties"
+                    style="display: flex; align-items: center; gap: 5px;">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span data-i18n="nav_compare">Compare</span>
+                    <span id="header-compare-count" class="badge badge-sm badge-primary"
+                        style="display: none; font-size: 0.7rem; padding: 2px 5px; border-radius: 50%;">0</span>
+                </a>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="section bg-gray" style="padding-top: calc(var(--header-height) + var(--space-8)); min-height: 80vh;">
+        <div class="container">
+            <div class="text-center mb-12" style="margin-bottom: var(--space-10);">
+                <h1 data-i18n="media_title">Media Center</h1>
+                <p class="text-gray mt-2" data-i18n="media_subtitle">Latest news, videos, and resources from the real
+                    estate market</p>
+            </div>
+
+            <div class="tabs-header">
+                <button class="tab-btn active" onclick="switchTab('news')" data-i18n="media_tab_news">News</button>
+                <button class="tab-btn" onclick="switchTab('videos')" data-i18n="media_tab_videos">Videos</button>
+                <button class="tab-btn" onclick="switchTab('downloads')"
+                    data-i18n="media_tab_downloads">Downloads</button>
+            </div>
+
+            <!-- News Tab -->
+            <div id="news" class="tab-content active">
+                <div class="grid grid-cols-3" style="gap: var(--space-6);">
+                    <div class="media-card">
+                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80" alt="News"
+                            class="media-img">
+                        <div class="media-body">
+                            <div class="media-date">Oct 15, 2025</div>
+                            <h3 class="media-title">New Housing Projects Announced in New Capital</h3>
+                            <p class="media-excerpt">The Ministry of Housing has announced the launch of 5 new
+                                residential projects...</p>
+                            <a href="#" class="text-primary font-bold" data-i18n="read_more">Read More →</a>
+                        </div>
+                    </div>
+                    <div class="media-card">
+                        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&q=80" alt="News"
+                            class="media-img">
+                        <div class="media-body">
+                            <div class="media-date">Oct 10, 2025</div>
+                            <h3 class="media-title">Market Trends: Real Estate Prices Stabilizing</h3>
+                            <p class="media-excerpt">Recent reports indicate a stabilization in property prices across
+                                major cities...</p>
+                            <a href="#" class="text-primary font-bold" data-i18n="read_more">Read More →</a>
+                        </div>
+                    </div>
+                    <div class="media-card">
+                        <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=600&q=80" alt="News"
+                            class="media-img">
+                        <div class="media-body">
+                            <div class="media-date">Oct 05, 2025</div>
+                            <h3 class="media-title">Investment Opportunities in North Coast</h3>
+                            <p class="media-excerpt">Why the North Coast remains a top destination for real estate
+                                investors...</p>
+                            <a href="#" class="text-primary font-bold" data-i18n="read_more">Read More →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Videos Tab -->
+            <div id="videos" class="tab-content">
+                <div class="grid grid-cols-2" style="gap: var(--space-8);">
+                    <div>
+                        <div class="video-container mb-4" style="margin-bottom: var(--space-4);">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video"
+                                allowfullscreen></iframe>
+                        </div>
+                        <h3 class="text-xl font-bold">New Capital Tour 2025</h3>
+                        <p class="text-gray">A comprehensive tour of the latest developments.</p>
+                    </div>
+                    <div>
+                        <div class="video-container mb-4" style="margin-bottom: var(--space-4);">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video"
+                                allowfullscreen></iframe>
+                        </div>
+                        <h3 class="text-xl font-bold">How to Buy Property in Egypt</h3>
+                        <p class="text-gray">Expert guide on legal procedures and tips.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Downloads Tab -->
+            <div id="downloads" class="tab-content">
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <div class="download-item">
+                        <div class="download-info">
+                            <div class="download-icon"><i class="fas fa-file-pdf"></i></div>
+                            <div>
+                                <h4 class="font-bold">Q4 2025 Market Report</h4>
+                                <p class="text-gray text-sm">PDF - 2.4 MB</p>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-outline btn-sm"><i class="fas fa-download mr-2"></i> Download</a>
+                    </div>
+                    <div class="download-item">
+                        <div class="download-info">
+                            <div class="download-icon"><i class="fas fa-file-alt"></i></div>
+                            <div>
+                                <h4 class="font-bold">Buyer's Guide Checklist</h4>
+                                <p class="text-gray text-sm">PDF - 1.1 MB</p>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-outline btn-sm"><i class="fas fa-download mr-2"></i> Download</a>
+                    </div>
+                    <div class="download-item">
+                        <div class="download-info">
+                            <div class="download-icon"><i class="fas fa-map"></i></div>
+                            <div>
+                                <h4 class="font-bold">New Capital Master Plan Map</h4>
+                                <p class="text-gray text-sm">JPG - 5.8 MB</p>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-outline btn-sm"><i class="fas fa-download mr-2"></i> Download</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2024 The Official Egyptian Real Estate Platform. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/compare.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof updateAuthUI === 'function') {
+                updateAuthUI();
+            }
+            if (typeof ComparisonManager !== 'undefined') {
+                ComparisonManager.updateUI();
+            }
+        });
+    </script>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/201000000000" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+</body>
+
+</html>

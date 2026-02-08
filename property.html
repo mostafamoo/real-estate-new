@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Beautiful 4 bedroom home for sale in Beverly Hills. View photos, specs, and schedule a tour.">
+    <title>منصة مصر العقارية - The Official Egyptian Real Estate Platform</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        .property-page {
+            margin-top: var(--header-height);
+            padding-bottom: var(--space-16);
+        }
+
+        .property-gallery {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: repeat(2, 200px);
+            gap: var(--space-2);
+            margin-bottom: var(--space-8);
+        }
+
+        .property-gallery .main-image {
+            grid-row: span 2;
+            border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+        }
+
+        .property-gallery .gallery-image:nth-child(3) {
+            border-radius: 0 var(--radius-lg) 0 0;
+        }
+
+        .property-gallery .gallery-image:nth-child(5) {
+            border-radius: 0 0 var(--radius-lg) 0;
+        }
+
+        .gallery-image {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-slow);
+        }
+
+        .gallery-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-more {
+            position: absolute;
+            bottom: var(--space-4);
+            right: var(--space-4);
+            padding: var(--space-2) var(--space-4);
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--white);
+            border-radius: var(--radius-md);
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+        }
+
+        .property-content {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: var(--space-10);
+        }
+
+        .property-main {
+            min-width: 0;
+        }
+
+        .property-header {
+            margin-bottom: var(--space-8);
+        }
+
+        .property-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+            margin-bottom: var(--space-3);
+        }
+
+        .property-price-tag {
+            font-size: var(--text-4xl);
+            font-weight: var(--font-extrabold);
+            color: var(--primary);
+        }
+
+        .property-address-full {
+            font-size: var(--text-xl);
+            color: var(--gray-600);
+            margin-bottom: var(--space-4);
+        }
+
+        .property-badges {
+            display: flex;
+            gap: var(--space-2);
+            flex-wrap: wrap;
+        }
+
+        .property-quick-specs {
+            display: flex;
+            gap: var(--space-8);
+            padding: var(--space-6);
+            background: var(--off-white);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-8);
+        }
+
+        .quick-spec {
+            text-align: center;
+        }
+
+        .quick-spec-value {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-bold);
+            color: var(--secondary);
+        }
+
+        .quick-spec-label {
+            font-size: var(--text-sm);
+            color: var(--gray-500);
+        }
+
+        .property-section {
+            margin-bottom: var(--space-10);
+        }
+
+        .property-section-title {
+            font-size: var(--text-xl);
+            margin-bottom: var(--space-4);
+            padding-bottom: var(--space-3);
+            border-bottom: 2px solid var(--gray-100);
+        }
+
+        .property-description {
+            font-size: var(--text-base);
+            line-height: 1.8;
+            color: var(--gray-700);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-4);
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            background: var(--off-white);
+            border-radius: var(--radius-md);
+        }
+
+        .feature-item svg {
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .price-history-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .price-history-table th,
+        .price-history-table td {
+            padding: var(--space-3) var(--space-4);
+            text-align: left;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .price-history-table th {
+            background: var(--off-white);
+            font-weight: var(--font-semibold);
+            color: var(--gray-700);
+        }
+
+        .calculator-card {
+            background: var(--off-white);
+            padding: var(--space-6);
+            border-radius: var(--radius-lg);
+        }
+
+        .calculator-result {
+            text-align: center;
+            padding: var(--space-6);
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            margin-top: var(--space-4);
+        }
+
+        .monthly-payment {
+            font-size: var(--text-3xl);
+            font-weight: var(--font-extrabold);
+            color: var(--primary);
+        }
+
+        .property-sidebar {
+            position: sticky;
+            top: calc(var(--header-height) + var(--space-6));
+        }
+
+        .agent-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
+            box-shadow: var(--shadow-card);
+        }
+
+        .agent-card-header {
+            display: flex;
+            gap: var(--space-4);
+            margin-bottom: var(--space-5);
+        }
+
+        .agent-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: var(--radius-full);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: var(--text-2xl);
+            font-weight: var(--font-bold);
+        }
+
+        .agent-info h4 {
+            font-size: var(--text-lg);
+            margin-bottom: var(--space-1);
+        }
+
+        .agent-title {
+            font-size: var(--text-sm);
+            color: var(--gray-500);
+        }
+
+        .agent-rating {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            margin-top: var(--space-2);
+            color: var(--warning);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+
+        .similar-properties {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-6);
+        }
+
+        .map-embed {
+            width: 100%;
+            height: 300px;
+            background: var(--gray-100);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-500);
+        }
+
+        /* Image Modal */
+        .gallery-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: var(--z-modal);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-modal.active {
+            display: flex;
+        }
+
+        .gallery-modal-close {
+            position: absolute;
+            top: var(--space-6);
+            right: var(--space-6);
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            color: var(--white);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .gallery-modal-close:hover {
+            background: var(--primary);
+        }
+
+        .gallery-modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: var(--radius-lg);
+        }
+
+        /* Virtual Tour Modal */
+        .tour-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: var(--z-modal);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tour-modal.active {
+            display: flex;
+        }
+
+        .tour-content {
+            position: relative;
+            width: 90%;
+            height: 80%;
+            background: var(--off-white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tour-header {
+            padding: var(--space-4) var(--space-6);
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tour-viewer {
+            flex: 1;
+            position: relative;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tour-viewer img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+
+        .tour-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--white);
+            pointer-events: none;
+        }
+
+        .tour-360-badge {
+            display: inline-block;
+            padding: var(--space-2) var(--space-4);
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--white);
+            border-radius: var(--radius-full);
+            font-weight: var(--font-bold);
+            margin-bottom: var(--space-4);
+            font-size: var(--text-xl);
+        }
+
+        @media (max-width: 992px) {
+            .property-content {
+                grid-template-columns: 1fr;
+            }
+
+            .property-sidebar {
+                position: static;
+            }
+
+            .property-gallery {
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 250px 150px;
+            }
+
+            .property-gallery .main-image {
+                grid-column: span 2;
+                grid-row: span 1;
+                border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            }
+
+            .property-gallery .gallery-image:nth-child(2) {
+                border-radius: 0 0 0 var(--radius-lg);
+            }
+
+            .property-gallery .gallery-image:nth-child(3) {
+                border-radius: 0 0 var(--radius-lg) 0;
+            }
+
+            .property-gallery .gallery-image:nth-child(4),
+            .property-gallery .gallery-image:nth-child(5) {
+                display: none;
+            }
+
+            .similar-properties {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .property-quick-specs {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="Logo">
+            </a>
+
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link" data-i18n="nav_home">Home</a>
+                <a href="search.html?type=buy" class="nav-link" data-i18n="nav_buy">Buy</a>
+                <a href="search.html?type=rent" class="nav-link" data-i18n="nav_rent">Rent</a>
+                <a href="agents.html" class="nav-link" data-i18n="nav_agents">Agents</a>
+                <a href="become-agent.html" class="nav-link" data-i18n="nav_become_agent">For Agents</a>
+                <a href="sell.html" class="nav-link" data-i18n="nav_sell">Sell</a>
+                <a href="calculator.html" class="nav-link" data-i18n="nav_mortgage">Mortgage</a>
+            </nav>
+
+            <div class="nav-actions">
+                <!-- Language Switcher -->
+                <div class="lang-switcher" style="margin-right: 0.5rem; position: relative;">
+                    <button class="btn btn-ghost"
+                        onclick="document.getElementById('lang-menu').style.display = document.getElementById('lang-menu').style.display === 'block' ? 'none' : 'block'"
+                        style="padding: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="lang-menu" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; min-width: 140px; overflow: hidden;">
+                        <a href="#"
+                            onclick="I18n.setLanguage('en'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">English</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('ar'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">العربية</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('de'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">Deutsch</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('ru'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none;">Русский</a>
+                    </div>
+                </div>
+
+                <!-- Notifications Bell -->
+                <div class="notifications-wrapper auth-only" style="position: relative; display: none;">
+                    <button class="btn btn-ghost btn-icon" id="notificationsBtn" onclick="toggleNotifications()"
+                        title="الإشعارات">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge"
+                            style="position: absolute; top: 0; right: 0; background: var(--primary); color: white; font-size: 10px; padding: 2px 6px; border-radius: 50%; display: none;">0</span>
+                    </button>
+                    <div id="notificationsDropdown" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 1000; min-width: 320px; max-height: 400px; overflow-y: auto;">
+                        <div style="padding: 16px; border-bottom: 1px solid #eee; font-weight: 600;">
+                            <span data-i18n="notifications_title">Notifications</span>
+                        </div>
+                        <div id="notificationsList">
+                            <div style="padding: 24px; text-align: center; color: #999;">No notifications</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Menu (Logged In) -->
+                <div class="user-menu auth-only" style="position: relative; display: none;">
+                    <button class="btn btn-ghost" onclick="toggleUserMenu()"
+                        style="display: flex; align-items: center; gap: 8px;">
+                        <div
+                            style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center;">
+                            <span class="user-initial">U</span>
+                        </div>
+                        <span class="user-display-name">User</span>
+                        <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+                    </button>
+                    <div id="userMenu" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; min-width: 220px; overflow: hidden;">
+                        <a href="profile.html"
+                            style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">
+                            <i class="fas fa-user" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_profile">Profile</span>
+                        </a>
+                        <a href="dashboard.html"
+                            style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">
+                            <i class="fas fa-th-large" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_dashboard">Dashboard</span>
+                        </a>
+                        <a href="#" onclick="Auth.logout(); return false;"
+                            style="display: block; padding: 12px 16px; color: var(--primary); text-decoration: none;">
+                            <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_logout">Log Out</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Guest Auth Links -->
+                <div class="auth-links guest-only">
+                    <i class="fas fa-user-circle"></i>
+                    <a href="login.html" class="nav-link" data-i18n="nav_login">Log In</a>
+                    <span class="divider">/</span>
+                    <a href="register.html" class="nav-link" data-i18n="nav_register">Register</a>
+                </div>
+
+                <a href="sell.html" class="btn btn-primary btn-cta text-white" data-i18n="nav_sell_cta">Sell Your
+                    Property</a>
+                <!-- Comparison Button (Header) -->
+                <a href="compare.html" class="btn btn-ghost btn-icon" title="Compare Properties"
+                    style="display: flex; align-items: center; gap: 5px;">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span data-i18n="nav_compare">Compare</span>
+                    <span id="header-compare-count" class="badge badge-sm badge-primary"
+                        style="display: none; font-size: 0.7rem; padding: 2px 5px; border-radius: 50%;">0</span>
+                </a>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="property-page">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" style="margin: var(--space-6) 0;">
+                <span class="breadcrumb-item"><a href="index.html" data-i18n="nav_home">Home</a></span>
+                <span class="breadcrumb-item"><a href="search.html">Los Angeles</a></span>
+                <span class="breadcrumb-item"><a href="search.html">Beverly Hills</a></span>
+                <span class="breadcrumb-item active">1234 Oak Street</span>
+            </nav>
+
+            <!-- Image Gallery -->
+            <div class="property-gallery">
+                <div class="gallery-image main-image" onclick="openGallery(0)">
+                    <img src="assets/images/property-1.png" alt="Property main view">
+                </div>
+                <div class="gallery-image" onclick="openGallery(1)">
+                    <img src="assets/images/property-interior.png" alt="Living room">
+                </div>
+                <div class="gallery-image" onclick="openGallery(2)">
+                    <img src="assets/images/property-2.png" alt="Kitchen">
+                </div>
+                <div class="gallery-image" onclick="openGallery(3)">
+                    <img src="assets/images/property-3.png" alt="Bedroom">
+                </div>
+                <div class="gallery-image" onclick="openGallery(4)">
+                    <img src="assets/images/hero-bg.png" alt="Backyard">
+                    <span class="gallery-more">+12 Photos</span>
+                </div>
+            </div>
+
+            <!-- Property Content -->
+            <div class="property-content">
+                <!-- Main Content -->
+                <div class="property-main">
+                    <!-- Header -->
+                    <div class="property-header">
+                        <div class="property-title-row">
+                            <div>
+                                <h1 class="property-price-tag">$485,000</h1>
+                                <div class="property-address-full">1234 Oak Street, Beverly Hills, CA 90210</div>
+                                <div class="property-badges">
+                                    <span class="badge badge-primary" data-i18n="badge_for_sale">For Sale</span>
+                                    <span class="badge badge-success" data-i18n="filter_open_house">Open House</span>
+                                    <span class="tag" data-i18n="badge_single_family">Single Family</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <button class="btn btn-outline btn-sm">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                                        <polyline points="16 6 12 2 8 6"></polyline>
+                                        <line x1="12" y1="2" x2="12" y2="15"></line>
+                                    </svg>
+                                    <span data-i18n="btn_share">Share</span>
+                                </button>
+                                <button class="btn btn-outline btn-sm card-save">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path
+                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                        </path>
+                                    </svg>
+                                    <span data-i18n="btn_save">Save</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Specs -->
+                    <div class="property-quick-specs">
+                        <div class="quick-spec">
+                            <div class="quick-spec-value">4</div>
+                            <div class="quick-spec-label" data-i18n="filter_beds">Bedrooms</div>
+                        </div>
+                        <div class="quick-spec">
+                            <div class="quick-spec-value">3</div>
+                            <div class="quick-spec-label" data-i18n="filter_baths">Bathrooms</div>
+                        </div>
+                        <div class="quick-spec">
+                            <div class="quick-spec-value">2,450</div>
+                            <div class="quick-spec-label" data-i18n="filter_sqft">Square Feet</div>
+                        </div>
+                        <div class="quick-spec">
+                            <div class="quick-spec-value">0.25</div>
+                            <div class="quick-spec-label" data-i18n="spec_acres">Acre Lot</div>
+                        </div>
+                        <div class="quick-spec">
+                            <div class="quick-spec-value">1998</div>
+                            <div class="quick-spec-label" data-i18n="spec_year_built">Year Built</div>
+                        </div>
+                        <div class="quick-spec">
+                            <div class="quick-spec-value">$198</div>
+                            <div class="quick-spec-label" data-i18n="spec_price_sqft">Price/sqft</div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="property-section">
+                        <h2 class="property-section-title" data-i18n="section_about">About This Home</h2>
+                        <p class="property-description">
+                            Welcome to this stunning 4-bedroom, 3-bathroom home in the heart of Beverly Hills. This
+                            beautifully maintained property offers the perfect blend of classic elegance and modern
+                            comfort. As you enter, you'll be greeted by an open floor plan featuring high ceilings,
+                            hardwood floors throughout, and abundant natural light.
+                        </p>
+                        <p class="property-description" style="margin-top: var(--space-4);">
+                            The gourmet kitchen boasts granite countertops, stainless steel appliances, and a large
+                            center island perfect for entertaining. The primary suite includes a spa-like bathroom with
+                            dual vanities, a soaking tub, and a walk-in closet. Enjoy outdoor living in the private
+                            backyard with a covered patio, built-in BBQ, and mature landscaping.
+                        </p>
+                        <p class="property-description" style="margin-top: var(--space-4);">
+                            Additional features include a two-car garage, central air conditioning, smart home
+                            technology, and new roof installed in 2022. Located in a top-rated school district, walking
+                            distance to parks, shopping, and dining. Don't miss this opportunity to own a piece of
+                            Beverly Hills living!
+                        </p>
+                    </div>
+
+                    <!-- Features -->
+                    <div class="property-section">
+                        <h2 class="property-section-title" data-i18n="section_features">Home Features</h2>
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                </svg>
+                                <span data-i18n="badge_single_family">Single Family</span>
+                            </div>
+                            <div class="feature-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                                <span data-i18n="feature_garage">2 Car Garage</span>
+                            </div>
+                            <div class="feature-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M12 1v6"></path>
+                                    <path d="M12 17v6"></path>
+                                </svg>
+                                <span data-i18n="feature_ac">Central A/C</span>
+                            </div>
+                            <div class="feature-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
+                                </svg>
+                                <span data-i18n="feature_pool">Pool</span>
+                            </div>
+                            <div class="feature-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z">
+                                    </path>
+                                    <path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z">
+                                    </path>
+                                </svg>
+                                <span data-i18n="feature_hardwood">Hardwood Floors</span>
+                            </div>
+                            <div class="feature-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                </svg>
+                                <span data-i18n="feature_smart">Smart Home</span>
+                            </div>
+                            <div class="feature-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                    <polyline points="17 2 12 7 7 2"></polyline>
+                                </svg>
+                                <span data-i18n="feature_fireplace">Fireplace</span>
+                            </div>
+                            <div class="feature-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                    </path>
+                                </svg>
+                                <span data-i18n="feature_storage">Storage</span>
+                            </div>
+                            <div class="feature-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z">
+                                    </path>
+                                </svg>
+                                <span data-i18n="feature_location">Great Location</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price History -->
+                    <div class="property-section">
+                        <h2 class="property-section-title" data-i18n="section_price_history">Price History</h2>
+                        <table class="price-history-table">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="table_date">Date</th>
+                                    <th data-i18n="table_event">Event</th>
+                                    <th data-i18n="table_price">Price</th>
+                                    <th data-i18n="table_change">Change</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Jan 15, 2024</td>
+                                    <td>Listed for Sale</td>
+                                    <td>$485,000</td>
+                                    <td>—</td>
+                                </tr>
+                                <tr>
+                                    <td>Mar 22, 2018</td>
+                                    <td>Sold</td>
+                                    <td>$395,000</td>
+                                    <td>+$45,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Feb 10, 2018</td>
+                                    <td>Listed for Sale</td>
+                                    <td>$350,000</td>
+                                    <td>—</td>
+                                </tr>
+                                <tr>
+                                    <td>Aug 5, 2010</td>
+                                    <td>Sold</td>
+                                    <td>$310,000</td>
+                                    <td>—</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Mortgage Calculator -->
+                    <div class="property-section">
+                        <h2 class="property-section-title" data-i18n="section_mortgage">Mortgage Calculator</h2>
+                        <div class="calculator-card">
+                            <div class="grid grid-cols-2" style="gap: var(--space-4);">
+                                <div class="form-group">
+                                    <label class="form-label" data-i18n="calc_price">Home Price</label>
+                                    <input type="text" class="form-input" value="$485,000" id="homePrice">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" data-i18n="calc_down_payment">Down Payment</label>
+                                    <input type="text" class="form-input" value="$97,000 (20%)" id="downPayment">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" data-i18n="calc_term">Loan Term</label>
+                                    <select class="form-input form-select" id="loanTerm">
+                                        <option>30 years</option>
+                                        <option>20 years</option>
+                                        <option>15 years</option>
+                                        <option>10 years</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" data-i18n="calc_interest">Interest Rate</label>
+                                    <input type="text" class="form-input" value="6.5%" id="interestRate">
+                                </div>
+                            </div>
+
+                            <div class="calculator-result">
+                                <div class="text-gray" data-i18n="calc_result_monthly">Estimated Monthly Payment</div>
+                                <div class="monthly-payment">$2,453/mo</div>
+                                <div style="margin-top: var(--space-4); font-size: var(--text-sm); color: var(--gray-500);"
+                                    data-i18n="calc_result_breakdown">
+                                    Principal & Interest: $2,453 • Property Tax: ~$486 • Insurance: ~$150
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="property-section">
+                        <h2 class="property-section-title" data-i18n="section_location">Location</h2>
+                        <div class="map-embed">
+                            <div style="text-align: center;">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                <p style="margin-top: var(--space-2);">1234 Oak Street, Beverly Hills, CA 90210</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="property-sidebar">
+                    <!-- Agent Card -->
+                    <div class="agent-card">
+                        <div class="agent-card-header">
+                            <div class="agent-avatar">JS</div>
+                            <div class="agent-info">
+                                <h4>John Smith</h4>
+                                <div class="agent-title" data-i18n="agent_premier">Premier Agent</div>
+                                <div class="agent-rating">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                        <polygon
+                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                        </polygon>
+                                    </svg>
+                                    <span>4.9 (127 <span data-i18n="agent_reviews">reviews</span>)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form class="contact-form">
+                            <input type="text" class="form-input" placeholder="Your Name" required
+                                data-i18n-placeholder="form_name">
+                            <input type="email" class="form-input" placeholder="Email Address" required
+                                data-i18n-placeholder="form_email">
+                            <input type="tel" class="form-input" placeholder="Phone Number"
+                                data-i18n-placeholder="form_phone">
+                            <textarea class="form-input form-textarea"
+                                placeholder="I'm interested in 1234 Oak Street..." rows="4"
+                                data-i18n-placeholder="form_message"></textarea>
+                            <button type="submit" class="btn btn-primary w-full" data-i18n="btn_request_tour">Request
+                                Tour</button>
+                            <button type="button" class="btn btn-outline w-full" data-i18n="btn_call_agent">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                    </path>
+                                </svg>
+                                Call Agent
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Virtual Tour -->
+                    <div class="agent-card">
+                        <h4 style="margin-bottom: var(--space-4);" data-i18n="section_tour">Virtual Tour</h4>
+                        <button class="btn btn-secondary w-full" id="takeTourBtn" onclick="openTour()"
+                            data-i18n="btn_take_tour">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                            Take Virtual Tour
+                        </button>
+                    </div>
+
+                    <!-- Open House -->
+                    <div class="agent-card">
+                        <h4 style="margin-bottom: var(--space-4);" data-i18n="filter_open_house">Open House</h4>
+                        <div
+                            style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--off-white); border-radius: var(--radius-md); margin-bottom: var(--space-3);">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)"
+                                stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <div>
+                                <strong>Saturday, Jan 20</strong>
+                                <div style="font-size: var(--text-sm); color: var(--gray-500);">1:00 PM - 4:00 PM</div>
+                            </div>
+                        </div>
+                        <div
+                            style="display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3); background: var(--off-white); border-radius: var(--radius-md);">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)"
+                                stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <div>
+                                <strong>Sunday, Jan 21</strong>
+                                <div style="font-size: var(--text-sm); color: var(--gray-500);">11:00 AM - 2:00 PM</div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Similar Properties -->
+            <div class="property-section" style="margin-top: var(--space-16);">
+                <h2 class="property-section-title" data-i18n="section_similar">Similar Properties</h2>
+                <div class="similar-properties">
+                    <article class="card property-card">
+                        <a href="property.html">
+                            <div class="card-image">
+                                <button class="card-save">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path
+                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                        </path>
+                                    </svg>
+                                </button>
+                                <img src="assets/images/property-2.png" alt="Similar property">
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <div class="property-price">$525,000</div>
+                            <div class="property-address">456 Maple Ave, Beverly Hills, CA</div>
+                            <div class="property-specs">
+                                <span class="property-spec">4 <span data-i18n="card_bd_short">bd</span></span>
+                                <span class="property-spec">3 <span data-i18n="card_ba_short">ba</span></span>
+                                <span class="property-spec">2,200 <span data-i18n="card_sqft">sqft</span></span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="card property-card">
+                        <a href="property.html">
+                            <div class="card-image">
+                                <button class="card-save">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path
+                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                        </path>
+                                    </svg>
+                                </button>
+                                <img src="assets/images/property-3.png" alt="Similar property">
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <div class="property-price">$445,000</div>
+                            <div class="property-address">789 Palm Dr, West Hollywood, CA</div>
+                            <div class="property-specs">
+                                <span class="property-spec">3 <span data-i18n="card_bd_short">bd</span></span>
+                                <span class="property-spec">2 <span data-i18n="card_ba_short">ba</span></span>
+                                <span class="property-spec">1,950 <span data-i18n="card_sqft">sqft</span></span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="card property-card">
+                        <a href="property.html">
+                            <div class="card-image">
+                                <button class="card-save">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path
+                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                        </path>
+                                    </svg>
+                                </button>
+                                <img src="assets/images/hero-bg.png" alt="Similar property">
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <div class="property-price">$595,000</div>
+                            <div class="property-address">321 Sunset Blvd, Beverly Hills, CA</div>
+                            <div class="property-specs">
+                                <span class="property-spec">5 <span data-i18n="card_bd_short">bd</span></span>
+                                <span class="property-spec">4 <span data-i18n="card_ba_short">ba</span></span>
+                                <span class="property-spec">3,100 <span data-i18n="card_sqft">sqft</span></span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="assets/images/logo.png" alt="Logo">
+                    </a>
+                    <p data-i18n="footer_desc">Your trusted partner in finding the perfect home. We connect buyers,
+                        sellers, and renters with
+                        the best properties across the nation.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Twitter">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                                </path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="footer-title" data-i18n="footer_buy">Buy</h4>
+                    <nav class="footer-links">
+                        <a href="search.html" data-i18n="footer_browse">Browse Homes</a>
+                        <a href="search.html?type=house" data-i18n="footer_houses">Houses for Sale</a>
+                        <a href="search.html?type=condo" data-i18n="footer_condos">Condos for Sale</a>
+                        <a href="search.html?type=townhouse" data-i18n="footer_townhouses">Townhouses</a>
+                        <a href="search.html?type=land" data-i18n="footer_land">Land for Sale</a>
+                    </nav>
+                </div>
+
+                <div>
+                    <h4 class="footer-title" data-i18n="footer_sell">Sell</h4>
+                    <nav class="footer-links">
+                        <a href="sell.html" data-i18n="footer_sell_home">Sell Your Home</a>
+                        <a href="sell.html#value" data-i18n="footer_value">Home Value Estimator</a>
+                        <a href="agents.html" data-i18n="footer_find_agent">Find an Agent</a>
+                        <a href="blog.html" data-i18n="footer_selling_tips">Selling Tips</a>
+                        <a href="help.html" data-i18n="footer_seller_resources">Seller Resources</a>
+                    </nav>
+                </div>
+
+                <div>
+                    <h4 class="footer-title" data-i18n="footer_company">Company</h4>
+                    <nav class="footer-links">
+                        <a href="about.html" data-i18n="footer_about">About Us</a>
+                        <a href="contact.html" data-i18n="footer_contact">Contact</a>
+                        <a href="blog.html" data-i18n="footer_blog">Blog</a>
+                        <a href="help.html" data-i18n="footer_help">Help Center</a>
+                        <a href="#" data-i18n="footer_careers">Careers</a>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright" data-i18n="footer_rights">&copy; 2024 Real Estate. All rights reserved.
+                </p>
+                <div class="footer-legal">
+                    <a href="#" data-i18n="footer_privacy">Privacy Policy</a>
+                    <a href="#" data-i18n="footer_terms">Terms of Service</a>
+                    <a href="#" data-i18n="footer_cookies">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Gallery Modal -->
+    <div class="gallery-modal" id="galleryModal">
+        <button class="gallery-modal-close" onclick="closeGallery()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <img src="" alt="Gallery image" id="galleryImage">
+    </div>
+
+    <!-- Virtual Tour Modal -->
+    <div class="tour-modal" id="tourModal">
+        <div class="tour-content">
+            <div class="tour-header">
+                <h3 data-i18n="section_tour">Virtual Tour</h3>
+                <button class="btn btn-outline btn-sm" onclick="closeTour()">
+                    <span data-i18n="btn_close">Close</span>
+                </button>
+            </div>
+            <div class="tour-viewer">
+                <img src="assets/images/property-interior.png" alt="360 View">
+                <div class="tour-overlay">
+                    <div class="tour-360-badge">360°</div>
+                    <p data-i18n="tour_simulated">Simulated immersive view</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/201000000000" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Chatbot Widget -->
+    <link rel="stylesheet" href="css/chat-widget.css">
+    <script src="js/chat-widget.js"></script>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/i18n.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof updateAuthUI === 'function') {
+                updateAuthUI();
+            }
+        });
+    </script>
+    <script>
+        const images = [
+            'assets/images/property-1.png',
+            'assets/images/property-interior.png',
+            'assets/images/property-2.png',
+            'assets/images/property-3.png',
+            'assets/images/hero-bg.png'
+        ];
+
+        function openGallery(index) {
+            const modal = document.getElementById('galleryModal');
+            const img = document.getElementById('galleryImage');
+            img.src = images[index];
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGallery() {
+            const modal = document.getElementById('galleryModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('galleryModal').addEventListener('click', function (e) {
+            if (e.target === this) closeGallery();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeGallery();
+        });
+
+        // Virtual Tour Functions
+        function openTour() {
+            const modal = document.getElementById('tourModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Force re-translation of modal content
+            if (typeof I18n !== 'undefined' && I18n.updatePageContent) {
+                I18n.updatePageContent();
+            }
+        }
+
+        function closeTour() {
+            const modal = document.getElementById('tourModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('tourModal').addEventListener('click', function (e) {
+            if (e.target === this) closeTour();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeTour();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Welcome to the Egyptian Real Estate Platform. The official source for real estate in Egypt. Browse homes for sale, rent, and get home value estimates.">
+    <title>منصة مصر العقارية - The Official Egyptian Real Estate Platform</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/calc-premium.css">
+
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="Logo">
+            </a>
+
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link" data-i18n="nav_home">Home</a>
+                <a href="search.html?type=buy" class="nav-link" data-i18n="nav_buy">Buy</a>
+                <a href="search.html?type=rent" class="nav-link" data-i18n="nav_rent">Rent</a>
+                <a href="agents.html" class="nav-link" data-i18n="nav_agents">Agents</a>
+                <a href="become-agent.html" class="nav-link" data-i18n="nav_become_agent">For Agents</a>
+                <a href="sell.html" class="nav-link" data-i18n="nav_sell">Sell</a>
+                <a href="calculator.html" class="nav-link active" data-i18n="nav_mortgage">Mortgage</a>
+            </nav>
+
+            <div class="nav-actions">
+                <!-- Language Switcher -->
+                <div class="lang-switcher" style="margin-right: 0.5rem; position: relative;">
+                    <button class="btn btn-ghost"
+                        onclick="document.getElementById('lang-menu').style.display = document.getElementById('lang-menu').style.display === 'block' ? 'none' : 'block'"
+                        style="padding: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="lang-menu" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; min-width: 140px; overflow: hidden;">
+                        <a href="#"
+                            onclick="I18n.setLanguage('en'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">English</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('ar'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">العربية</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('de'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">Deutsch</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('ru'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none;">Русский</a>
+                    </div>
+                </div>
+
+                <!-- Notifications Bell -->
+                <div class="notifications-wrapper auth-only" style="position: relative; display: none;">
+                    <button class="btn btn-ghost btn-icon" id="notificationsBtn" onclick="toggleNotifications()"
+                        title="الإشعارات">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge"
+                            style="position: absolute; top: 0; right: 0; background: var(--primary); color: white; font-size: 10px; padding: 2px 6px; border-radius: 50%; display: none;">0</span>
+                    </button>
+                    <div id="notificationsDropdown" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 1000; min-width: 320px; max-height: 400px; overflow-y: auto;">
+                        <div style="padding: 16px; border-bottom: 1px solid #eee; font-weight: 600;">
+                            <span data-i18n="notifications_title">Notifications</span>
+                        </div>
+                        <div id="notificationsList">
+                            <div style="padding: 24px; text-align: center; color: #999;">No notifications</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Menu (Logged In) -->
+                <div class="user-menu auth-only" style="position: relative; display: none;">
+                    <button class="btn btn-ghost" onclick="toggleUserMenu()"
+                        style="display: flex; align-items: center; gap: 8px;">
+                        <div
+                            style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center;">
+                            <span class="user-initial">U</span>
+                        </div>
+                        <span class="user-display-name">User</span>
+                        <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+                    </button>
+                    <div id="userMenu" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; min-width: 220px; overflow: hidden;">
+                        <a href="profile.html"
+                            style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">
+                            <i class="fas fa-user" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_profile">Profile</span>
+                        </a>
+                        <a href="dashboard.html"
+                            style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">
+                            <i class="fas fa-th-large" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_dashboard">Dashboard</span>
+                        </a>
+                        <a href="#" onclick="Auth.logout(); return false;"
+                            style="display: block; padding: 12px 16px; color: var(--primary); text-decoration: none;">
+                            <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_logout">Log Out</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Guest Auth Links -->
+                <div class="auth-links guest-only">
+                    <i class="fas fa-user-circle"></i>
+                    <a href="login.html" class="nav-link" data-i18n="nav_login">Log In</a>
+                    <span class="divider">/</span>
+                    <a href="register.html" class="nav-link" data-i18n="nav_register">Register</a>
+                </div>
+
+                <a href="sell.html" class="btn btn-primary btn-cta text-white" data-i18n="nav_sell_cta">Sell Your
+                    Property</a>
+                <!-- Comparison Button (Header) -->
+                <a href="compare.html" class="btn btn-ghost btn-icon" title="Compare Properties"
+                    style="display: flex; align-items: center; gap: 5px;">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span data-i18n="nav_compare">Compare</span>
+                    <span id="header-compare-count" class="badge badge-sm badge-primary"
+                        style="display: none; font-size: 0.7rem; padding: 2px 5px; border-radius: 50%;">0</span>
+                </a>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="calc-hero">
+        <div class="calc-hero-overlay"></div>
+        <div class="container">
+            <div class="calc-hero-content text-center">
+                <h1 class="calc-hero-title" data-i18n="calc_page_title">Mortgage Calculator</h1>
+                <p class="calc-hero-subtitle" data-i18n="calc_page_subtitle">Calculate your estimated monthly payments
+                    and see if you are eligible for financing.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Calculator Layout -->
+    <div class="calc-page-wrapper">
+        <div class="container">
+            <!-- Old Header Removed -->
+
+            <!-- Main Calculator Card -->
+            <div class="calc-card">
+                <!-- MLS Search Header -->
+                <div class="calc-search-row">
+                    <div class="mls-search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="mls-search-input" class="mls-search-input"
+                            placeholder="Enter MLS ID (e.g., 1002)" data-i18n-placeholder="calc_enter_mls">
+                        <button class="mls-search-btn" id="mls-search-btn">
+                            <span data-i18n="search_btn">Search</span>
+                        </button>
+                    </div>
+                    <div class="mls-feedback">
+                        <span id="mls-error-msg" class="feedback-error" style="display: none;"
+                            data-i18n="calc_mls_not_found">MLS Not Found</span>
+                        <span id="mls-success-msg" class="feedback-success" style="display: none;"
+                            data-i18n="calc_mls_found">Data Loaded!</span>
+                    </div>
+                </div>
+
+                <div class="calc-content-grid">
+                    <!-- Left Side: Inputs -->
+                    <div class="calc-inputs-col">
+                        <h3 class="calc-section-title" data-i18n="calc_details">Loan Details</h3>
+
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="calc_program">Loan Program</label>
+                            <div class="input-wrapper">
+                                <select id="loan-program" class="form-input form-select" style="border:none;">
+                                    <option value="3" data-i18n="calc_program_3">3% Initiative (Low/Middle Income)
+                                    </option>
+                                    <option value="8" data-i18n="calc_program_8">8% Initiative (Middle Income)</option>
+                                    <option value="commercial" data-i18n="calc_program_commercial">Commercial (Standard)
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="calc_income">Monthly Income (EGP)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="monthly-income" value="10000">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="calc_price">Home Price (EGP)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="home-price" value="500000">
+                            </div>
+                            <input type="range" id="home-price-range" class="form-range" min="100000" max="5000000"
+                                step="5000" value="500000">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="calc_down_payment">Down Payment (EGP)</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="down-payment" value="100000">
+                            </div>
+                            <input type="range" id="down-payment-range" class="form-range" min="0" max="1000000"
+                                step="1000" value="100000">
+                        </div>
+
+                        <div class="grid-cols-2 gap-4">
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="calc_rate">Interest Rate (%)</label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="interest-rate" value="3" step="0.1" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" data-i18n="calc_term">Loan Term (Years)</label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="loan-term" value="30" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Side: Dark Results -->
+                    <div class="calc-results-col" id="mortgage-calculator">
+                        <div class="results-content">
+                            <h3 class="calc-section-title text-white" data-i18n="calc_monthly">Monthly Payment</h3>
+                            <div class="total-amount" id="monthly-payment">0 EGP</div>
+
+                            <div class="eligibility-badge" id="eligibility-badge">
+                                <!-- JS populate -->
+                            </div>
+
+                            <div class="breakdown-list">
+                                <div class="breakdown-row">
+                                    <span class="breakdown-label" data-i18n="calc_principal">Principal & Interest</span>
+                                    <span class="breakdown-value" id="breakdown-pi">0</span>
+                                </div>
+                                <div class="breakdown-row">
+                                    <span class="breakdown-label" data-i18n="calc_taxes">Property Taxes</span>
+                                    <span class="breakdown-value" id="breakdown-tax">0</span>
+                                </div>
+                                <div class="breakdown-row">
+                                    <span class="breakdown-label" data-i18n="calc_insurance">Home Insurance</span>
+                                    <span class="breakdown-value" id="breakdown-insurance">0</span>
+                                </div>
+                            </div>
+
+                            <div class="chart-placeholder">
+                                <i class="fas fa-chart-pie" style="font-size: 24px; margin-right: 10px;"></i>
+                                <span data-i18n="calc_breakdown_chart">Payment Breakdown Visualization</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="assets/images/logo.png" alt="Logo">
+                    </a>
+                    <p data-i18n="footer_desc">Your trusted partner in finding the perfect home. We connect buyers,
+                        sellers, and renters with the best properties across the nation.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="footer-title" data-i18n="footer_buy">Buy</h4>
+                    <nav class="footer-links">
+                        <a href="search.html" data-i18n="footer_browse">Browse Homes</a>
+                        <a href="search.html?type=house" data-i18n="footer_houses">Houses for Sale</a>
+                        <a href="search.html?type=condo" data-i18n="footer_condos">Condos for Sale</a>
+                        <a href="search.html?type=townhouse" data-i18n="footer_townhouses">Townhouses</a>
+                        <a href="search.html?type=land" data-i18n="footer_land">Land for Sale</a>
+                    </nav>
+                </div>
+
+                <div>
+                    <h4 class="footer-title" data-i18n="footer_sell">Sell</h4>
+                    <nav class="footer-links">
+                        <a href="sell.html" data-i18n="footer_sell_home">Sell Your Home</a>
+                        <a href="sell.html#value" data-i18n="footer_value">Home Value Estimator</a>
+                        <a href="agents.html" data-i18n="footer_find_agent">Find an Agent</a>
+                        <a href="blog.html" data-i18n="footer_selling_tips">Selling Tips</a>
+                        <a href="help.html" data-i18n="footer_seller_resources">Seller Resources</a>
+                    </nav>
+                </div>
+
+                <div>
+                    <h4 class="footer-title" data-i18n="footer_company">Company</h4>
+                    <nav class="footer-links">
+                        <a href="about.html" data-i18n="footer_about">About Us</a>
+                        <a href="contact.html" data-i18n="footer_contact">Contact</a>
+                        <a href="blog.html" data-i18n="footer_blog">Blog</a>
+                        <a href="help.html" data-i18n="footer_help">Help Center</a>
+                        <a href="#" data-i18n="footer_careers">Careers</a>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright" data-i18n="footer_rights">&copy; 2024 Real Estate. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#" data-i18n="footer_privacy">Privacy Policy</a>
+                    <a href="#" data-i18n="footer_terms">Terms of Service</a>
+                    <a href="#" data-i18n="footer_cookies">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/201000000000" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Chatbot Widget -->
+    <link rel="stylesheet" href="css/chat-widget.css">
+    <script src="js/chat-widget.js"></script>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/i18n.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof updateAuthUI === 'function') {
+                updateAuthUI();
+            }
+        });
+    </script>
+</body>
+
+</html>

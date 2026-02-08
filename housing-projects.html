@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Housing Projects - The Official Egyptian Real Estate Platform</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .project-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .project-img {
+            height: 240px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .project-body {
+            padding: var(--space-6);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-badge {
+            background: var(--primary);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: var(--text-xs);
+            font-weight: bold;
+            align-self: flex-start;
+            margin-bottom: var(--space-3);
+        }
+
+        .project-badge.open {
+            background: var(--success);
+        }
+
+        .project-badge.closed {
+            background: var(--gray-500);
+        }
+
+        .project-title {
+            font-size: var(--text-xl);
+            font-weight: bold;
+            margin-bottom: var(--space-2);
+            color: var(--secondary);
+        }
+
+        .project-location {
+            color: var(--gray-600);
+            font-size: var(--text-sm);
+            margin-bottom: var(--space-4);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .project-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+            padding-top: var(--space-4);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: var(--text-lg);
+            display: block;
+        }
+
+        .stat-label-sm {
+            font-size: var(--text-xs);
+            color: var(--gray-500);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="Logo">
+            </a>
+
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link" data-i18n="nav_home">Home</a>
+                <a href="search.html?type=buy" class="nav-link" data-i18n="nav_buy">Buy</a>
+                <a href="search.html?type=rent" class="nav-link" data-i18n="nav_rent">Rent</a>
+                <a href="agents.html" class="nav-link" data-i18n="nav_agents">Agents</a>
+                <a href="become-agent.html" class="nav-link" data-i18n="nav_become_agent">For Agents</a>
+                <a href="sell.html" class="nav-link" data-i18n="nav_sell">Sell</a>
+                <a href="calculator.html" class="nav-link" data-i18n="nav_mortgage">Mortgage</a>
+            </nav>
+
+            <div class="nav-actions">
+                <!-- Language Switcher -->
+                <div class="lang-switcher" style="margin-right: 0.5rem; position: relative;">
+                    <button class="btn btn-ghost"
+                        onclick="document.getElementById('lang-menu').style.display = document.getElementById('lang-menu').style.display === 'block' ? 'none' : 'block'"
+                        style="padding: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="lang-menu" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; min-width: 140px; overflow: hidden;">
+                        <a href="#"
+                            onclick="I18n.setLanguage('en'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">English</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('ar'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">العربية</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('de'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">Deutsch</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('ru'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none;">Русский</a>
+                    </div>
+                </div>
+
+                <!-- Notifications Bell -->
+                <div class="notifications-wrapper auth-only" style="position: relative; display: none;">
+                    <button class="btn btn-ghost btn-icon" id="notificationsBtn" onclick="toggleNotifications()"
+                        title="الإشعارات">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge"
+                            style="position: absolute; top: 0; right: 0; background: var(--primary); color: white; font-size: 10px; padding: 2px 6px; border-radius: 50%; display: none;">0</span>
+                    </button>
+                    <div id="notificationsDropdown" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 1000; min-width: 320px; max-height: 400px; overflow-y: auto;">
+                        <div style="padding: 16px; border-bottom: 1px solid #eee; font-weight: 600;">
+                            <span data-i18n="notifications_title">Notifications</span>
+                        </div>
+                        <div id="notificationsList">
+                            <div style="padding: 24px; text-align: center; color: #999;">No notifications</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Menu (Logged In) -->
+                <div class="user-menu auth-only" style="position: relative; display: none;">
+                    <button class="btn btn-ghost" onclick="toggleUserMenu()"
+                        style="display: flex; align-items: center; gap: 8px;">
+                        <div
+                            style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center;">
+                            <span class="user-initial">U</span>
+                        </div>
+                        <span class="user-display-name">User</span>
+                        <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+                    </button>
+                    <div id="userMenu" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; min-width: 220px; overflow: hidden;">
+                        <a href="profile.html"
+                            style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">
+                            <i class="fas fa-user" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_profile">Profile</span>
+                        </a>
+                        <a href="dashboard.html"
+                            style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">
+                            <i class="fas fa-th-large" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_dashboard">Dashboard</span>
+                        </a>
+                        <a href="#" onclick="Auth.logout(); return false;"
+                            style="display: block; padding: 12px 16px; color: var(--primary); text-decoration: none;">
+                            <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_logout">Log Out</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Guest Auth Links -->
+                <div class="auth-links guest-only">
+                    <i class="fas fa-user-circle"></i>
+                    <a href="login.html" class="nav-link" data-i18n="nav_login">Log In</a>
+                    <span class="divider">/</span>
+                    <a href="register.html" class="nav-link" data-i18n="nav_register">Register</a>
+                </div>
+
+                <a href="sell.html" class="btn btn-primary btn-cta text-white" data-i18n="nav_sell_cta">Sell Your
+                    Property</a>
+                <!-- Comparison Button (Header) -->
+                <a href="compare.html" class="btn btn-ghost btn-icon" title="Compare Properties"
+                    style="display: flex; align-items: center; gap: 5px;">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span data-i18n="nav_compare">Compare</span>
+                    <span id="header-compare-count" class="badge badge-sm badge-primary"
+                        style="display: none; font-size: 0.7rem; padding: 2px 5px; border-radius: 50%;">0</span>
+                </a>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="section bg-secondary text-white py-20" style="padding: var(--space-20) 0;">
+        <div class="container text-center">
+            <h1 class="text-5xl font-bold mb-4" data-i18n="projects_title">National Housing Projects</h1>
+            <p class="text-xl opacity-90 max-w-2xl mx-auto" data-i18n="projects_subtitle">Discover affordble and luxury
+                housing opportunities provided by the Urban Communities Authority.</p>
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="section bg-gray">
+        <div class="container">
+            <div class="grid grid-cols-3" style="gap: var(--space-8);">
+
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80" alt="Janna"
+                        class="project-img">
+                    <div class="project-body">
+                        <span class="project-badge open" data-i18n="status_open">Now Open</span>
+                        <h3 class="project-title" data-i18n="project_janna">JANNA Luxury Housing</h3>
+                        <div class="project-location">
+                            <i class="fas fa-map-marker-alt text-primary"></i> <span
+                                data-i18n="loc_new_cairo_shiekh_zayed">New Cairo, Sheikh Zayed, 6th of October</span>
+                        </div>
+                        <p class="text-gray text-sm mb-4" data-i18n="desc_janna">High-end residential compounds with
+                            swimming pools, landscaping, and full services.</p>
+                        <div class="project-stats">
+                            <div class="stat-box">
+                                <span class="stat-value">100-150m²</span>
+                                <span class="stat-label-sm" data-i18n="label_areas">Areas</span>
+                            </div>
+                            <div class="stat-box"> <!-- Placeholder price -->
+                                <span class="stat-value">EGP 11,500</span>
+                                <span class="stat-label-sm" data-i18n="label_meter_price">Per Meter Start</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-primary w-full mt-auto" data-i18n="btn_view_details">View Details</a>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1460317442991-0ec2aa247f7b?w=600&q=80" alt="Sakan Misr"
+                        class="project-img">
+                    <div class="project-body">
+                        <span class="project-badge open" data-i18n="status_open">Now Open</span>
+                        <h3 class="project-title" data-i18n="project_sakan_misr">Sakan Misr</h3>
+                        <div class="project-location">
+                            <i class="fas fa-map-marker-alt text-primary"></i> <span data-i18n="loc_various">12 New
+                                Cities</span>
+                        </div>
+                        <p class="text-gray text-sm mb-4" data-i18n="desc_sakan">Middle-income housing surrounded by
+                            green fences and commercial services.</p>
+                        <div class="project-stats">
+                            <div class="stat-box">
+                                <span class="stat-value">106-118m²</span>
+                                <span class="stat-label-sm" data-i18n="label_areas">Areas</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-value">EGP 7,500</span>
+                                <span class="stat-label-sm" data-i18n="label_meter_price">Per Meter Start</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-primary w-full mt-auto" data-i18n="btn_view_details">View Details</a>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80" alt="Dar Misr"
+                        class="project-img">
+                    <div class="project-body">
+                        <span class="project-badge closed" data-i18n="status_closed">Closed</span>
+                        <h3 class="project-title" data-i18n="project_dar_misr">Dar Misr</h3>
+                        <div class="project-location">
+                            <i class="fas fa-map-marker-alt text-primary"></i> <span
+                                data-i18n="loc_new_damietta_obour">New Damietta, Obour</span>
+                        </div>
+                        <p class="text-gray text-sm mb-4" data-i18n="desc_dar">Gated communities offering privacy and
+                            security for middle-income families.</p>
+                        <div class="project-stats">
+                            <div class="stat-box">
+                                <span class="stat-value">100-140m²</span>
+                                <span class="stat-label-sm" data-i18n="label_areas">Areas</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-value">EGP 8,500</span>
+                                <span class="stat-label-sm" data-i18n="label_meter_price">Per Meter Start</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-secondary w-full mt-auto" data-i18n="btn_notify">Notify Me</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2024 The Official Egyptian Real Estate Platform. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/compare.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof updateAuthUI === 'function') {
+                updateAuthUI();
+            }
+            if (typeof ComparisonManager !== 'undefined') {
+                ComparisonManager.updateUI();
+            }
+        });
+    </script>
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/201000000000" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+</body>
+
+</html>

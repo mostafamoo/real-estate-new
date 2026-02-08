@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة مصر العقارية - The Official Egyptian Real Estate Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .rent-hero {
+            margin-top: var(--header-height);
+            padding: var(--space-16) 0;
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            text-align: center;
+        }
+
+        .rent-hero h1 {
+            color: var(--white);
+            margin-bottom: var(--space-4);
+        }
+
+        .rent-hero p {
+            color: var(--gray-300);
+            font-size: var(--text-lg);
+            margin-bottom: var(--space-8);
+        }
+
+        .rent-search-box {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .rent-search-form {
+            display: flex;
+            gap: var(--space-3);
+            flex-wrap: wrap;
+        }
+
+        .rental-listings {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-6);
+        }
+
+        @media (max-width: 768px) {
+            .rent-search-form {
+                flex-direction: column;
+            }
+
+            .rental-listings {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="Logo">
+            </a>
+
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="nav-link" data-i18n="nav_home">Home</a>
+                <a href="search.html?type=buy" class="nav-link" data-i18n="nav_buy">Buy</a>
+                <a href="search.html?type=rent" class="nav-link active" data-i18n="nav_rent">Rent</a>
+                <a href="agents.html" class="nav-link" data-i18n="nav_agents">Agents</a>
+                <a href="become-agent.html" class="nav-link" data-i18n="nav_become_agent">For Agents</a>
+                <a href="sell.html" class="nav-link" data-i18n="nav_sell">Sell</a>
+                <a href="calculator.html" class="nav-link" data-i18n="nav_mortgage">Mortgage</a>
+            </nav>
+
+            <div class="nav-actions">
+                <!-- Language Switcher -->
+                <div class="lang-switcher" style="margin-right: 0.5rem; position: relative;">
+                    <button class="btn btn-ghost"
+                        onclick="document.getElementById('lang-menu').style.display = document.getElementById('lang-menu').style.display === 'block' ? 'none' : 'block'"
+                        style="padding: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="lang-menu" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; min-width: 140px; overflow: hidden;">
+                        <a href="#"
+                            onclick="I18n.setLanguage('en'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">English</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('ar'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">العربية</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('de'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">Deutsch</a>
+                        <a href="#"
+                            onclick="I18n.setLanguage('ru'); document.getElementById('lang-menu').style.display='none'; return false;"
+                            style="display: block; padding: 10px 16px; color: #333; text-decoration: none;">Русский</a>
+                    </div>
+                </div>
+
+                <!-- Notifications Bell -->
+                <div class="notifications-wrapper auth-only" style="position: relative; display: none;">
+                    <button class="btn btn-ghost btn-icon" id="notificationsBtn" onclick="toggleNotifications()"
+                        title="الإشعارات">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge"
+                            style="position: absolute; top: 0; right: 0; background: var(--primary); color: white; font-size: 10px; padding: 2px 6px; border-radius: 50%; display: none;">0</span>
+                    </button>
+                    <div id="notificationsDropdown" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 1000; min-width: 320px; max-height: 400px; overflow-y: auto;">
+                        <div style="padding: 16px; border-bottom: 1px solid #eee; font-weight: 600;">
+                            <span data-i18n="notifications_title">Notifications</span>
+                        </div>
+                        <div id="notificationsList">
+                            <div style="padding: 24px; text-align: center; color: #999;">No notifications</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Menu (Logged In) -->
+                <div class="user-menu auth-only" style="position: relative; display: none;">
+                    <button class="btn btn-ghost" onclick="toggleUserMenu()"
+                        style="display: flex; align-items: center; gap: 8px;">
+                        <div
+                            style="width: 32px; height: 32px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center;">
+                            <span class="user-initial">U</span>
+                        </div>
+                        <span class="user-display-name">User</span>
+                        <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+                    </button>
+                    <div id="userMenu" class="dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 0; background: white; border: 1px solid #eee; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000; min-width: 220px; overflow: hidden;">
+                        <a href="profile.html"
+                            style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">
+                            <i class="fas fa-user" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_profile">Profile</span>
+                        </a>
+                        <a href="dashboard.html"
+                            style="display: block; padding: 12px 16px; color: #333; text-decoration: none; border-bottom: 1px solid #f5f5f5;">
+                            <i class="fas fa-th-large" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_dashboard">Dashboard</span>
+                        </a>
+                        <a href="#" onclick="Auth.logout(); return false;"
+                            style="display: block; padding: 12px 16px; color: var(--primary); text-decoration: none;">
+                            <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>
+                            <span data-i18n="nav_logout">Log Out</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Guest Auth Links -->
+                <div class="auth-links guest-only">
+                    <i class="fas fa-user-circle"></i>
+                    <a href="login.html" class="nav-link" data-i18n="nav_login">Log In</a>
+                    <span class="divider">/</span>
+                    <a href="register.html" class="nav-link" data-i18n="nav_register">Register</a>
+                </div>
+
+                <a href="sell.html" class="btn btn-primary btn-cta text-white" data-i18n="nav_sell_cta">Sell Your
+                    Property</a>
+                <!-- Comparison Button (Header) -->
+                <a href="compare.html" class="btn btn-ghost btn-icon" title="Compare Properties"
+                    style="display: flex; align-items: center; gap: 5px;">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span data-i18n="nav_compare">Compare</span>
+                    <span id="header-compare-count" class="badge badge-sm badge-primary"
+                        style="display: none; font-size: 0.7rem; padding: 2px 5px; border-radius: 50%;">0</span>
+                </a>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <section class="rent-hero">
+        <div class="container">
+            <h1 data-i18n="rent_hero_title">Find Your Next Rental</h1>
+            <p data-i18n="rent_hero_desc">Discover thousands of apartments and houses for rent</p>
+            <div class="rent-search-box">
+                <form class="rent-search-form" action="search.html">
+                    <input type="text" class="form-input form-input-lg" placeholder="Enter city, neighborhood, or ZIP"
+                        data-i18n-placeholder="filter_location_placeholder" style="flex: 1; min-width: 200px;">
+                    <select class="form-input form-input-lg form-select" style="width: 140px;">
+                        <option>Any Price</option>
+                        <option>$500-1000</option>
+                        <option>$1000-2000</option>
+                        <option>$2000+</option>
+                    </select>
+                    <select class="form-input form-input-lg form-select" style="width: 120px;">
+                        <option>Any Beds</option>
+                        <option>Studio</option>
+                        <option>1+</option>
+                        <option>2+</option>
+                        <option>3+</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-lg" data-i18n="hero_btn">Search</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="flex justify-between items-center" style="margin-bottom: var(--space-10);">
+                <h2 data-i18n="rent_featured">Featured Rentals</h2><a href="search.html?type=rent"
+                    class="btn btn-outline" data-i18n="btn_view_all">View All</a>
+            </div>
+            <div class="rental-listings">
+                <article class="card property-card"><a href="property.html">
+                        <div class="card-image">
+                            <span class="card-badge">Featured</span>
+                            <button class="card-save" aria-label="Save property">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <button class="card-compare" aria-label="Compare property" data-id="rent-prop1">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <img src="assets/images/property-interior.png" alt="Apartment">
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="property-price">$2,450<span
+                                style="font-size:var(--text-sm);color:var(--gray-500)">/mo</span></div>
+                        <div class="property-address">123 Downtown Ave, New York, NY</div>
+                        <div class="property-specs"><span class="property-spec">2 bd</span><span class="property-spec">1
+                                ba</span><span class="property-spec">950 sqft</span></div>
+                    </div>
+                </article>
+                <article class="card property-card"><a href="property.html">
+                        <div class="card-image">
+                            <span class="card-badge" style="background:var(--success)">Available</span>
+                            <button class="card-save" aria-label="Save property">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <button class="card-compare" aria-label="Compare property" data-id="rent-prop2">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <img src="assets/images/property-1.png" alt="House">
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="property-price">$3,200<span
+                                style="font-size:var(--text-sm);color:var(--gray-500)">/mo</span></div>
+                        <div class="property-address">456 Oak Lane, Los Angeles, CA</div>
+                        <div class="property-specs"><span class="property-spec">3 bd</span><span class="property-spec">2
+                                ba</span><span class="property-spec">1,650 sqft</span></div>
+                    </div>
+                </article>
+                <article class="card property-card"><a href="property.html">
+                        <div class="card-image">
+                            <button class="card-save" aria-label="Save property">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <button class="card-compare" aria-label="Compare property" data-id="rent-prop3">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <img src="assets/images/property-2.png" alt="Condo">
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="property-price">$1,850<span
+                                style="font-size:var(--text-sm);color:var(--gray-500)">/mo</span></div>
+                        <div class="property-address">789 Skyline Tower, Miami, FL</div>
+                        <div class="property-specs"><span class="property-spec">1 <span
+                                    data-i18n="card_bd_short">bd</span></span><span class="property-spec">1
+                                <span data-i18n="card_ba_short">ba</span></span><span class="property-spec">720 <span
+                                    data-i18n="card_sqft">sqft</span></span></div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="assets/images/logo.png" alt="Logo">
+                    </a>
+                    <p data-i18n="footer_desc">Your trusted partner in finding the perfect home. We connect buyers,
+                        sellers, and renters with
+                        the best properties across the nation.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Twitter">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                                </path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="footer-title" data-i18n="footer_buy">Buy</h4>
+                    <nav class="footer-links">
+                        <a href="search.html" data-i18n="footer_browse">Browse Homes</a>
+                        <a href="search.html?type=house" data-i18n="footer_houses">Houses for Sale</a>
+                        <a href="search.html?type=condo" data-i18n="footer_condos">Condos for Sale</a>
+                        <a href="search.html?type=townhouse" data-i18n="footer_townhouses">Townhouses</a>
+                        <a href="search.html?type=land" data-i18n="footer_land">Land for Sale</a>
+                    </nav>
+                </div>
+
+                <div>
+                    <h4 class="footer-title" data-i18n="footer_sell">Sell</h4>
+                    <nav class="footer-links">
+                        <a href="sell.html" data-i18n="footer_sell_home">Sell Your Home</a>
+                        <a href="sell.html#value" data-i18n="footer_value">Home Value Estimator</a>
+                        <a href="agents.html" data-i18n="footer_find_agent">Find an Agent</a>
+                        <a href="blog.html" data-i18n="footer_selling_tips">Selling Tips</a>
+                        <a href="help.html" data-i18n="footer_seller_resources">Seller Resources</a>
+                    </nav>
+                </div>
+
+                <div>
+                    <h4 class="footer-title" data-i18n="footer_company">Company</h4>
+                    <nav class="footer-links">
+                        <a href="about.html" data-i18n="footer_about">About Us</a>
+                        <a href="contact.html" data-i18n="footer_contact">Contact</a>
+                        <a href="blog.html" data-i18n="footer_blog">Blog</a>
+                        <a href="help.html" data-i18n="footer_help">Help Center</a>
+                        <a href="#" data-i18n="footer_careers">Careers</a>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright" data-i18n="footer_rights">&copy; 2024 Real Estate. All rights reserved.
+                </p>
+                <div class="footer-legal">
+                    <a href="#" data-i18n="footer_privacy">Privacy Policy</a>
+                    <a href="#" data-i18n="footer_terms">Terms of Service</a>
+                    <a href="#" data-i18n="footer_cookies">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/201000000000" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/i18n.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof updateAuthUI === 'function') {
+                updateAuthUI();
+            }
+        });
+    </script>
+    <!-- Chatbot Widget -->
+    <link rel="stylesheet" href="css/chat-widget.css">
+    <script src="js/chat-widget.js"></script>
+</body>
+
+</html>
