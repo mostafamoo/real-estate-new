@@ -447,7 +447,7 @@
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="M21 21l-4.35-4.35"></path>
                     </svg>
-                    <input type="text" class="form-input" placeholder="City, ZIP, Address"
+                    <input type="text" class="form-input" id="filterLocation" placeholder="City, ZIP, Address"
                         data-i18n-placeholder="filter_location_placeholder">
                 </div>
             </div>
@@ -455,13 +455,14 @@
             <!-- Property Type -->
             <div class="filter-section">
                 <div class="filter-title" data-i18n="filter_type">Property Type</div>
-                <div class="filter-chips">
-                    <button class="filter-chip active" data-i18n="type_all">All</button>
-                    <button class="filter-chip" data-i18n="type_house">House</button>
-                    <button class="filter-chip" data-i18n="type_condo">Condo</button>
-                    <button class="filter-chip" data-i18n="type_townhouse">Townhouse</button>
-                    <button class="filter-chip" data-i18n="type_land">Land</button>
-                    <button class="filter-chip" data-i18n="type_multifamily">Multi-family</button>
+                <div class="filter-chips" id="filterType">
+                    <button class="filter-chip active" data-value="all" data-i18n="type_all">All</button>
+                    <button class="filter-chip" data-value="house" data-i18n="type_house">House</button>
+                    <button class="filter-chip" data-value="condo" data-i18n="type_condo">Condo</button>
+                    <button class="filter-chip" data-value="townhouse" data-i18n="type_townhouse">Townhouse</button>
+                    <button class="filter-chip" data-value="land" data-i18n="type_land">Land</button>
+                    <button class="filter-chip" data-value="multifamily"
+                        data-i18n="type_multifamily">Multi-family</button>
                 </div>
             </div>
 
@@ -470,16 +471,16 @@
                 <div class="filter-title" data-i18n="filter_price">Price Range</div>
                 <div class="filter-row">
                     <div class="form-group">
-                        <input type="text" class="form-input" placeholder="Min" value="$0"
+                        <input type="text" class="form-input" id="filterPriceMin" placeholder="Min" value="$0"
                             data-i18n-placeholder="price_min">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-input" placeholder="Max" value="$2,000,000"
+                        <input type="text" class="form-input" id="filterPriceMax" placeholder="Max" value="$2,000,000"
                             data-i18n-placeholder="price_max">
                     </div>
                 </div>
                 <div class="range-slider">
-                    <input type="range" min="0" max="2000000" value="2000000">
+                    <input type="range" id="filterPriceRange" min="0" max="2000000" value="2000000">
                     <div class="range-values">
                         <span>$0</span>
                         <span>$2M+</span>
@@ -490,25 +491,25 @@
             <!-- Bedrooms -->
             <div class="filter-section">
                 <div class="filter-title" data-i18n="filter_beds">Bedrooms</div>
-                <div class="filter-chips">
-                    <button class="filter-chip active" data-i18n="filter_any">Any</button>
-                    <button class="filter-chip">1+</button>
-                    <button class="filter-chip">2+</button>
-                    <button class="filter-chip">3+</button>
-                    <button class="filter-chip">4+</button>
-                    <button class="filter-chip">5+</button>
+                <div class="filter-chips" id="filterBeds">
+                    <button class="filter-chip active" data-value="any" data-i18n="filter_any">Any</button>
+                    <button class="filter-chip" data-value="1">1+</button>
+                    <button class="filter-chip" data-value="2">2+</button>
+                    <button class="filter-chip" data-value="3">3+</button>
+                    <button class="filter-chip" data-value="4">4+</button>
+                    <button class="filter-chip" data-value="5">5+</button>
                 </div>
             </div>
 
             <!-- Bathrooms -->
             <div class="filter-section">
                 <div class="filter-title" data-i18n="filter_baths">Bathrooms</div>
-                <div class="filter-chips">
-                    <button class="filter-chip active" data-i18n="filter_any">Any</button>
-                    <button class="filter-chip">1+</button>
-                    <button class="filter-chip">2+</button>
-                    <button class="filter-chip">3+</button>
-                    <button class="filter-chip">4+</button>
+                <div class="filter-chips" id="filterBaths">
+                    <button class="filter-chip active" data-value="any" data-i18n="filter_any">Any</button>
+                    <button class="filter-chip" data-value="1">1+</button>
+                    <button class="filter-chip" data-value="2">2+</button>
+                    <button class="filter-chip" data-value="3">3+</button>
+                    <button class="filter-chip" data-value="4">4+</button>
                 </div>
             </div>
 
@@ -517,10 +518,12 @@
                 <div class="filter-title" data-i18n="filter_sqft">Square Feet</div>
                 <div class="filter-row">
                     <div class="form-group">
-                        <input type="text" class="form-input" placeholder="Min sqft" data-i18n-placeholder="sqft_min">
+                        <input type="number" class="form-input" id="filterSqftMin" placeholder="Min sqft"
+                            data-i18n-placeholder="sqft_min">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-input" placeholder="Max sqft" data-i18n-placeholder="sqft_max">
+                        <input type="number" class="form-input" id="filterSqftMax" placeholder="Max sqft"
+                            data-i18n-placeholder="sqft_max">
                     </div>
                 </div>
             </div>
@@ -956,6 +959,7 @@
     <script src="js/auth.js"></script>
     <script src="js/main.js"></script>
     <script src="js/i18n.js"></script>
+    <script src="js/search.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             if (typeof updateAuthUI === 'function') {

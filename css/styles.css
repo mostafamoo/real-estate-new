@@ -1109,6 +1109,10 @@ h6 {
     color: var(--success);
 }
 
+.agent-hero h1 {
+    color: var(--white) !important;
+}
+
 .badge-warning {
     background: rgba(243, 156, 18, 0.1);
     color: var(--warning);
