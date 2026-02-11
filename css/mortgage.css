@@ -14,10 +14,12 @@
     justify-content: flex-start;
     /* Align content to the start (right for RTL) */
     text-align: right;
-    direction: rtl;
     /* Ensure RTL layout */
+    direction: rtl;
     color: var(--white);
     padding: 0 var(--space-8);
+    overflow: hidden;
+    /* For absolute positioning */
 }
 
 .mortgage-hero::before {
@@ -27,7 +29,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 100%);
+    /* Gradient from right (dark) to left (transparent) to make text readable */
+    background: linear-gradient(270deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0) 100%);
     z-index: 1;
 }
 
@@ -35,27 +38,52 @@
     position: relative;
     z-index: 2;
     max-width: 600px;
+    margin-right: var(--space-8);
+    /* Push slightly from right edge */
+    text-align: right;
+}
+
+/* Logos */
+.mortgage-logo-gold {
+    position: absolute;
+    top: var(--space-6);
+    right: var(--space-8);
+    height: 80px;
+    z-index: 3;
+}
+
+.mortgage-logo-maroon {
+    position: absolute;
+    bottom: var(--space-6);
+    left: var(--space-8);
+    height: 70px;
+    /* Slight adjustment */
+    z-index: 3;
+    border-radius: var(--radius-md);
+    /* Often these cards have radius */
 }
 
 .mortgage-hero-title {
-    font-size: var(--text-4xl);
+    font-size: 3.5rem;
+    /* Larger font */
     font-weight: var(--font-bold);
     margin-bottom: var(--space-6);
-    line-height: 1.3;
+    line-height: 1.2;
 }
 
 .mortgage-hero-highlight {
-    color: var(--primary);
-    /* Using the new #C62828 */
+    color: #FFD700;
+    /* Gold color for highlight */
 }
 
 .mortgage-hero-btn {
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
-    background-color: var(--primary);
+    background-color: #B71C1C;
+    /* Dark Red */
     color: var(--white);
-    padding: var(--space-3) var(--space-6);
+    padding: 12px 32px;
     border-radius: var(--radius-full);
     font-weight: var(--font-bold);
     text-decoration: none;
@@ -66,7 +94,8 @@
 }
 
 .mortgage-hero-btn:hover {
-    background-color: var(--primary-dark);
+    background-color: #C62828;
+    /* Slightly lighter on hover */
 }
 
 /* Features Section */
@@ -147,4 +176,9 @@
         grid-template-columns: 1fr;
         padding: 0 var(--space-4);
     }
+}
+
+/* Hide global components for this specific landing page look if needed */
+body.mortgage-page .whatsapp-float {
+    display: none !important;
 }
