@@ -7,12 +7,12 @@
     height: 600px;
     background-image: url('../assets/images/headerBg.png');
     background-size: cover;
-    background-position: top center;
+    background-position: center;
+    /* Revert to center for normal view */
     background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    /* Align content to the start (right for RTL) */
     /* Align content to the start (right for RTL) */
     text-align: right;
     /* Ensure RTL layout */
@@ -40,8 +40,6 @@
     position: relative;
     z-index: 2;
     max-width: 600px;
-    margin-right: var(--space-8);
-    /* Push slightly from right edge */
     margin-right: 0;
     text-align: right;
     margin-top: var(--space-12);
@@ -89,7 +87,7 @@
 }
 
 .mortgage-hero-highlight {
-    color: #FFD700;
+    color: #FFD700 !important;
     /* Gold color for highlight */
 }
 
@@ -148,7 +146,8 @@
     direction: rtl;
     text-align: right;
     position: relative;
-    /* Removed negative margin */
+    margin-bottom: 100px;
+    /* Separates from Calculator */
 }
 
 /* Alternative: Wave Separator (handled in HTML, but here is the utility) */
