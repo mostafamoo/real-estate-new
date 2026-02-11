@@ -1,14 +1,14 @@
 /* ======================================
    REAL ESTATE WEBSITE - MAIN STYLESHEET
-   Brand Colors: Red #E63946, Dark #1A1A2E
+   Brand Colors: Red #C62828, Dark #1A1A2E
    ====================================== */
 
 /* ========== CSS VARIABLES ========== */
 :root {
     /* Brand Colors */
-    --primary: #E63946;
-    --primary-dark: #C62828;
-    --primary-light: #FF6B6B;
+    --primary: #C62828;
+    --primary-dark: #B71C1C;
+    --primary-light: #EF5350;
     --secondary: #1A1A2E;
     --secondary-light: #2D3142;
 
