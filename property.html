@@ -477,6 +477,54 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Gallery Navigation Arrows */
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1002;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            color: var(--primary);
+        }
+
+        .gallery-nav:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .gallery-nav.prev {
+            left: 20px;
+        }
+
+        .gallery-nav.next {
+            right: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-nav {
+                width: 40px;
+                height: 40px;
+            }
+
+            .gallery-nav.prev {
+                left: 10px;
+            }
+
+            .gallery-nav.next {
+                right: 10px;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -893,10 +941,10 @@
                     <!-- Agent Card -->
                     <div class="agent-card">
                         <div class="agent-card-header">
-                            <div class="agent-avatar">JS</div>
+                            <div class="agent-avatar" style="background: #2c3e50;">EM</div>
                             <div class="agent-info">
-                                <h4>John Smith</h4>
-                                <div class="agent-title" data-i18n="agent_premier">Premier Agent</div>
+                                <h4>Emaar Misr</h4>
+                                <div class="agent-title" data-i18n="agent_premier">Premier Developer</div>
                                 <div class="agent-rating">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                                         <polygon
@@ -1120,7 +1168,20 @@
                 <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
         </button>
+
+        <button class="gallery-nav prev" onclick="prevImage(event)" aria-label="Previous image">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+
         <img src="" alt="Gallery image" id="galleryImage">
+
+        <button class="gallery-nav next" onclick="nextImage(event)" aria-label="Next image">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
     </div>
 
     <!-- Virtual Tour Modal -->
@@ -1171,12 +1232,31 @@
             'assets/images/hero-bg.png'
         ];
 
+        let currentImageIndex = 0;
+
         function openGallery(index) {
+            currentImageIndex = index;
+            updateGalleryImage();
             const modal = document.getElementById('galleryModal');
-            const img = document.getElementById('galleryImage');
-            img.src = images[index];
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+        }
+
+        function updateGalleryImage() {
+            const img = document.getElementById('galleryImage');
+            img.src = images[currentImageIndex];
+        }
+
+        function nextImage(e) {
+            if (e) e.stopPropagation();
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            updateGalleryImage();
+        }
+
+        function prevImage(e) {
+            if (e) e.stopPropagation();
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            updateGalleryImage();
         }
 
         function closeGallery() {
@@ -1190,7 +1270,12 @@
         });
 
         document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') closeGallery();
+            const modal = document.getElementById('galleryModal');
+            if (modal.classList.contains('active')) {
+                if (e.key === 'Escape') closeGallery();
+                if (e.key === 'ArrowRight') nextImage();
+                if (e.key === 'ArrowLeft') prevImage();
+            }
         });
 
         // Virtual Tour Functions
