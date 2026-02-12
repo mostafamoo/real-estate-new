@@ -312,6 +312,7 @@
 
             <div class="tabs-header">
                 <div class="tab-btn active" onclick="switchTab('news')" data-i18n="media_tab_news">News & Updates</div>
+                <div class="tab-btn" onclick="switchTab('blog')" data-i18n="media_tab_blog">Blog</div>
                 <div class="tab-btn" onclick="switchTab('downloads')" data-i18n="media_tab_downloads">Downloads & Forms
                 </div>
                 <div class="tab-btn" onclick="switchTab('videos')" data-i18n="media_tab_videos">Video Gallery</div>
@@ -351,6 +352,46 @@
                             </h3>
                             <p class="media-excerpt" data-i18n="media_news_2_excerpt">Launching the new digital platform
                                 for all real estate services in Egypt.</p>
+                            <a href="#" class="btn btn-primary btn-sm" data-i18n="media_read_more">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Tab -->
+            <div id="blog" class="tab-content">
+                <div class="grid grid-cols-3" style="gap: var(--space-6);">
+                    <div class="media-card">
+                        <img src="https://images.unsplash.com/photo-1512453979798-5ea904ac6605?w=600&q=80" alt="Blog"
+                            class="media-img">
+                        <div class="media-body">
+                            <div class="media-date">Nov 10, 2025</div>
+                            <h3 class="media-title" data-i18n="blog_1_title">Top 10 Investment Areas in Cairo</h3>
+                            <p class="media-excerpt" data-i18n="blog_1_excerpt">Discover the hottest neighborhoods for
+                                real
+                                estate investment this year, from New Capital to Zayed City.</p>
+                            <a href="#" class="btn btn-primary btn-sm" data-i18n="media_read_more">Read More</a>
+                        </div>
+                    </div>
+                    <div class="media-card">
+                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80" alt="Blog"
+                            class="media-img">
+                        <div class="media-body">
+                            <div class="media-date">Nov 05, 2025</div>
+                            <h3 class="media-title" data-i18n="blog_2_title">Guide to Mortgage Options</h3>
+                            <p class="media-excerpt" data-i18n="blog_2_excerpt">Everything you need to know about
+                                financing your home purchase through Egyptian banks.</p>
+                            <a href="#" class="btn btn-primary btn-sm" data-i18n="media_read_more">Read More</a>
+                        </div>
+                    </div>
+                    <div class="media-card">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80" alt="Blog"
+                            class="media-img">
+                        <div class="media-body">
+                            <div class="media-date">Oct 28, 2025</div>
+                            <h3 class="media-title" data-i18n="blog_3_title">Smart Home Trends 2026</h3>
+                            <p class="media-excerpt" data-i18n="blog_3_excerpt">The latest technology integrations that
+                                are becoming standard in new Egyptian developments.</p>
                             <a href="#" class="btn btn-primary btn-sm" data-i18n="media_read_more">Read More</a>
                         </div>
                     </div>
@@ -442,6 +483,34 @@
                 ComparisonManager.updateUI();
             }
         });
+
+        function switchTab(tabId) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show the selected tab content
+            const selectedTab = document.getElementById(tabId);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+            }
+            
+            // Add active class to the clicked button
+            // We search for the button that has the matching onclick attribute
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                const onclickAttr = btn.getAttribute('onclick');
+                if (onclickAttr && onclickAttr.includes(`'${tabId}'`)) {
+                    btn.classList.add('active');
+                }
+            });
+        }
     </script>
 
     <!-- Floating WhatsApp Button -->
