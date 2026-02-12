@@ -874,18 +874,16 @@
                         </div>
                     </div>
 
-                    <!-- Location -->
+                    <!-- QR Code Section -->
                     <div class="property-section">
-                        <h2 class="property-section-title" data-i18n="section_location">Location</h2>
-                        <div class="map-embed">
-                            <div style="text-align: center;">
-                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="1">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                    <circle cx="12" cy="10" r="3"></circle>
-                                </svg>
-                                <p style="margin-top: var(--space-2);">1234 Oak Street, Beverly Hills, CA 90210</p>
-                            </div>
+                        <h2 class="property-section-title" data-i18n="section_qr_code">QR Code</h2>
+                        <div class="qr-code-container"
+                            style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-6); background: var(--off-white); border-radius: var(--radius-lg); text-align: center;">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://realEstate.eg/property/1234"
+                                alt="Property QR Code"
+                                style="width: 150px; height: 150px; margin-bottom: var(--space-4); mix-blend-mode: multiply;">
+                            <p style="color: var(--gray-600); max-width: 300px; margin: 0;">Scan to view details on
+                                mobile app</p>
                         </div>
                     </div>
                 </div>
