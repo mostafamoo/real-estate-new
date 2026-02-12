@@ -46,8 +46,50 @@
 
         .rental-listings {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: var(--space-6);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--space-2);
+            margin-top: var(--space-10);
+        }
+
+        .pagination a,
+        .pagination span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            height: 40px;
+            padding: 0 var(--space-3);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--gray-300);
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+        }
+
+        .pagination a:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(200, 50, 50, 0.05);
+        }
+
+        .pagination .active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        .pagination .disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
         }
 
         @media (max-width: 768px) {
@@ -229,6 +271,7 @@
                     class="btn btn-outline" data-i18n="btn_view_all">View All</a>
             </div>
             <div class="rental-listings">
+                <!-- Rental Card 1 -->
                 <article class="card property-card"><a href="property.html">
                         <div class="card-image">
                             <span class="card-badge">Featured</span>
@@ -253,7 +296,14 @@
                         <div class="property-specs"><span class="property-spec">2 bd</span><span class="property-spec">1
                                 ba</span><span class="property-spec">950 sqft</span></div>
                     </div>
+                    <div class="card-actions">
+                        <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp"><i
+                                class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a href="tel:+201000000000" class="btn btn-call"><i class="fas fa-phone"></i> Call</a>
+                    </div>
                 </article>
+
+                <!-- Rental Card 2 -->
                 <article class="card property-card"><a href="property.html">
                         <div class="card-image">
                             <span class="card-badge" style="background:var(--success)">Available</span>
@@ -278,7 +328,14 @@
                         <div class="property-specs"><span class="property-spec">3 bd</span><span class="property-spec">2
                                 ba</span><span class="property-spec">1,650 sqft</span></div>
                     </div>
+                    <div class="card-actions">
+                        <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp"><i
+                                class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a href="tel:+201000000000" class="btn btn-call"><i class="fas fa-phone"></i> Call</a>
+                    </div>
                 </article>
+
+                <!-- Rental Card 3 -->
                 <article class="card property-card"><a href="property.html">
                         <div class="card-image">
                             <button class="card-save" aria-label="Save property">
@@ -299,13 +356,123 @@
                         <div class="property-price">$1,850<span
                                 style="font-size:var(--text-sm);color:var(--gray-500)">/mo</span></div>
                         <div class="property-address">789 Skyline Tower, Miami, FL</div>
-                        <div class="property-specs"><span class="property-spec">1 <span
-                                    data-i18n="card_bd_short">bd</span></span><span class="property-spec">1
-                                <span data-i18n="card_ba_short">ba</span></span><span class="property-spec">720 <span
-                                    data-i18n="card_sqft">sqft</span></span></div>
+                        <div class="property-specs"><span class="property-spec">1 bd</span><span class="property-spec">1
+                                ba</span><span class="property-spec">720 sqft</span></div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp"><i
+                                class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a href="tel:+201000000000" class="btn btn-call"><i class="fas fa-phone"></i> Call</a>
+                    </div>
+                </article>
+
+                <!-- Rental Card 4 -->
+                <article class="card property-card"><a href="property.html">
+                        <div class="card-image">
+                            <span class="card-badge" style="background:var(--warning)">New</span>
+                            <button class="card-save" aria-label="Save property">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <button class="card-compare" aria-label="Compare property" data-id="rent-prop4">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <img src="assets/images/hero-bg.png" alt="Villa">
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="property-price">$4,500<span
+                                style="font-size:var(--text-sm);color:var(--gray-500)">/mo</span></div>
+                        <div class="property-address">321 Palm Beach Drive, Palm Beach, FL</div>
+                        <div class="property-specs"><span class="property-spec">4 bd</span><span class="property-spec">3
+                                ba</span><span class="property-spec">2,800 sqft</span></div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp"><i
+                                class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a href="tel:+201000000000" class="btn btn-call"><i class="fas fa-phone"></i> Call</a>
+                    </div>
+                </article>
+
+                <!-- Rental Card 5 -->
+                <article class="card property-card"><a href="property.html">
+                        <div class="card-image">
+                            <button class="card-save" aria-label="Save property">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <button class="card-compare" aria-label="Compare property" data-id="rent-prop5">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <img src="assets/images/property-interior.png" alt="Studio Apartment">
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="property-price">$1,200<span
+                                style="font-size:var(--text-sm);color:var(--gray-500)">/mo</span></div>
+                        <div class="property-address">55 Riverside Blvd, Chicago, IL</div>
+                        <div class="property-specs"><span class="property-spec">Studio</span><span
+                                class="property-spec">1 ba</span><span class="property-spec">480 sqft</span></div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp"><i
+                                class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a href="tel:+201000000000" class="btn btn-call"><i class="fas fa-phone"></i> Call</a>
+                    </div>
+                </article>
+
+                <!-- Rental Card 6 -->
+                <article class="card property-card"><a href="property.html">
+                        <div class="card-image">
+                            <span class="card-badge" style="background:var(--success)">Open House</span>
+                            <button class="card-save" aria-label="Save property">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <button class="card-compare" aria-label="Compare property" data-id="rent-prop6">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            <img src="assets/images/property-1.png" alt="Townhouse">
+                        </div>
+                    </a>
+                    <div class="card-body">
+                        <div class="property-price">$2,750<span
+                                style="font-size:var(--text-sm);color:var(--gray-500)">/mo</span></div>
+                        <div class="property-address">99 Harbor View, San Francisco, CA</div>
+                        <div class="property-specs"><span class="property-spec">3 bd</span><span class="property-spec">2
+                                ba</span><span class="property-spec">1,400 sqft</span></div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp"><i
+                                class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a href="tel:+201000000000" class="btn btn-call"><i class="fas fa-phone"></i> Call</a>
                     </div>
                 </article>
             </div>
+
+            <!-- Pagination -->
+            <nav class="pagination" aria-label="Pagination">
+                <a href="#" class="disabled"><i class="fas fa-chevron-left"></i></a>
+                <span class="active">1</span>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <span>...</span>
+                <a href="#">12</a>
+                <a href="#"><i class="fas fa-chevron-right"></i></a>
+            </nav>
         </div>
     </section>
 

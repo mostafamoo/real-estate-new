@@ -248,23 +248,73 @@
             position: relative;
         }
 
+        .properties-carousel-viewport {
+            overflow: hidden;
+        }
+
         .properties-track {
             display: flex;
             gap: var(--space-6);
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
             padding: var(--space-4) 0;
-        }
-
-        .properties-track::-webkit-scrollbar {
-            display: none;
+            transition: transform 0.4s ease;
         }
 
         .properties-track .property-card {
-            flex: 0 0 320px;
-            scroll-snap-align: start;
+            flex: 0 0 calc((100% - var(--space-6) * 2) / 3);
+            min-width: 0;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.2s ease;
+            color: var(--gray-700);
+            font-size: 18px;
+        }
+
+        .carousel-arrow:hover {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-arrow:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            background: var(--gray-100);
+        }
+
+        .carousel-arrow:disabled:hover {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            border-color: var(--gray-300);
+        }
+
+        .carousel-arrow-prev {
+            left: -22px;
+        }
+
+        .carousel-arrow-next {
+            right: -22px;
+        }
+
+        @media (max-width: 1024px) {
+            .properties-track .property-card {
+                flex: 0 0 calc((100% - var(--space-6)) / 2);
+            }
         }
 
         @media (max-width: 768px) {
@@ -273,7 +323,15 @@
             }
 
             .properties-track .property-card {
-                flex: 0 0 280px;
+                flex: 0 0 100%;
+            }
+
+            .carousel-arrow-prev {
+                left: -10px;
+            }
+
+            .carousel-arrow-next {
+                right: -10px;
             }
         }
     </style>
@@ -491,253 +549,347 @@
             </div>
 
             <div class="properties-carousel">
-                <div class="properties-track" data-carousel-track>
-                    <!-- Property Card 1 -->
-                    <article class="card property-card" data-carousel-item>
-                        <div class="card-image">
-                            <span class="card-badge">Featured</span>
-                            <button class="card-save" aria-label="Save property">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path
-                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                                    </path>
-                                </svg>
-                            </button>
-                            <button class="card-compare" aria-label="Compare property" data-id="prop1">
-                                <i class="fas fa-exchange-alt"></i>
-                            </button>
-                            <img src="assets/images/property-1.png" alt="Beautiful suburban family home">
-                        </div>
-                        <div class="card-body">
-                            <div class="property-price">$485,000</div>
-                            <div class="property-address">1234 Oak Street, Beverly Hills, CA 90210</div>
-                            <div class="property-specs">
-                                <span class="property-spec">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                <button class="carousel-arrow carousel-arrow-prev" id="propCarouselPrev" aria-label="Previous">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="properties-carousel-viewport">
+                    <div class="properties-track" id="propCarouselTrack">
+                        <!-- Property Card 1 -->
+                        <article class="card property-card">
+                            <div class="card-image">
+                                <span class="card-badge">Featured</span>
+                                <button class="card-save" aria-label="Save property">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2">
-                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        <path
+                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                        </path>
                                     </svg>
-                                    4 <span data-i18n="card_bed">Beds</span>
-                                </span>
-                                <span class="property-spec">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <path d="M9 6l1-1h4l1 1"></path>
-                                        <path d="M3 12h18v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6z"></path>
-                                        <path d="M3 12V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"></path>
-                                    </svg>
-                                    3 <span data-i18n="card_bath">Baths</span>
-                                </span>
-                                <span class="property-spec">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                    </svg>
-                                    2,450 <span data-i18n="card_sqft">sqft</span>
-                                </span>
+                                </button>
+                                <button class="card-compare" aria-label="Compare property" data-id="prop1">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </button>
+                                <img src="assets/images/property-1.png" alt="Beautiful suburban family home">
                             </div>
-                        </div>
-                    </article>
+                            <div class="card-body">
+                                <div class="property-price">$485,000</div>
+                                <div class="property-address">1234 Oak Street, Beverly Hills, CA 90210</div>
+                                <div class="property-specs">
+                                    <span class="property-spec">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        </svg>
+                                        4 <span data-i18n="card_bed">Beds</span>
+                                    </span>
+                                    <span class="property-spec">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M9 6l1-1h4l1 1"></path>
+                                            <path d="M3 12h18v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6z"></path>
+                                            <path d="M3 12V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"></path>
+                                        </svg>
+                                        3 <span data-i18n="card_bath">Baths</span>
+                                    </span>
+                                    <span class="property-spec">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        </svg>
+                                        2,450 <span data-i18n="card_sqft">sqft</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </a>
+                                <a href="tel:+201000000000" class="btn btn-call">
+                                    <i class="fas fa-phone"></i> Call
+                                </a>
+                            </div>
+                        </article>
 
-                    <!-- Property Card 2 -->
-                    <article class="card property-card" data-carousel-item>
-                        <div class="card-image">
-                            <span class="card-badge">New</span>
-                            <button class="card-save" aria-label="Save property">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path
-                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                                    </path>
-                                </svg>
-                            </button>
-                            <button class="card-compare" aria-label="Compare property" data-id="prop2">
-                                <i class="fas fa-exchange-alt"></i>
-                            </button>
-                            <img src="assets/images/property-2.png" alt="Modern downtown condominium">
-                        </div>
-                        <div class="card-body">
-                            <div class="property-price">$725,000</div>
-                            <div class="property-address">567 Skyline Tower, Manhattan, NY 10001</div>
-                            <div class="property-specs">
-                                <span class="property-spec">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        <!-- Property Card 2 -->
+                        <article class="card property-card">
+                            <div class="card-image">
+                                <span class="card-badge">New</span>
+                                <button class="card-save" aria-label="Save property">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2">
-                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        <path
+                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                        </path>
                                     </svg>
-                                    2 <span data-i18n="card_bed">Beds</span>
-                                </span>
-                                <span class="property-spec">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <path d="M9 6l1-1h4l1 1"></path>
-                                        <path d="M3 12h18v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6z"></path>
-                                        <path d="M3 12V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"></path>
-                                    </svg>
-                                    2 <span data-i18n="card_bath">Baths</span>
-                                </span>
-                                <span class="property-spec">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                    </svg>
-                                    1,200 <span data-i18n="card_sqft">sqft</span>
-                                </span>
+                                </button>
+                                <button class="card-compare" aria-label="Compare property" data-id="prop2">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </button>
+                                <img src="assets/images/property-2.png" alt="Modern downtown condominium">
                             </div>
-                        </div>
-                    </article>
+                            <div class="card-body">
+                                <div class="property-price">$725,000</div>
+                                <div class="property-address">567 Skyline Tower, Manhattan, NY 10001</div>
+                                <div class="property-specs">
+                                    <span class="property-spec">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        </svg>
+                                        2 <span data-i18n="card_bed">Beds</span>
+                                    </span>
+                                    <span class="property-spec">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M9 6l1-1h4l1 1"></path>
+                                            <path d="M3 12h18v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6z"></path>
+                                            <path d="M3 12V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"></path>
+                                        </svg>
+                                        2 <span data-i18n="card_bath">Baths</span>
+                                    </span>
+                                    <span class="property-spec">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        </svg>
+                                        1,200 <span data-i18n="card_sqft">sqft</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </a>
+                                <a href="tel:+201000000000" class="btn btn-call">
+                                    <i class="fas fa-phone"></i> Call
+                                </a>
+                            </div>
+                        </article>
 
-                    <!-- Property Card 3 -->
-                    <article class="card property-card" data-carousel-item>
-                        <div class="card-image">
-                            <button class="card-save" aria-label="Save property">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path
-                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                                    </path>
-                                </svg>
-                            </button>
-                            <button class="card-compare" aria-label="Compare property" data-id="prop3">
-                                <i class="fas fa-exchange-alt"></i>
-                            </button>
-                            <img src="assets/images/property-3.png" alt="Cozy cottage style house">
-                        </div>
-                        <div class="card-body">
-                            <div class="property-price">$375,000</div>
-                            <div class="property-address">89 Garden Lane, Portland, OR 97205</div>
-                            <div class="property-specs">
-                                <span class="property-spec">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        <!-- Property Card 3 -->
+                        <article class="card property-card">
+                            <div class="card-image">
+                                <button class="card-save" aria-label="Save property">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2">
-                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        <path
+                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                        </path>
                                     </svg>
-                                    3 <span data-i18n="card_bed">Beds</span>
-                                </span>
-                                <span class="property-spec">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <path d="M9 6l1-1h4l1 1"></path>
-                                        <path d="M3 12h18v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6z"></path>
-                                        <path d="M3 12V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"></path>
-                                    </svg>
-                                    2 <span data-i18n="card_bath">Baths</span>
-                                </span>
-                                <span class="property-spec">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                    </svg>
-                                    1,850 <span data-i18n="card_sqft">sqft</span>
-                                </span>
+                                </button>
+                                <button class="card-compare" aria-label="Compare property" data-id="prop3">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </button>
+                                <img src="assets/images/property-3.png" alt="Cozy cottage style house">
                             </div>
-                        </div>
-                    </article>
+                            <div class="card-body">
+                                <div class="property-price">$375,000</div>
+                                <div class="property-address">89 Garden Lane, Portland, OR 97205</div>
+                                <div class="property-specs">
+                                    <span class="property-spec">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        </svg>
+                                        3 <span data-i18n="card_bed">Beds</span>
+                                    </span>
+                                    <span class="property-spec">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M9 6l1-1h4l1 1"></path>
+                                            <path d="M3 12h18v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6z"></path>
+                                            <path d="M3 12V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"></path>
+                                        </svg>
+                                        2 <span data-i18n="card_bath">Baths</span>
+                                    </span>
+                                    <span class="property-spec">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        </svg>
+                                        1,850 <span data-i18n="card_sqft">sqft</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </a>
+                                <a href="tel:+201000000000" class="btn btn-call">
+                                    <i class="fas fa-phone"></i> Call
+                                </a>
+                            </div>
+                        </article>
 
-                    <!-- Property Card 4 -->
-                    <article class="card property-card" data-carousel-item>
-                        <div class="card-image">
-                            <span class="card-badge" style="background: var(--success);">Open House</span>
-                            <button class="card-save" aria-label="Save property">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path
-                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                                    </path>
-                                </svg>
-                            </button>
-                            <button class="card-compare" aria-label="Compare property" data-id="prop4">
-                                <i class="fas fa-exchange-alt"></i>
-                            </button>
-                            <img src="assets/images/property-interior.png" alt="Modern luxury apartment">
-                        </div>
-                        <div class="card-body">
-                            <div class="property-price">$1,250,000</div>
-                            <div class="property-address">1001 Luxury Ave, Miami Beach, FL 33139</div>
-                            <div class="property-specs">
-                                <span class="property-spec">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        <!-- Property Card 4 -->
+                        <article class="card property-card">
+                            <div class="card-image">
+                                <span class="card-badge" style="background: var(--success);">Open House</span>
+                                <button class="card-save" aria-label="Save property">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2">
-                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        <path
+                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                        </path>
                                     </svg>
-                                    5 <span data-i18n="card_bed">Beds</span>
-                                </span>
-                                <span class="property-spec">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <path d="M9 6l1-1h4l1 1"></path>
-                                        <path d="M3 12h18v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6z"></path>
-                                        <path d="M3 12V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"></path>
-                                    </svg>
-                                    4 <span data-i18n="card_bath">Baths</span>
-                                </span>
-                                <span class="property-spec">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                    </svg>
-                                    3,800 <span data-i18n="card_sqft">sqft</span>
-                                </span>
+                                </button>
+                                <button class="card-compare" aria-label="Compare property" data-id="prop4">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </button>
+                                <img src="assets/images/property-interior.png" alt="Modern luxury apartment">
                             </div>
-                        </div>
-                    </article>
+                            <div class="card-body">
+                                <div class="property-price">$1,250,000</div>
+                                <div class="property-address">1001 Luxury Ave, Miami Beach, FL 33139</div>
+                                <div class="property-specs">
+                                    <span class="property-spec">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        </svg>
+                                        5 <span data-i18n="card_bed">Beds</span>
+                                    </span>
+                                    <span class="property-spec">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M9 6l1-1h4l1 1"></path>
+                                            <path d="M3 12h18v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6z"></path>
+                                            <path d="M3 12V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"></path>
+                                        </svg>
+                                        4 <span data-i18n="card_bath">Baths</span>
+                                    </span>
+                                    <span class="property-spec">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        </svg>
+                                        3,800 <span data-i18n="card_sqft">sqft</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </a>
+                                <a href="tel:+201000000000" class="btn btn-call">
+                                    <i class="fas fa-phone"></i> Call
+                                </a>
+                            </div>
+                        </article>
 
-                    <!-- Property Card 5 -->
-                    <article class="card property-card" data-carousel-item>
-                        <div class="card-image">
-                            <button class="card-save" aria-label="Save property">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path
-                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                                    </path>
-                                </svg>
-                            </button>
-                            <button class="card-compare" aria-label="Compare property" data-id="prop5">
-                                <i class="fas fa-exchange-alt"></i>
-                            </button>
-                            <img src="assets/images/hero-bg.png" alt="Modern luxury home">
-                        </div>
-                        <div class="card-body">
-                            <div class="property-price">$895,000</div>
-                            <div class="property-address">456 Sunset Blvd, Los Angeles, CA 90028</div>
-                            <div class="property-specs">
-                                <span class="property-spec">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        <!-- Property Card 5 -->
+                        <article class="card property-card">
+                            <div class="card-image">
+                                <button class="card-save" aria-label="Save property">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2">
-                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        <path
+                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                        </path>
                                     </svg>
-                                    4 <span data-i18n="card_bed">Beds</span>
-                                </span>
-                                <span class="property-spec">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <path d="M9 6l1-1h4l1 1"></path>
-                                        <path d="M3 12h18v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6z"></path>
-                                        <path d="M3 12V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"></path>
-                                    </svg>
-                                    3 <span data-i18n="card_bath">Baths</span>
-                                </span>
-                                <span class="property-spec">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2">
-                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                    </svg>
-                                    2,950 <span data-i18n="card_sqft">sqft</span>
-                                </span>
+                                </button>
+                                <button class="card-compare" aria-label="Compare property" data-id="prop5">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </button>
+                                <img src="assets/images/hero-bg.png" alt="Modern luxury home">
                             </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </div>
+                            <div class="card-body">
+                                <div class="property-price">$895,000</div>
+                                <div class="property-address">456 Sunset Blvd, Los Angeles, CA 90028</div>
+                                <div class="property-specs">
+                                    <span class="property-spec">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                        </svg>
+                                        4 <span data-i18n="card_bed">Beds</span>
+                                    </span>
+                                    <span class="property-spec">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <path d="M9 6l1-1h4l1 1"></path>
+                                            <path d="M3 12h18v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6z"></path>
+                                            <path d="M3 12V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"></path>
+                                        </svg>
+                                        3 <span data-i18n="card_bath">Baths</span>
+                                    </span>
+                                    <span class="property-spec">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                        </svg>
+                                        2,950 <span data-i18n="card_sqft">sqft</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-actions">
+                                <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </a>
+                                <a href="tel:+201000000000" class="btn btn-call">
+                                    <i class="fas fa-phone"></i> Call
+                                </a>
+                            </div>
+                        </article>
+                    </div><!-- /properties-track -->
+                </div><!-- /properties-carousel-viewport -->
+                <button class="carousel-arrow carousel-arrow-next" id="propCarouselNext" aria-label="Next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div><!-- /properties-carousel -->
+        </div><!-- /container -->
     </section>
+
+    <script>
+        (function () {
+            const track = document.getElementById('propCarouselTrack');
+            const prevBtn = document.getElementById('propCarouselPrev');
+            const nextBtn = document.getElementById('propCarouselNext');
+            if (!track || !prevBtn || !nextBtn) return;
+
+            const cards = track.querySelectorAll('.property-card');
+            let currentIndex = 0;
+
+            function getVisibleCount() {
+                const w = window.innerWidth;
+                if (w <= 768) return 1;
+                if (w <= 1024) return 2;
+                return 3;
+            }
+
+            function update() {
+                const visibleCount = getVisibleCount();
+                const maxIndex = Math.max(0, cards.length - visibleCount);
+                if (currentIndex > maxIndex) currentIndex = maxIndex;
+
+                const gap = parseInt(getComputedStyle(track).gap) || 24;
+                const cardWidth = cards[0].offsetWidth;
+                const offset = currentIndex * (cardWidth + gap);
+                track.style.transform = 'translateX(-' + offset + 'px)';
+
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex >= maxIndex;
+            }
+
+            prevBtn.addEventListener('click', function () {
+                if (currentIndex > 0) { currentIndex--; update(); }
+            });
+
+            nextBtn.addEventListener('click', function () {
+                const visibleCount = getVisibleCount();
+                const maxIndex = Math.max(0, cards.length - visibleCount);
+                if (currentIndex < maxIndex) { currentIndex++; update(); }
+            });
+
+            window.addEventListener('resize', update);
+            update();
+        })();
+    </script>
 
     <!-- Features Section -->
     <section class="section bg-gray">

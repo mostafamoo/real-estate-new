@@ -243,6 +243,14 @@ function initSearch() {
                             <span>${p.sqft} sqft</span>
                         </div>
                     </div>
+                    <div class="card-actions">
+                        <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                        <a href="tel:+201000000000" class="btn btn-call">
+                            <i class="fas fa-phone"></i> Call
+                        </a>
+                    </div>
                 </div>
             </article>
         `).join('');

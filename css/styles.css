@@ -535,6 +535,56 @@ h6 {
     accent-color: var(--primary);
 }
 
+/* Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--gray-300);
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: var(--primary);
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px var(--primary);
+}
+
+input:checked+.slider:before {
+    transform: translateX(20px);
+}
+
 /* Search Input with Icon */
 .search-input-wrapper {
     position: relative;
@@ -2344,4 +2394,47 @@ h6 {
     align-items: center;
     justify-content: center;
     font-weight: bold;
+}
+
+/* ========== PROPERTY CARD ACTIONS ========== */
+.card-actions {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--gray-200);
+}
+
+.card-actions .btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    padding: var(--space-2) var(--space-3);
+}
+
+.btn-whatsapp {
+    background-color: #25D366;
+    color: var(--white);
+    border: 1px solid #25D366;
+}
+
+.btn-whatsapp:hover {
+    background-color: #128C7E;
+    border-color: #128C7E;
+    color: var(--white);
+}
+
+.btn-call {
+    background-color: var(--secondary);
+    color: var(--white);
+    border: 1px solid var(--secondary);
+}
+
+.btn-call:hover {
+    background-color: var(--secondary-light);
+    border-color: var(--secondary-light);
+    color: var(--white);
 }
