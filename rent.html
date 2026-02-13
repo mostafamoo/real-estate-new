@@ -272,192 +272,260 @@
             </div>
             <div class="rental-listings">
                 <!-- Rental Card 1 -->
-                <article class="card property-card"><a href="property.html">
+                <article class="card property-card">
+                    <a href="property.html">
                         <div class="card-image">
-                            <span class="card-badge">Featured</span>
-                            <button class="card-save" aria-label="Save property">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path
-                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                                    </path>
-                                </svg>
-                            </button>
-                            <button class="card-compare" aria-label="Compare property" data-id="rent-prop1">
-                                <i class="fas fa-exchange-alt"></i>
-                            </button>
+                            <button class="card-compare-label" onclick="event.preventDefault();"
+                                data-id="rent-prop1">Compare <i class="fas fa-exchange-alt"></i></button>
+                            <div class="card-overlay-actions">
+                                <button class="overlay-btn" onclick="event.preventDefault();"><i
+                                        class="fas fa-share-alt"></i></button>
+                                <button class="overlay-btn" onclick="event.preventDefault();"><i
+                                        class="far fa-heart"></i></button>
+                            </div>
                             <img src="assets/images/property-interior.png" alt="Apartment">
                         </div>
                     </a>
                     <div class="card-body">
-                        <div class="property-price">$2,450<span
+                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
+                        <div class="property-national-id">Property National ID Number <span>2233445566778899</span>
+                        </div>
+                        <div class="property-name">Marina Heights, New Alamein, Egypt</div>
+                        <div class="property-mls">MLS ID number <span>E601234</span></div>
+                        <div class="property-specs-new">
+                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">2</span> Rooms
+                            </div>
+                            <div class="spec-divider"></div>
+                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">1</span>
+                                Bathroom</div>
+                            <div class="spec-divider"></div>
+                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span
+                                    class="spec-value">85</span> SQ MT</div>
+                        </div>
+                        <div class="property-price-new">12,000 EGP<span
                                 style="font-size:var(--text-sm);color:var(--gray-500)">/mo</span></div>
-                        <div class="property-address">123 Downtown Ave, New York, NY</div>
-                        <div class="property-specs"><span class="property-spec">2 bd</span><span class="property-spec">1
-                                ba</span><span class="property-spec">950 sqft</span></div>
-                    </div>
-                    <div class="card-actions">
-                        <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp"><i
-                                class="fab fa-whatsapp"></i> WhatsApp</a>
-                        <a href="tel:+201000000000" class="btn btn-call"><i class="fas fa-phone"></i> Call</a>
+                        <div class="card-actions-new">
+                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a
+                                tour</a>
+                            <a href="https://wa.me/201000000000" target="_blank"
+                                class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
+                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
+                        </div>
                     </div>
                 </article>
 
                 <!-- Rental Card 2 -->
-                <article class="card property-card"><a href="property.html">
+                <article class="card property-card">
+                    <a href="property.html">
                         <div class="card-image">
-                            <span class="card-badge" style="background:var(--success)">Available</span>
-                            <button class="card-save" aria-label="Save property">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path
-                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                                    </path>
-                                </svg>
-                            </button>
-                            <button class="card-compare" aria-label="Compare property" data-id="rent-prop2">
-                                <i class="fas fa-exchange-alt"></i>
-                            </button>
+                            <button class="card-compare-label" onclick="event.preventDefault();"
+                                data-id="rent-prop2">Compare <i class="fas fa-exchange-alt"></i></button>
+                            <div class="card-overlay-actions">
+                                <button class="overlay-btn" onclick="event.preventDefault();"><i
+                                        class="fas fa-share-alt"></i></button>
+                                <button class="overlay-btn" onclick="event.preventDefault();"><i
+                                        class="far fa-heart"></i></button>
+                            </div>
                             <img src="assets/images/property-1.png" alt="House">
                         </div>
                     </a>
                     <div class="card-body">
-                        <div class="property-price">$3,200<span
+                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
+                        <div class="property-national-id">Property National ID Number <span>4455667788990011</span>
+                        </div>
+                        <div class="property-name">Garden City Residence, Giza, Egypt</div>
+                        <div class="property-mls">MLS ID number <span>E702345</span></div>
+                        <div class="property-specs-new">
+                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">3</span> Rooms
+                            </div>
+                            <div class="spec-divider"></div>
+                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">2</span>
+                                Bathroom</div>
+                            <div class="spec-divider"></div>
+                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span
+                                    class="spec-value">140</span> SQ MT</div>
+                        </div>
+                        <div class="property-price-new">18,000 EGP<span
                                 style="font-size:var(--text-sm);color:var(--gray-500)">/mo</span></div>
-                        <div class="property-address">456 Oak Lane, Los Angeles, CA</div>
-                        <div class="property-specs"><span class="property-spec">3 bd</span><span class="property-spec">2
-                                ba</span><span class="property-spec">1,650 sqft</span></div>
-                    </div>
-                    <div class="card-actions">
-                        <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp"><i
-                                class="fab fa-whatsapp"></i> WhatsApp</a>
-                        <a href="tel:+201000000000" class="btn btn-call"><i class="fas fa-phone"></i> Call</a>
+                        <div class="card-actions-new">
+                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a
+                                tour</a>
+                            <a href="https://wa.me/201000000000" target="_blank"
+                                class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
+                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
+                        </div>
                     </div>
                 </article>
 
                 <!-- Rental Card 3 -->
-                <article class="card property-card"><a href="property.html">
+                <article class="card property-card">
+                    <a href="property.html">
                         <div class="card-image">
-                            <button class="card-save" aria-label="Save property">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path
-                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                                    </path>
-                                </svg>
-                            </button>
-                            <button class="card-compare" aria-label="Compare property" data-id="rent-prop3">
-                                <i class="fas fa-exchange-alt"></i>
-                            </button>
+                            <button class="card-compare-label" onclick="event.preventDefault();"
+                                data-id="rent-prop3">Compare <i class="fas fa-exchange-alt"></i></button>
+                            <div class="card-overlay-actions">
+                                <button class="overlay-btn" onclick="event.preventDefault();"><i
+                                        class="fas fa-share-alt"></i></button>
+                                <button class="overlay-btn" onclick="event.preventDefault();"><i
+                                        class="far fa-heart"></i></button>
+                            </div>
                             <img src="assets/images/property-2.png" alt="Condo">
                         </div>
                     </a>
                     <div class="card-body">
-                        <div class="property-price">$1,850<span
+                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
+                        <div class="property-national-id">Property National ID Number <span>6677889900112233</span>
+                        </div>
+                        <div class="property-name">Katameya Dunes, New Cairo, Egypt</div>
+                        <div class="property-mls">MLS ID number <span>E803456</span></div>
+                        <div class="property-specs-new">
+                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">1</span> Rooms
+                            </div>
+                            <div class="spec-divider"></div>
+                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">1</span>
+                                Bathroom</div>
+                            <div class="spec-divider"></div>
+                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span
+                                    class="spec-value">70</span> SQ MT</div>
+                        </div>
+                        <div class="property-price-new">8,500 EGP<span
                                 style="font-size:var(--text-sm);color:var(--gray-500)">/mo</span></div>
-                        <div class="property-address">789 Skyline Tower, Miami, FL</div>
-                        <div class="property-specs"><span class="property-spec">1 bd</span><span class="property-spec">1
-                                ba</span><span class="property-spec">720 sqft</span></div>
-                    </div>
-                    <div class="card-actions">
-                        <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp"><i
-                                class="fab fa-whatsapp"></i> WhatsApp</a>
-                        <a href="tel:+201000000000" class="btn btn-call"><i class="fas fa-phone"></i> Call</a>
+                        <div class="card-actions-new">
+                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a
+                                tour</a>
+                            <a href="https://wa.me/201000000000" target="_blank"
+                                class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
+                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
+                        </div>
                     </div>
                 </article>
 
                 <!-- Rental Card 4 -->
-                <article class="card property-card"><a href="property.html">
+                <article class="card property-card">
+                    <a href="property.html">
                         <div class="card-image">
-                            <span class="card-badge" style="background:var(--warning)">New</span>
-                            <button class="card-save" aria-label="Save property">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path
-                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                                    </path>
-                                </svg>
-                            </button>
-                            <button class="card-compare" aria-label="Compare property" data-id="rent-prop4">
-                                <i class="fas fa-exchange-alt"></i>
-                            </button>
+                            <button class="card-compare-label" onclick="event.preventDefault();"
+                                data-id="rent-prop4">Compare <i class="fas fa-exchange-alt"></i></button>
+                            <div class="card-overlay-actions">
+                                <button class="overlay-btn" onclick="event.preventDefault();"><i
+                                        class="fas fa-share-alt"></i></button>
+                                <button class="overlay-btn" onclick="event.preventDefault();"><i
+                                        class="far fa-heart"></i></button>
+                            </div>
                             <img src="assets/images/hero-bg.png" alt="Villa">
                         </div>
                     </a>
                     <div class="card-body">
-                        <div class="property-price">$4,500<span
+                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
+                        <div class="property-national-id">Property National ID Number <span>8899001122334455</span>
+                        </div>
+                        <div class="property-name">Royal Meadows, Sheikh Zayed, Egypt</div>
+                        <div class="property-mls">MLS ID number <span>E904567</span></div>
+                        <div class="property-specs-new">
+                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">4</span> Rooms
+                            </div>
+                            <div class="spec-divider"></div>
+                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">3</span>
+                                Bathroom</div>
+                            <div class="spec-divider"></div>
+                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span
+                                    class="spec-value">200</span> SQ MT</div>
+                        </div>
+                        <div class="property-price-new">25,000 EGP<span
                                 style="font-size:var(--text-sm);color:var(--gray-500)">/mo</span></div>
-                        <div class="property-address">321 Palm Beach Drive, Palm Beach, FL</div>
-                        <div class="property-specs"><span class="property-spec">4 bd</span><span class="property-spec">3
-                                ba</span><span class="property-spec">2,800 sqft</span></div>
-                    </div>
-                    <div class="card-actions">
-                        <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp"><i
-                                class="fab fa-whatsapp"></i> WhatsApp</a>
-                        <a href="tel:+201000000000" class="btn btn-call"><i class="fas fa-phone"></i> Call</a>
+                        <div class="card-actions-new">
+                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a
+                                tour</a>
+                            <a href="https://wa.me/201000000000" target="_blank"
+                                class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
+                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
+                        </div>
                     </div>
                 </article>
 
                 <!-- Rental Card 5 -->
-                <article class="card property-card"><a href="property.html">
+                <article class="card property-card">
+                    <a href="property.html">
                         <div class="card-image">
-                            <button class="card-save" aria-label="Save property">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path
-                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                                    </path>
-                                </svg>
-                            </button>
-                            <button class="card-compare" aria-label="Compare property" data-id="rent-prop5">
-                                <i class="fas fa-exchange-alt"></i>
-                            </button>
+                            <button class="card-compare-label" onclick="event.preventDefault();"
+                                data-id="rent-prop5">Compare <i class="fas fa-exchange-alt"></i></button>
+                            <div class="card-overlay-actions">
+                                <button class="overlay-btn" onclick="event.preventDefault();"><i
+                                        class="fas fa-share-alt"></i></button>
+                                <button class="overlay-btn" onclick="event.preventDefault();"><i
+                                        class="far fa-heart"></i></button>
+                            </div>
                             <img src="assets/images/property-interior.png" alt="Studio Apartment">
                         </div>
                     </a>
                     <div class="card-body">
-                        <div class="property-price">$1,200<span
+                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
+                        <div class="property-national-id">Property National ID Number <span>5566778899001122</span>
+                        </div>
+                        <div class="property-name">Rehab City Studio, New Cairo, Egypt</div>
+                        <div class="property-mls">MLS ID number <span>E105678</span></div>
+                        <div class="property-specs-new">
+                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">1</span> Rooms
+                            </div>
+                            <div class="spec-divider"></div>
+                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">1</span>
+                                Bathroom</div>
+                            <div class="spec-divider"></div>
+                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span
+                                    class="spec-value">55</span> SQ MT</div>
+                        </div>
+                        <div class="property-price-new">5,500 EGP<span
                                 style="font-size:var(--text-sm);color:var(--gray-500)">/mo</span></div>
-                        <div class="property-address">55 Riverside Blvd, Chicago, IL</div>
-                        <div class="property-specs"><span class="property-spec">Studio</span><span
-                                class="property-spec">1 ba</span><span class="property-spec">480 sqft</span></div>
-                    </div>
-                    <div class="card-actions">
-                        <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp"><i
-                                class="fab fa-whatsapp"></i> WhatsApp</a>
-                        <a href="tel:+201000000000" class="btn btn-call"><i class="fas fa-phone"></i> Call</a>
+                        <div class="card-actions-new">
+                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a
+                                tour</a>
+                            <a href="https://wa.me/201000000000" target="_blank"
+                                class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
+                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
+                        </div>
                     </div>
                 </article>
 
                 <!-- Rental Card 6 -->
-                <article class="card property-card"><a href="property.html">
+                <article class="card property-card">
+                    <a href="property.html">
                         <div class="card-image">
-                            <span class="card-badge" style="background:var(--success)">Open House</span>
-                            <button class="card-save" aria-label="Save property">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path
-                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                                    </path>
-                                </svg>
-                            </button>
-                            <button class="card-compare" aria-label="Compare property" data-id="rent-prop6">
-                                <i class="fas fa-exchange-alt"></i>
-                            </button>
+                            <button class="card-compare-label" onclick="event.preventDefault();"
+                                data-id="rent-prop6">Compare <i class="fas fa-exchange-alt"></i></button>
+                            <div class="card-overlay-actions">
+                                <button class="overlay-btn" onclick="event.preventDefault();"><i
+                                        class="fas fa-share-alt"></i></button>
+                                <button class="overlay-btn" onclick="event.preventDefault();"><i
+                                        class="far fa-heart"></i></button>
+                            </div>
                             <img src="assets/images/property-1.png" alt="Townhouse">
                         </div>
                     </a>
                     <div class="card-body">
-                        <div class="property-price">$2,750<span
+                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
+                        <div class="property-national-id">Property National ID Number <span>7788990011223344</span>
+                        </div>
+                        <div class="property-name">West Gate Towers, 6th of October, Egypt</div>
+                        <div class="property-mls">MLS ID number <span>E206789</span></div>
+                        <div class="property-specs-new">
+                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">3</span> Rooms
+                            </div>
+                            <div class="spec-divider"></div>
+                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">2</span>
+                                Bathroom</div>
+                            <div class="spec-divider"></div>
+                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span
+                                    class="spec-value">130</span> SQ MT</div>
+                        </div>
+                        <div class="property-price-new">15,000 EGP<span
                                 style="font-size:var(--text-sm);color:var(--gray-500)">/mo</span></div>
-                        <div class="property-address">99 Harbor View, San Francisco, CA</div>
-                        <div class="property-specs"><span class="property-spec">3 bd</span><span class="property-spec">2
-                                ba</span><span class="property-spec">1,400 sqft</span></div>
-                    </div>
-                    <div class="card-actions">
-                        <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp"><i
-                                class="fab fa-whatsapp"></i> WhatsApp</a>
-                        <a href="tel:+201000000000" class="btn btn-call"><i class="fas fa-phone"></i> Call</a>
+                        <div class="card-actions-new">
+                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a
+                                tour</a>
+                            <a href="https://wa.me/201000000000" target="_blank"
+                                class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
+                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
+                        </div>
                     </div>
                 </article>
             </div>
