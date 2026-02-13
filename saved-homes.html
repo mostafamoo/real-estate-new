@@ -179,204 +179,104 @@
                         data-i18n="saved_count">properties saved</span></span>
             </div>
             <div class="saved-grid">
-                <article class="card property-card">
-                    <a href="property.html">
-                        <div class="card-image">
-                            <button class="card-compare-label" onclick="event.preventDefault();"
-                                data-id="saved-prop1">Compare <i class="fas fa-exchange-alt"></i></button>
-                            <div class="card-overlay-actions">
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i
-                                        class="fas fa-share-alt"></i></button>
-                                <button class="overlay-btn active" onclick="event.preventDefault();"><i
-                                        class="fas fa-heart"></i></button>
-                            </div>
+                <article class="card property-card"><a href="property.html">
+                        <div class="card-image"><button class="card-save active"><svg width="18" height="18"
+                                    viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                    </path>
+                                </svg></button>
+                            <button class="card-compare" aria-label="Compare property" data-id="saved-prop1">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
                             <img src="assets/images/property-1.png" alt="Property">
                         </div>
                     </a>
                     <div class="card-body">
-                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
-                        <div class="property-national-id">Property National ID Number <span>1234567891234567</span>
-                        </div>
-                        <div class="property-name">Valori New Cairo, Cairo, Egypt</div>
-                        <div class="property-mls">MLS ID number <span>E109866</span></div>
-                        <div class="property-specs-new">
-                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">4</span> Rooms
-                            </div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">3</span>
-                                Bathroom</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span
-                                    class="spec-value">200</span> SQ MT</div>
-                        </div>
-                        <div class="property-price-new">2,000,000 EGP</div>
-                        <div class="card-actions-new">
-                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a
-                                tour</a>
-                            <a href="https://wa.me/201000000000" target="_blank"
-                                class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
-                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
-                        </div>
+                        <div class="property-price">$485,000</div>
+                        <div class="property-address">1234 Oak Street, Beverly Hills, CA</div>
+                        <div class="property-specs"><span class="property-spec">4 bd</span><span class="property-spec">3
+                                ba</span><span class="property-spec">2,450 sqft</span></div>
                     </div>
                 </article>
-                <article class="card property-card">
-                    <a href="property.html">
-                        <div class="card-image">
-                            <button class="card-compare-label" onclick="event.preventDefault();"
-                                data-id="saved-prop2">Compare <i class="fas fa-exchange-alt"></i></button>
-                            <div class="card-overlay-actions">
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i
-                                        class="fas fa-share-alt"></i></button>
-                                <button class="overlay-btn active" onclick="event.preventDefault();"><i
-                                        class="fas fa-heart"></i></button>
-                            </div>
+                <article class="card property-card"><a href="property.html">
+                        <div class="card-image"><button class="card-save active"><svg width="18" height="18"
+                                    viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                    </path>
+                                </svg></button>
+                            <button class="card-compare" aria-label="Compare property" data-id="saved-prop2">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
                             <img src="assets/images/property-2.png" alt="Property">
                         </div>
                     </a>
                     <div class="card-body">
-                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
-                        <div class="property-national-id">Property National ID Number <span>9876543219876543</span>
-                        </div>
-                        <div class="property-name">Sky Residences, 6th of October, Egypt</div>
-                        <div class="property-mls">MLS ID number <span>E208477</span></div>
-                        <div class="property-specs-new">
-                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">2</span> Rooms
-                            </div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">2</span>
-                                Bathroom</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span
-                                    class="spec-value">100</span> SQ MT</div>
-                        </div>
-                        <div class="property-price-new">3,500,000 EGP</div>
-                        <div class="card-actions-new">
-                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a
-                                tour</a>
-                            <a href="https://wa.me/201000000000" target="_blank"
-                                class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
-                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
-                        </div>
+                        <div class="property-price">$725,000</div>
+                        <div class="property-address">567 Skyline Tower, Manhattan, NY</div>
+                        <div class="property-specs"><span class="property-spec">2 bd</span><span class="property-spec">2
+                                ba</span><span class="property-spec">1,200 sqft</span></div>
                     </div>
                 </article>
-                <article class="card property-card">
-                    <a href="property.html">
-                        <div class="card-image">
-                            <button class="card-compare-label" onclick="event.preventDefault();"
-                                data-id="saved-prop3">Compare <i class="fas fa-exchange-alt"></i></button>
-                            <div class="card-overlay-actions">
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i
-                                        class="fas fa-share-alt"></i></button>
-                                <button class="overlay-btn active" onclick="event.preventDefault();"><i
-                                        class="fas fa-heart"></i></button>
-                            </div>
+                <article class="card property-card"><a href="property.html">
+                        <div class="card-image"><button class="card-save active"><svg width="18" height="18"
+                                    viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                    </path>
+                                </svg></button>
+                            <button class="card-compare" aria-label="Compare property" data-id="saved-prop3">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
                             <img src="assets/images/property-3.png" alt="Property">
                         </div>
                     </a>
                     <div class="card-body">
-                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
-                        <div class="property-national-id">Property National ID Number <span>5678901234567890</span>
-                        </div>
-                        <div class="property-name">Palm Hills, Madinaty, Cairo, Egypt</div>
-                        <div class="property-mls">MLS ID number <span>E305921</span></div>
-                        <div class="property-specs-new">
-                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">3</span> Rooms
-                            </div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">2</span>
-                                Bathroom</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span
-                                    class="spec-value">150</span> SQ MT</div>
-                        </div>
-                        <div class="property-price-new">1,500,000 EGP</div>
-                        <div class="card-actions-new">
-                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a
-                                tour</a>
-                            <a href="https://wa.me/201000000000" target="_blank"
-                                class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
-                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
-                        </div>
+                        <div class="property-price">$375,000</div>
+                        <div class="property-address">89 Garden Lane, Portland, OR</div>
+                        <div class="property-specs"><span class="property-spec">3 bd</span><span class="property-spec">2
+                                ba</span><span class="property-spec">1,850 sqft</span></div>
                     </div>
                 </article>
-                <article class="card property-card">
-                    <a href="property.html">
-                        <div class="card-image">
-                            <button class="card-compare-label" onclick="event.preventDefault();"
-                                data-id="saved-prop4">Compare <i class="fas fa-exchange-alt"></i></button>
-                            <div class="card-overlay-actions">
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i
-                                        class="fas fa-share-alt"></i></button>
-                                <button class="overlay-btn active" onclick="event.preventDefault();"><i
-                                        class="fas fa-heart"></i></button>
-                            </div>
+                <article class="card property-card"><a href="property.html">
+                        <div class="card-image"><button class="card-save active"><svg width="18" height="18"
+                                    viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                    </path>
+                                </svg></button>
+                            <button class="card-compare" aria-label="Compare property" data-id="saved-prop4">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
                             <img src="assets/images/property-interior.png" alt="Property">
                         </div>
                     </a>
                     <div class="card-body">
-                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
-                        <div class="property-national-id">Property National ID Number <span>1122334455667788</span>
-                        </div>
-                        <div class="property-name">Nile View Tower, Zamalek, Cairo, Egypt</div>
-                        <div class="property-mls">MLS ID number <span>E412350</span></div>
-                        <div class="property-specs-new">
-                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">5</span> Rooms
-                            </div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">4</span>
-                                Bathroom</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span
-                                    class="spec-value">300</span> SQ MT</div>
-                        </div>
-                        <div class="property-price-new">8,500,000 EGP</div>
-                        <div class="card-actions-new">
-                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a
-                                tour</a>
-                            <a href="https://wa.me/201000000000" target="_blank"
-                                class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
-                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
-                        </div>
+                        <div class="property-price">$1,250,000</div>
+                        <div class="property-address">1001 Luxury Ave, Miami Beach, FL</div>
+                        <div class="property-specs"><span class="property-spec">5 bd</span><span class="property-spec">4
+                                ba</span><span class="property-spec">3,800 sqft</span></div>
                     </div>
                 </article>
-                <article class="card property-card">
-                    <a href="property.html">
-                        <div class="card-image">
-                            <button class="card-compare-label" onclick="event.preventDefault();"
-                                data-id="saved-prop5">Compare <i class="fas fa-exchange-alt"></i></button>
-                            <div class="card-overlay-actions">
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i
-                                        class="fas fa-share-alt"></i></button>
-                                <button class="overlay-btn active" onclick="event.preventDefault();"><i
-                                        class="fas fa-heart"></i></button>
-                            </div>
+                <article class="card property-card"><a href="property.html">
+                        <div class="card-image"><button class="card-save active"><svg width="18" height="18"
+                                    viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2">
+                                    <path
+                                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                    </path>
+                                </svg></button>
+                            <button class="card-compare" aria-label="Compare property" data-id="saved-prop5">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
                             <img src="assets/images/hero-bg.png" alt="Property">
                         </div>
                     </a>
                     <div class="card-body">
-                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
-                        <div class="property-national-id">Property National ID Number <span>3344556677889900</span>
-                        </div>
-                        <div class="property-name">Sunset Boulevard, Heliopolis, Cairo, Egypt</div>
-                        <div class="property-mls">MLS ID number <span>E518243</span></div>
-                        <div class="property-specs-new">
-                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">4</span> Rooms
-                            </div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">3</span>
-                                Bathroom</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span
-                                    class="spec-value">240</span> SQ MT</div>
-                        </div>
-                        <div class="property-price-new">4,200,000 EGP</div>
-                        <div class="card-actions-new">
-                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a
-                                tour</a>
-                            <a href="https://wa.me/201000000000" target="_blank"
-                                class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
-                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
-                        </div>
+                        <div class="property-price">$895,000</div>
+                        <div class="property-address">456 Sunset Blvd, Los Angeles, CA</div>
+                        <div class="property-specs"><span class="property-spec">4 bd</span><span class="property-spec">3
+                                ba</span><span class="property-spec">2,950 sqft</span></div>
                     </div>
                 </article>
             </div>
