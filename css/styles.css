@@ -2642,12 +2642,13 @@ input:checked+.slider:before {
 }
 
 .btn-circle-icon.whatsapp-icon {
-    background: var(--primary);
-    color: #fff;
-    border-color: var(--primary);
+    background: #f5f5f5;
+    color: #555;
+    border: 1px solid #e0e0e0;
 }
 
 .btn-circle-icon.whatsapp-icon:hover {
-    background: var(--primary-dark);
-    border-color: var(--primary-dark);
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
 }
