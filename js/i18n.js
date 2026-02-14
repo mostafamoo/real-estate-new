@@ -512,7 +512,19 @@ const translations = {
         "faq_a5": "Visit our Sell page to get started. Enter your address for a free home valuation, then connect with a top agent in your area who will guide you through the listing process.",
         "help_cta_title": "Still Need Help?",
         "help_cta_desc": "Our support team is here to assist you",
-        "btn_contact_support": "Contact Support"
+        "btn_contact_support": "Contact Support",
+
+        // Trust & Initiatives Section
+        "trust_mls_title": "The official MLS platform in Egypt",
+        "trust_mls_desc": "Your gateway to reliable real estate and unparalleled opportunities. Join now and unlock the future of real estate!",
+        "trust_mls_btn": "Explore more",
+        "trust_verified_title": "Verified Property",
+        "trust_verified_badge": "Coming Soon",
+        "trust_verified_desc": "Simply scan the QR code to view all the information about this property! It's super easy just point your phone at the code, and you'll get all the details instantly. It's a fast and simple way to stay informed!",
+        "trust_pnid_title": "Property National ID",
+        "trust_pnid_desc": "The Property National ID (PNID) is your digital key to quick and reliable information about listings.",
+        "trust_housing_title": "Initiative Now Open for Phase Two of the Ministry of Housing's 400,000 Units Offering",
+        "trust_housing_btn": "Apply Now"
     },
     "ar": {
         // Media Center
@@ -798,6 +810,18 @@ const translations = {
         "form_message": "أنا مهتم بهذا العقار...",
         "btn_request_tour": "طلب جولة",
         "btn_call_agent": "اتصل بالوكيل",
+
+        // Trust & Initiatives Section
+        "trust_mls_title": "المنصة الرسمية للـ MLS في مصر",
+        "trust_mls_desc": "بوابتك للعقارات الموثوقة والفرص التي لا مثيل لها. انضم الآن واكتشف مستقبل العقارات!",
+        "trust_mls_btn": "استكشف المزيد",
+        "trust_verified_title": "عقار موثق",
+        "trust_verified_badge": "قريباً",
+        "trust_verified_desc": "ما عليك سوى مسح رمز الـ QR لعرض جميع المعلومات حول هذا العقار! إنه أمر سهل للغاية، فقط وجّه هاتفك نحو الرمز، وستحصل على كافة التفاصيل على الفور. إنها طريقة سريعة وبسيطة للبقاء على اطلاع!",
+        "trust_pnid_title": "الرقم القومي للعقار",
+        "trust_pnid_desc": "الرقم القومي للعقار (PNID) هو مفتاحك الرقمي للحصول على معلومات سريعة وموثوقة حول الوحدات.",
+        "trust_housing_title": "المبادرة مفتوحة الآن للمرحلة الثانية من طرح وزارة الإسكان لـ 400,000 وحدة",
+        "trust_housing_btn": "قدم الآن",
         "section_tour": "جولة افتراضية",
         "btn_take_tour": "ابدأ الجولة الافتراضية",
         "btn_close": "إغلاق",
