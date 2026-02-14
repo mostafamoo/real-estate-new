@@ -214,42 +214,34 @@ function initSearch() {
                 <a href="property.html?id=${p.id}">
                     <div class="card-image">
                         <span class="card-badge ${p.type === 'rent' ? 'badge-blue' : ''}">${p.type === 'rent' ? 'For Rent' : 'For Sale'}</span>
-                        <button class="card-save" aria-label="Save property">
-                           <i class="far fa-heart"></i>
-                        </button>
+                        <button class="card-compare-label" onclick="event.preventDefault();">Compare <i class="fas fa-exchange-alt"></i></button>
+                        <div class="card-overlay-actions">
+                            <button class="overlay-btn" onclick="event.preventDefault();"><i class="fas fa-share-alt"></i></button>
+                            <button class="overlay-btn" onclick="event.preventDefault();"><i class="far fa-heart"></i></button>
+                        </div>
                         <img src="${p.image}" alt="${p.title}" onerror="this.src='https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80'">
                     </div>
                 </a>
                 <div class="card-body">
-                    <div class="property-price">
+                    <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
+                    <div class="property-national-id">Property National ID Number <span>${Math.floor(1000000000000000 + Math.random() * 9000000000000000)}</span></div>
+                    <div class="property-name">${p.title}</div>
+                    <div class="property-mls">MLS ID number <span>E${Math.floor(100000 + Math.random() * 900000)}</span></div>
+                    <div class="property-specs-new">
+                        <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">${p.beds}</span> Rooms</div>
+                        <div class="spec-divider"></div>
+                        <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">${p.baths}</span> Bathroom</div>
+                        <div class="spec-divider"></div>
+                        <div class="spec-item"><i class="fas fa-vector-square"></i> <span class="spec-value">${p.sqft}</span> SQ MT</div>
+                    </div>
+                    <div class="property-price-new">
                         ${p.price.toLocaleString()} EGP
                         ${p.type === 'rent' ? '<span style="font-size:0.8em; font-weight:normal">/mo</span>' : ''}
                     </div>
-                    <h3 class="property-title"><a href="property.html?id=${p.id}">${p.title}</a></h3>
-                    <div class="property-address">
-                        <i class="fas fa-map-marker-alt"></i> ${p.location}
-                    </div>
-                    <div class="property-features">
-                        <div class="feature">
-                            <i class="fas fa-bed"></i>
-                            <span>${p.beds} Beds</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-bath"></i>
-                            <span>${p.baths} Baths</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-ruler-combined"></i>
-                            <span>${p.sqft} sqft</span>
-                        </div>
-                    </div>
-                    <div class="card-actions">
-                        <a href="https://wa.me/201000000000" target="_blank" class="btn btn-whatsapp">
-                            <i class="fab fa-whatsapp"></i> WhatsApp
-                        </a>
-                        <a href="tel:+201000000000" class="btn btn-call">
-                            <i class="fas fa-phone"></i> Call
-                        </a>
+                    <div class="card-actions-new">
+                        <a href="property.html?id=${p.id}" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a tour</a>
+                        <a href="https://wa.me/201000000000" target="_blank" class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
+                        <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
                     </div>
                 </div>
             </article>
