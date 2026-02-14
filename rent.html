@@ -4,100 +4,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Search homes for sale. Filter by price, bedrooms, property type, and more.">
     <title>منصة مصر العقارية - The Official Egyptian Real Estate Platform</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="css/styles.css?v=toggle_polish">
+
     <style>
-        .rent-hero {
+        .search-page {
             margin-top: var(--header-height);
-            padding: var(--space-16) 0;
-            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
-            text-align: center;
+            display: flex;
+            min-height: calc(100vh - var(--header-height));
         }
 
-        .rent-hero h1 {
-            color: var(--white);
-            margin-bottom: var(--space-4);
-        }
-
-        .rent-hero p {
-            color: var(--gray-300);
-            font-size: var(--text-lg);
-            margin-bottom: var(--space-8);
-        }
-
-        .rent-search-box {
+        .search-sidebar {
+            width: 320px;
             background: var(--white);
-            border-radius: var(--radius-xl);
+            border-right: 1px solid var(--gray-200);
             padding: var(--space-6);
-            max-width: 800px;
-            margin: 0 auto;
-            box-shadow: var(--shadow-2xl);
+            overflow-y: auto;
+            position: sticky;
+            top: var(--header-height);
+            height: calc(100vh - var(--header-height));
         }
 
-        .rent-search-form {
+        .search-main {
+            flex: 1;
             display: flex;
-            gap: var(--space-3);
+            flex-direction: column;
+        }
+
+        .search-header {
+            padding: var(--space-5) var(--space-6);
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             flex-wrap: wrap;
+            gap: var(--space-4);
         }
 
-        .rental-listings {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: var(--space-6);
+        .search-results-count {
+            font-weight: var(--font-semibold);
+            color: var(--secondary);
         }
 
-        .pagination {
+        .search-controls {
             display: flex;
-            justify-content: center;
             align-items: center;
-            gap: var(--space-2);
-            margin-top: var(--space-10);
+            gap: var(--space-4);
         }
 
-        .pagination a,
-        .pagination span {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 40px;
-            height: 40px;
-            padding: 0 var(--space-3);
+        .view-toggle {
+            display: flex;
+            border: 1px solid var(--gray-200);
             border-radius: var(--radius-md);
-            border: 1px solid var(--gray-300);
-            color: var(--gray-600);
-            text-decoration: none;
-            font-weight: 500;
+            overflow: hidden;
+        }
+
+        .view-toggle button {
+            padding: var(--space-2) var(--space-3);
+            background: var(--white);
+            color: var(--gray-500);
             transition: all var(--transition-fast);
         }
 
-        .pagination a:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: rgba(200, 50, 50, 0.05);
-        }
-
-        .pagination .active {
+        .view-toggle button.active {
             background: var(--primary);
             color: var(--white);
-            border-color: var(--primary);
         }
 
-        .pagination .disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            pointer-events: none;
+        .search-content {
+            flex: 1;
+            display: flex;
+        }
+
+        .map-container {
+            flex: 1;
+            background: var(--gray-100);
+            position: relative;
+            min-height: 400px;
+        }
+
+        .map-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: var(--gray-500);
+            background: linear-gradient(135deg, #e8ecef 0%, #d0d8dd 100%);
+        }
+
+        .map-placeholder svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: var(--space-4);
+            opacity: 0.5;
+        }
+
+        .listings-container {
+            width: 50%;
+            min-width: 400px;
+            background: var(--off-white);
+            padding: var(--space-6);
+            overflow-y: auto;
+            max-height: calc(100vh - var(--header-height) - 70px);
+        }
+
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-5);
+        }
+
+        .filter-section {
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-6);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .filter-section:last-child {
+            border-bottom: none;
+        }
+
+        .filter-title {
+            font-size: var(--text-sm);
+            font-weight: var(--font-semibold);
+            color: var(--secondary);
+            margin-bottom: var(--space-4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: var(--space-3);
+        }
+
+        .filter-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+        }
+
+        .filter-chip {
+            padding: var(--space-2) var(--space-4);
+            background: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-full);
+            font-size: var(--text-sm);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .filter-chip:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-chip.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--white);
+        }
+
+        .range-slider {
+            margin-top: var(--space-3);
+        }
+
+        .range-slider input[type="range"] {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--gray-200);
+            border-radius: var(--radius-full);
+            outline: none;
+        }
+
+        .range-slider input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+        }
+
+        .range-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: var(--text-sm);
+            color: var(--gray-600);
+            margin-top: var(--space-2);
+        }
+
+        .sidebar-footer {
+            padding-top: var(--space-4);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .property-card-horizontal {
+            display: flex;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: all var(--transition-normal);
+            margin-bottom: var(--space-4);
+        }
+
+        .property-card-horizontal:hover {
+            box-shadow: var(--shadow-card-hover);
+            transform: translateY(-2px);
+        }
+
+        .property-card-horizontal .card-image {
+            width: 200px;
+            height: 160px;
+            flex-shrink: 0;
+        }
+
+        .property-card-horizontal .card-body {
+            flex: 1;
+            padding: var(--space-4);
+        }
+
+        @media (max-width: 1200px) {
+            .listings-container {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .map-container {
+                display: none;
+            }
         }
 
         @media (max-width: 768px) {
-            .rent-search-form {
-                flex-direction: column;
+            .search-sidebar {
+                position: fixed;
+                left: -100%;
+                top: var(--header-height);
+                bottom: 0;
+                width: 100%;
+                max-width: 320px;
+                z-index: var(--z-modal);
+                transition: left var(--transition-normal);
             }
 
-            .rental-listings {
+            .search-sidebar.active {
+                left: 0;
+            }
+
+            .filter-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: calc(var(--z-modal) - 1);
+            }
+
+            .filter-overlay.active {
+                display: block;
+            }
+
+            .listings-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -106,6 +300,7 @@
 </head>
 
 <body>
+    <!-- Header -->
     <header class="header" id="header">
         <div class="container header-inner">
             <a href="index.html" class="logo">
@@ -237,354 +432,371 @@
         </div>
     </header>
 
-    <section class="rent-hero">
-        <div class="container">
-            <h1 data-i18n="rent_hero_title">Find Your Next Rental</h1>
-            <p data-i18n="rent_hero_desc">Discover thousands of apartments and houses for rent</p>
-            <div class="rent-search-box">
-                <form class="rent-search-form" action="search.html">
-                    <input type="text" class="form-input form-input-lg" placeholder="Enter city, neighborhood, or ZIP"
-                        data-i18n-placeholder="filter_location_placeholder" style="flex: 1; min-width: 200px;">
-                    <select class="form-input form-input-lg form-select" style="width: 140px;">
-                        <option>Any Price</option>
-                        <option>$500-1000</option>
-                        <option>$1000-2000</option>
-                        <option>$2000+</option>
-                    </select>
-                    <select class="form-input form-input-lg form-select" style="width: 120px;">
-                        <option>Any Beds</option>
-                        <option>Studio</option>
-                        <option>1+</option>
-                        <option>2+</option>
-                        <option>3+</option>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-lg" data-i18n="hero_btn">Search</button>
-                </form>
+    <div class="filter-overlay" id="filterOverlay"></div>
+
+    <div class="search-page">
+        <!-- Sidebar Filters -->
+        <aside class="search-sidebar" id="searchSidebar">
+            <div class="filter-header">
+                <h3 data-i18n="filter_title">Filters</h3>
+                <button id="clearFilters" data-i18n="filter_clear">Clear All</button>
             </div>
-        </div>
-    </section>
 
-    <section class="section">
-        <div class="container">
-            <div class="flex justify-between items-center" style="margin-bottom: var(--space-10);">
-                <h2 data-i18n="rent_featured">Featured Rentals</h2><a href="search.html?type=rent"
-                    class="btn btn-outline" data-i18n="btn_view_all">View All</a>
+            <!-- Search Field -->
+            <div class="filter-search-container">
+                <div class="filter-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="filterLocation" placeholder="Area, City, Building, MLS Number">
+                </div>
+                <!-- Points of Interest Toggle -->
+                <div class="toggle-container"
+                    style="display: flex !important; opacity: 1 !important; visibility: visible !important;">
+                    <span class="toggle-label" data-i18n="filter_poi">Points of Interest</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="poiToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
             </div>
-            <div class="rental-listings">
-                <article class="card property-card">
-                    <a href="property.html">
-                        <div class="card-image">
-                            <button class="card-compare-label" onclick="event.preventDefault();">Compare <i class="fas fa-exchange-alt"></i></button>
-                            <div class="card-overlay-actions">
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i class="fas fa-share-alt"></i></button>
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i class="far fa-heart"></i></button>
-                            </div>
-                            <img src="assets/images/property-1.png" alt="Apartment for Rent">
-                        </div>
-                    </a>
-                    <div class="card-body">
-                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
-                        <div class="property-national-id">Property National ID Number <span>4455667788990011</span></div>
-                        <div class="property-name">Garden City Residence, Cairo, Egypt</div>
-                        <div class="property-mls">MLS ID number <span>E701122</span></div>
-                        <div class="property-specs-new">
-                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">3</span> Rooms</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">2</span> Bathroom</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span class="spec-value">160</span> SQ MT</div>
-                        </div>
-                        <div class="property-price-new">15,000 EGP</div>
-                        <div class="card-actions-new">
-                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a tour</a>
-                            <a href="https://wa.me/201000000000" target="_blank" class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
-                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
-                        </div>
-                    </div>
-                </article>
 
-                <article class="card property-card">
-                    <a href="property.html">
-                        <div class="card-image">
-                            <button class="card-compare-label" onclick="event.preventDefault();">Compare <i class="fas fa-exchange-alt"></i></button>
-                            <div class="card-overlay-actions">
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i class="fas fa-share-alt"></i></button>
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i class="far fa-heart"></i></button>
-                            </div>
-                            <img src="assets/images/property-2.png" alt="Studio Apartment">
-                        </div>
-                    </a>
-                    <div class="card-body">
-                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
-                        <div class="property-national-id">Property National ID Number <span>5566778899001122</span></div>
-                        <div class="property-name">Heliopolis Tower, Cairo, Egypt</div>
-                        <div class="property-mls">MLS ID number <span>E802233</span></div>
-                        <div class="property-specs-new">
-                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">1</span> Rooms</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">1</span> Bathroom</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span class="spec-value">65</span> SQ MT</div>
-                        </div>
-                        <div class="property-price-new">8,000 EGP</div>
-                        <div class="card-actions-new">
-                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a tour</a>
-                            <a href="https://wa.me/201000000000" target="_blank" class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
-                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
-                        </div>
-                    </div>
-                </article>
+            <!-- Property Type Category -->
+            <div class="filter-section">
+                <div class="filter-pill-group bg-red-light">
+                    <button class="filter-pill active" data-group="main-cat" data-value="type">Property Type</button>
+                    <button class="filter-pill" data-group="main-cat" data-value="price">Price</button>
+                    <button class="filter-pill" data-group="main-cat" data-value="beds">Bed & Bath</button>
+                </div>
+            </div>
 
-                <article class="card property-card">
-                    <a href="property.html">
-                        <div class="card-image">
-                            <button class="card-compare-label" onclick="event.preventDefault();">Compare <i class="fas fa-exchange-alt"></i></button>
-                            <div class="card-overlay-actions">
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i class="fas fa-share-alt"></i></button>
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i class="far fa-heart"></i></button>
-                            </div>
-                            <img src="assets/images/property-3.png" alt="Family Flat">
-                        </div>
-                    </a>
-                    <div class="card-body">
-                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
-                        <div class="property-national-id">Property National ID Number <span>6677889900112233</span></div>
-                        <div class="property-name">Smouha District, Alexandria, Egypt</div>
-                        <div class="property-mls">MLS ID number <span>E903344</span></div>
-                        <div class="property-specs-new">
-                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">3</span> Rooms</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">2</span> Bathroom</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span class="spec-value">140</span> SQ MT</div>
-                        </div>
-                        <div class="property-price-new">12,000 EGP</div>
-                        <div class="card-actions-new">
-                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a tour</a>
-                            <a href="https://wa.me/201000000000" target="_blank" class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
-                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
-                        </div>
-                    </div>
-                </article>
+            <!-- Sub-Category -->
+            <div class="filter-section">
+                <div class="filter-pill-group">
+                    <button class="filter-pill active-red" data-group="sub-cat"
+                        data-value="residential">Residential</button>
+                    <button class="filter-pill" data-group="sub-cat" data-value="commercial">Commercial</button>
+                    <button class="filter-pill" data-group="sub-cat" data-value="land">Land</button>
+                </div>
+            </div>
 
-                <article class="card property-card">
-                    <a href="property.html">
-                        <div class="card-image">
-                            <button class="card-compare-label" onclick="event.preventDefault();">Compare <i class="fas fa-exchange-alt"></i></button>
-                            <div class="card-overlay-actions">
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i class="fas fa-share-alt"></i></button>
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i class="far fa-heart"></i></button>
-                            </div>
-                            <img src="assets/images/property-interior.png" alt="Luxury Penthouse">
-                        </div>
-                    </a>
-                    <div class="card-body">
-                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
-                        <div class="property-national-id">Property National ID Number <span>7788990011223344</span></div>
-                        <div class="property-name">Nile Corniche, Maadi, Cairo, Egypt</div>
-                        <div class="property-mls">MLS ID number <span>E104455</span></div>
-                        <div class="property-specs-new">
-                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">4</span> Rooms</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">3</span> Bathroom</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span class="spec-value">220</span> SQ MT</div>
-                        </div>
-                        <div class="property-price-new">25,000 EGP</div>
-                        <div class="card-actions-new">
-                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a tour</a>
-                            <a href="https://wa.me/201000000000" target="_blank" class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
-                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
-                        </div>
-                    </div>
-                </article>
+            <!-- Checkbox List -->
+            <div class="filter-section">
+                <div class="filter-checkbox-list" id="filterType">
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" value="apartment" checked>
+                        <span class="custom-checkmark"></span>
+                        <span class="checkbox-label">Apartment</span>
+                    </label>
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" value="duplex">
+                        <span class="custom-checkmark"></span>
+                        <span class="checkbox-label">Duplex</span>
+                    </label>
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" value="villa">
+                        <span class="custom-checkmark"></span>
+                        <span class="checkbox-label">Villa</span>
+                    </label>
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" value="twin-house">
+                        <span class="custom-checkmark"></span>
+                        <span class="checkbox-label">Twin House</span>
+                    </label>
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" value="townhouse">
+                        <span class="custom-checkmark"></span>
+                        <span class="checkbox-label">Townhouse</span>
+                    </label>
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" value="penthouse">
+                        <span class="custom-checkmark"></span>
+                        <span class="checkbox-label">Penthouse</span>
+                    </label>
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" value="chalet">
+                        <span class="custom-checkmark"></span>
+                        <span class="checkbox-label">Chalet</span>
+                    </label>
+                </div>
+            </div>
 
-                <article class="card property-card">
-                    <a href="property.html">
-                        <div class="card-image">
-                            <button class="card-compare-label" onclick="event.preventDefault();">Compare <i class="fas fa-exchange-alt"></i></button>
-                            <div class="card-overlay-actions">
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i class="fas fa-share-alt"></i></button>
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i class="far fa-heart"></i></button>
-                            </div>
-                            <img src="assets/images/property-1.png" alt="Cozy Apartment">
-                        </div>
-                    </a>
-                    <div class="card-body">
-                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
-                        <div class="property-national-id">Property National ID Number <span>8899001122334455</span></div>
-                        <div class="property-name">Mohandessin, Giza, Egypt</div>
-                        <div class="property-mls">MLS ID number <span>E205566</span></div>
-                        <div class="property-specs-new">
-                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">2</span> Rooms</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">1</span> Bathroom</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span class="spec-value">90</span> SQ MT</div>
-                        </div>
-                        <div class="property-price-new">10,000 EGP</div>
-                        <div class="card-actions-new">
-                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a tour</a>
-                            <a href="https://wa.me/201000000000" target="_blank" class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
-                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
-                        </div>
-                    </div>
-                </article>
+            <div class="sidebar-footer">
+                <button class="sidebar-search-btn" id="sidebarSearchBtn">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </aside>
 
-                <article class="card property-card">
-                    <a href="property.html">
-                        <div class="card-image">
-                            <button class="card-compare-label" onclick="event.preventDefault();">Compare <i class="fas fa-exchange-alt"></i></button>
-                            <div class="card-overlay-actions">
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i class="fas fa-share-alt"></i></button>
-                                <button class="overlay-btn" onclick="event.preventDefault();"><i class="far fa-heart"></i></button>
-                            </div>
-                            <img src="assets/images/property-2.png" alt="Modern Villa">
-                        </div>
-                    </a>
-                    <div class="card-body">
-                        <span class="card-type-badge"><i class="fas fa-star"></i> Distinct</span>
-                        <div class="property-national-id">Property National ID Number <span>9900112233445566</span></div>
-                        <div class="property-name">Beverly Hills, Sheikh Zayed, Egypt</div>
-                        <div class="property-mls">MLS ID number <span>E306677</span></div>
-                        <div class="property-specs-new">
-                            <div class="spec-item"><i class="fas fa-bed"></i> <span class="spec-value">5</span> Rooms</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-bath"></i> <span class="spec-value">4</span> Bathroom</div>
-                            <div class="spec-divider"></div>
-                            <div class="spec-item"><i class="fas fa-vector-square"></i> <span class="spec-value">350</span> SQ MT</div>
-                        </div>
-                        <div class="property-price-new">35,000 EGP</div>
-                        <div class="card-actions-new">
-                            <a href="property.html" class="btn-book-tour"><i class="far fa-calendar-alt"></i> Book a tour</a>
-                            <a href="https://wa.me/201000000000" target="_blank" class="btn-circle-icon whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
-                            <a href="tel:+201000000000" class="btn-circle-icon"><i class="fas fa-phone-alt"></i></a>
-                        </div>
-                    </div>
-                </article>
-</div>
+        <!-- Main Content -->
+        <main class="search-main">
+            <!-- Search Header -->
+            <div class="search-header">
+                <div>
+                    <span class="search-results-count" data-i18n="search_results_count">1,234 homes</span>
+                    <span class="text-gray" data-i18n="search_results_location"> in Los Angeles, CA</span>
+                </div>
 
-            <!-- Pagination -->
-            <nav class="pagination" aria-label="Pagination">
-                <a href="#" class="disabled"><i class="fas fa-chevron-left"></i></a>
-                <span class="active">1</span>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <span>...</span>
-                <a href="#">12</a>
-                <a href="#"><i class="fas fa-chevron-right"></i></a>
-            </nav>
-        </div>
-    </section>
+                <div class="search-controls">
+                    <button class="btn btn-ghost btn-sm" id="toggleFilters" style="display: none;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="4" y1="21" x2="4" y2="14"></line>
+                            <line x1="4" y1="10" x2="4" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12" y2="3"></line>
+                            <line x1="20" y1="21" x2="20" y2="16"></line>
+                            <line x1="20" y1="12" x2="20" y2="3"></line>
+                        </svg>
+                        <span data-i18n="btn_filters">filters</span>
+                    </button>
+
+                    <select class="form-input form-select" style="width: auto; padding-right: var(--space-10);">
+                        <option data-i18n="sort_newest">Sort: Newest</option>
+                        <option data-i18n="sort_price_low">Price: Low to High</option>
+                        <option data-i18n="sort_price_high">Price: High to Low</option>
+                        <option data-i18n="sort_beds">Bedrooms</option>
+                        <option data-i18n="sort_sqft">Square Feet</option>
+                    </select>
+
+                    <div class="view-toggle">
+                        <button class="active" title="Grid View" id="gridView">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                        </button>
+                        <button title="List View" id="listView">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Content -->
+            <div class="search-content">
+                <!-- Map -->
+                <div class="map-container" id="map">
+                </div>
+
+                <!-- Listings -->
+                <div class="listings-container">
+                    <div class="listings-grid" id="listingsGrid">
+                        <!-- Listings loaded via JS -->
+
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination" style="margin-top: var(--space-8);">
+                        <a href="#" class="pagination-item disabled">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </a>
+                        <a href="#" class="pagination-item active">1</a>
+                        <a href="#" class="pagination-item">2</a>
+                        <a href="#" class="pagination-item">3</a>
+                        <a href="#" class="pagination-item">4</a>
+                        <span class="pagination-item">...</span>
+                        <a href="#" class="pagination-item">24</a>
+                        <a href="#" class="pagination-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
     <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="index.html" class="logo">
-                        <img src="assets/images/logo.png" alt="Logo">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">
+                    <img src="assets/images/logo.png" alt="Logo">
+                </a>
+                <p data-i18n="footer_desc">Your trusted partner in finding the perfect home. We connect buyers, sellers,
+                    and renters with
+                    the best properties across the nation.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
                     </a>
-                    <p data-i18n="footer_desc">Your trusted partner in finding the perfect home. We connect buyers,
-                        sellers, and renters with
-                        the best properties across the nation.</p>
-                    <div class="footer-social">
-                        <a href="#" aria-label="Facebook">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Twitter">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-                                </path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Instagram">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="LinkedIn">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
-                                </path>
-                                <rect x="2" y="9" width="4" height="12"></rect>
-                                <circle cx="4" cy="4" r="2"></circle>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <div>
-                    <h4 class="footer-title" data-i18n="footer_buy">Buy</h4>
-                    <nav class="footer-links">
-                        <a href="search.html" data-i18n="footer_browse">Browse Homes</a>
-                        <a href="search.html?type=house" data-i18n="footer_houses">Houses for Sale</a>
-                        <a href="search.html?type=condo" data-i18n="footer_condos">Condos for Sale</a>
-                        <a href="search.html?type=townhouse" data-i18n="footer_townhouses">Townhouses</a>
-                        <a href="search.html?type=land" data-i18n="footer_land">Land for Sale</a>
-                    </nav>
-                </div>
-
-                <div>
-                    <h4 class="footer-title" data-i18n="footer_sell">Sell</h4>
-                    <nav class="footer-links">
-                        <a href="sell.html" data-i18n="footer_sell_home">Sell Your Home</a>
-                        <a href="sell.html#value" data-i18n="footer_value">Home Value Estimator</a>
-                        <a href="agents.html" data-i18n="footer_find_agent">Find an Agent</a>
-                        <a href="blog.html" data-i18n="footer_selling_tips">Selling Tips</a>
-                        <a href="help.html" data-i18n="footer_seller_resources">Seller Resources</a>
-                    </nav>
-                </div>
-
-                <div>
-                    <h4 class="footer-title" data-i18n="footer_company">Company</h4>
-                    <nav class="footer-links">
-                        <a href="about.html" data-i18n="footer_about">About Us</a>
-                        <a href="contact.html" data-i18n="footer_contact">Contact</a>
-                        <a href="blog.html" data-i18n="footer_blog">Blog</a>
-                        <a href="help.html" data-i18n="footer_help">Help Center</a>
-                        <a href="#" data-i18n="footer_careers">Careers</a>
-                    </nav>
+                    <a href="#" aria-label="Twitter">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                            </path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
                 </div>
             </div>
 
-            <div class="footer-bottom">
-                <p class="footer-copyright" data-i18n="footer_rights">&copy; 2024 Real Estate. All rights reserved.
-                </p>
-                <div class="footer-legal">
-                    <a href="#" data-i18n="footer_privacy">Privacy Policy</a>
-                    <a href="#" data-i18n="footer_terms">Terms of Service</a>
-                    <a href="#" data-i18n="footer_cookies">Cookie Policy</a>
-                </div>
+            <div>
+                <h4 class="footer-title" data-i18n="footer_buy">Buy</h4>
+                <nav class="footer-links">
+                    <a href="search.html" data-i18n="footer_browse">Browse Homes</a>
+                    <a href="search.html?type=house" data-i18n="footer_houses">Houses for Sale</a>
+                    <a href="search.html?type=condo" data-i18n="footer_condos">Condos for Sale</a>
+                    <a href="search.html?type=townhouse" data-i18n="footer_townhouses">Townhouses</a>
+                    <a href="search.html?type=land" data-i18n="footer_land">Land for Sale</a>
+                </nav>
+            </div>
+
+            <div>
+                <h4 class="footer-title" data-i18n="footer_sell">Sell</h4>
+                <nav class="footer-links">
+                    <a href="sell.html" data-i18n="footer_sell_home">Sell Your Home</a>
+                    <a href="sell.html#value" data-i18n="footer_value">Home Value Estimator</a>
+                    <a href="agents.html" data-i18n="footer_find_agent">Find an Agent</a>
+                    <a href="blog.html" data-i18n="footer_selling_tips">Selling Tips</a>
+                    <a href="help.html" data-i18n="footer_seller_resources">Seller Resources</a>
+                </nav>
+            </div>
+
+            <div>
+                <h4 class="footer-title" data-i18n="footer_company">Company</h4>
+                <nav class="footer-links">
+                    <a href="about.html" data-i18n="footer_about">About Us</a>
+                    <a href="contact.html" data-i18n="footer_contact">Contact</a>
+                    <a href="media-center.html" data-i18n="footer_media">Media Center</a>
+                    <a href="help.html" data-i18n="footer_help">Help Center</a>
+                    <a href="sitemap.html" data-i18n="footer_sitemap">Sitemap</a>
+                </nav>
             </div>
         </div>
-    </footer>
+
+        <div class="footer-bottom">
+            <p class="footer-copyright" data-i18n="footer_rights">&copy; 2024 Real Estate. All rights reserved.
+            </p>
+            <div class="footer-legal">
+                <a href="#" data-i18n="footer_privacy">Privacy Policy</a>
+                <a href="#" data-i18n="footer_terms">Terms of Service</a>
+                <a href="#" data-i18n="footer_cookies">Cookie Policy</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/201000000000" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <script src="js/auth.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/i18n.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof updateAuthUI === 'function') {
-                updateAuthUI();
-            }
-        });
-    </script>
     <!-- Chatbot Widget -->
     <link rel="stylesheet" href="css/chat-widget.css">
     <script src="js/chat-widget.js"></script>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/i18n.js?v=poi"></script>
+    <script src="js/search.js?v=newdesign"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof updateAuthUI === 'function') {
+                updateAuthUI();
+            }
+            // Initialize Leaflet Map
+            const map = L.map('map').setView([30.0444, 31.2357], 13); // Default to Cairo
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Add some sample markers
+            const properties = [
+                { lat: 30.0444, lng: 31.2357, title: "Modern Apartment in Downtown" },
+                { lat: 30.0500, lng: 31.2400, title: "Luxury Villa in New Cairo" },
+                { lat: 30.0600, lng: 31.2300, title: "Cozy Studio near Nile" }
+            ];
+
+            properties.forEach(prop => {
+                L.marker([prop.lat, prop.lng]).addTo(map)
+                    .bindPopup(prop.title);
+            });
+
+            // Filter chips interaction
+            document.querySelectorAll('.filter-chips').forEach(container => {
+                const chips = container.querySelectorAll('.filter-chip');
+                chips.forEach(chip => {
+                    chip.addEventListener('click', () => {
+                        chips.forEach(c => c.classList.remove('active'));
+                        chip.classList.add('active');
+                    });
+                });
+            });
+
+            // View toggle
+            const gridView = document.getElementById('gridView');
+            const listView = document.getElementById('listView');
+            const listingsGrid = document.getElementById('listingsGrid');
+
+            gridView.addEventListener('click', () => {
+                gridView.classList.add('active');
+                listView.classList.remove('active');
+                listingsGrid.classList.remove('list-view');
+            });
+
+            listView.addEventListener('click', () => {
+                listView.classList.add('active');
+                gridView.classList.remove('active');
+                listingsGrid.classList.add('list-view');
+            });
+
+            // Mobile filter toggle
+            const toggleFilters = document.getElementById('toggleFilters');
+            const searchSidebar = document.getElementById('searchSidebar');
+            const filterOverlay = document.getElementById('filterOverlay');
+
+            if (toggleFilters) {
+                toggleFilters.addEventListener('click', () => {
+                    searchSidebar.classList.add('active');
+                    filterOverlay.classList.add('active');
+                });
+            }
+
+            if (filterOverlay) {
+                filterOverlay.addEventListener('click', () => {
+                    searchSidebar.classList.remove('active');
+                    filterOverlay.classList.remove('active');
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

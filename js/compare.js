@@ -1,6 +1,6 @@
 
 const ComparisonManager = {
-    key: 'zillow_compare_list',
+    key: 'property_comparison_list',
     maxItems: 3,
 
     init() {
@@ -26,7 +26,14 @@ const ComparisonManager = {
         list.push(property);
         localStorage.setItem(this.key, JSON.stringify(list));
         this.updateUI();
-        // Show success message or toast
+
+        // Visual feedback
+        const btn = document.querySelector(`.card-compare-label[data-id="${property.id}"]`) ||
+            document.querySelector(`.card-compare[data-id="${property.id}"]`);
+        if (btn) {
+            btn.innerHTML = 'Added <i class="fas fa-check"></i>';
+            setTimeout(() => this.updateUI(), 1000);
+        }
     },
 
     removeProperty(id) {
@@ -60,54 +67,106 @@ const ComparisonManager = {
         }
 
         // Update card buttons state
-        document.querySelectorAll('.card-compare').forEach(btn => {
-            const id = btn.dataset.id;
-            if (this.isInComparison(id)) {
+        const selector = '.card-compare, .card-compare-label';
+        document.querySelectorAll(selector).forEach(btn => {
+            // Try to get ID from data attribute or parent card
+            let id = btn.dataset.id;
+            if (!id) {
+                const card = btn.closest('.property-card');
+                if (card) id = this.generateId(card);
+            }
+
+            if (id && this.isInComparison(id)) {
                 btn.classList.add('active');
-                btn.innerHTML = '<i class="fas fa-check"></i>';
+                btn.innerHTML = 'Compare <i class="fas fa-check" style="color: var(--primary)"></i>';
+                // For card-compare-label specifically
+                if (btn.classList.contains('card-compare-label')) {
+                    btn.style.color = 'var(--primary)';
+                    btn.style.fontWeight = 'bold';
+                }
             } else {
                 btn.classList.remove('active');
-                btn.innerHTML = '<i class="fas fa-exchange-alt"></i>';
+                btn.innerHTML = 'Compare <i class="fas fa-exchange-alt"></i>';
+                if (btn.classList.contains('card-compare-label')) {
+                    btn.style.color = '';
+                    btn.style.fontWeight = '';
+                }
             }
         });
     },
 
     bindEvents() {
         document.addEventListener('click', (e) => {
-            if (e.target.closest('.card-compare')) {
-                const btn = e.target.closest('.card-compare');
+            console.log('Document click detected', e.target);
+            const btn = e.target.closest('.card-compare') || e.target.closest('.card-compare-label');
+            if (btn) {
+                console.log('Compare button clicked', btn);
+                e.preventDefault(); // Ensure we don't navigate if it's inside a link
+                e.stopPropagation();
+
                 const card = btn.closest('.property-card');
+                if (!card) return;
+
                 const id = btn.dataset.id || this.generateId(card);
 
                 if (this.isInComparison(id)) {
+                    console.log('Removing from comparison', id);
                     this.removeProperty(id);
                 } else {
                     const data = this.extractData(card, id);
-                    this.addProperty(data);
+                    console.log('Adding to comparison', data);
+                    if (data) this.addProperty(data);
                 }
             }
         });
     },
 
     generateId(card) {
-        // Fallback ID generation based on address or price if no ID
-        const address = card.querySelector('.property-address')?.textContent || '';
-        return address.replace(/\s+/g, '-').toLowerCase();
+        // Try to find a unique identifier
+        // 1. Link with ID
+        const link = card.querySelector('a[href*="id="]');
+        if (link) {
+            const match = link.href.match(/id=([^&]+)/);
+            if (match) return match[1];
+        }
+
+        // 2. Name/Title
+        const title = card.querySelector('.property-name')?.textContent ||
+            card.querySelector('.property-title')?.textContent;
+
+        if (title) {
+            return title.trim().replace(/\s+/g, '-').toLowerCase();
+        }
+
+        // 3. Fallback
+        return 'unknown-' + Math.random().toString(36).substr(2, 9);
     },
 
     extractData(card, id) {
+        // Log for debugging
+        const img = card.querySelector('.card-image img');
+        const price = card.querySelector('.property-price-new') || card.querySelector('.property-price') || card.querySelector('.price');
+        const title = card.querySelector('.property-name') || card.querySelector('.property-title') || card.querySelector('h3');
+        const specs = card.querySelectorAll('.spec-value'); // Beds, Baths, Sqft usually in order
+
+        console.log('Extracted details:', { price: price?.textContent, title: title?.textContent });
+
         return {
             id: id,
-            image: card.querySelector('.card-image img')?.src,
-            price: card.querySelector('.property-price')?.textContent,
-            address: card.querySelector('.property-address')?.textContent,
-            beds: card.querySelector('[data-i18n="card_bed"]')?.previousSibling?.textContent?.trim(),
-            baths: card.querySelector('[data-i18n="card_bath"]')?.previousSibling?.textContent?.trim(),
-            sqft: card.querySelector('[data-i18n="card_sqft"]')?.previousSibling?.textContent?.trim()
+            image: img ? img.src : '',
+            price: price ? price.textContent.trim() : 'N/A',
+            address: title ? title.textContent.trim() : 'Unknown Location',
+            beds: specs[0] ? specs[0].textContent.trim() : '',
+            baths: specs[1] ? specs[1].textContent.trim() : '',
+            sqft: specs[2] ? specs[2].textContent.trim() : ''
         };
     }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+// Initialize
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => ComparisonManager.init());
+} else {
+    // DOM already loaded
     ComparisonManager.init();
-});
+}

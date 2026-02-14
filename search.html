@@ -14,7 +14,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=toggle_polish">
 
     <style>
         .search-page {
@@ -437,144 +437,91 @@
     <div class="search-page">
         <!-- Sidebar Filters -->
         <aside class="search-sidebar" id="searchSidebar">
-            <div class="flex justify-between items-center" style="margin-bottom: var(--space-6);">
+            <div class="filter-header">
                 <h3 data-i18n="filter_title">Filters</h3>
-                <button class="btn btn-ghost btn-sm" id="clearFilters" data-i18n="filter_clear">Clear All</button>
+                <button id="clearFilters" data-i18n="filter_clear">Clear All</button>
             </div>
 
-            <!-- Location -->
-            <div class="filter-section">
-                <div class="filter-title" data-i18n="filter_location">Location</div>
-                <div class="search-input-wrapper">
-                    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="M21 21l-4.35-4.35"></path>
-                    </svg>
-                    <input type="text" class="form-input" id="filterLocation" placeholder="City, ZIP, Address"
-                        data-i18n-placeholder="filter_location_placeholder">
+            <!-- Search Field -->
+            <div class="filter-search-container">
+                <div class="filter-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="filterLocation" placeholder="Area, City, Building, MLS Number">
                 </div>
-
                 <!-- Points of Interest Toggle -->
-                <div
-                    style="margin-top: var(--space-4); display: flex; justify-content: space-between; align-items: center;">
-                    <span class="text-sm text-gray" data-i18n="filter_poi">Points of Interest</span>
-                    <label class="switch">
-                        <input type="checkbox" id="filterPoi">
-                        <span class="slider round"></span>
+                <div class="toggle-container">
+                    <span class="toggle-label" data-i18n="filter_poi">Points of Interest</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="poiToggle">
+                        <span class="toggle-slider"></span>
                     </label>
                 </div>
             </div>
 
-            <!-- Property Type -->
+            <!-- Property Type Category -->
             <div class="filter-section">
-                <div class="filter-title" data-i18n="filter_type">Property Type</div>
-                <div class="filter-chips" id="filterType">
-                    <button class="filter-chip active" data-value="all" data-i18n="type_all">All</button>
-                    <button class="filter-chip" data-value="house" data-i18n="type_house">House</button>
-                    <button class="filter-chip" data-value="condo" data-i18n="type_condo">Condo</button>
-                    <button class="filter-chip" data-value="townhouse" data-i18n="type_townhouse">Townhouse</button>
-                    <button class="filter-chip" data-value="land" data-i18n="type_land">Land</button>
-                    <button class="filter-chip" data-value="multifamily"
-                        data-i18n="type_multifamily">Multi-family</button>
+                <div class="filter-pill-group bg-red-light">
+                    <button class="filter-pill active" data-group="main-cat" data-value="type">Property Type</button>
+                    <button class="filter-pill" data-group="main-cat" data-value="price">Price</button>
+                    <button class="filter-pill" data-group="main-cat" data-value="beds">Bed & Bath</button>
                 </div>
             </div>
 
-            <!-- Price Range -->
+            <!-- Sub-Category -->
             <div class="filter-section">
-                <div class="filter-title" data-i18n="filter_price">Price Range</div>
-                <div class="filter-row">
-                    <div class="form-group">
-                        <input type="text" class="form-input" id="filterPriceMin" placeholder="Min" value="$0"
-                            data-i18n-placeholder="price_min">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-input" id="filterPriceMax" placeholder="Max" value="$2,000,000"
-                            data-i18n-placeholder="price_max">
-                    </div>
-                </div>
-                <div class="range-slider">
-                    <input type="range" id="filterPriceRange" min="0" max="2000000" value="2000000">
-                    <div class="range-values">
-                        <span>$0</span>
-                        <span>$2M+</span>
-                    </div>
+                <div class="filter-pill-group">
+                    <button class="filter-pill active-red" data-group="sub-cat"
+                        data-value="residential">Residential</button>
+                    <button class="filter-pill" data-group="sub-cat" data-value="commercial">Commercial</button>
+                    <button class="filter-pill" data-group="sub-cat" data-value="land">Land</button>
                 </div>
             </div>
 
-            <!-- Bedrooms -->
+            <!-- Checkbox List -->
             <div class="filter-section">
-                <div class="filter-title" data-i18n="filter_beds">Bedrooms</div>
-                <div class="filter-chips" id="filterBeds">
-                    <button class="filter-chip active" data-value="any" data-i18n="filter_any">Any</button>
-                    <button class="filter-chip" data-value="1">1+</button>
-                    <button class="filter-chip" data-value="2">2+</button>
-                    <button class="filter-chip" data-value="3">3+</button>
-                    <button class="filter-chip" data-value="4">4+</button>
-                    <button class="filter-chip" data-value="5">5+</button>
-                </div>
-            </div>
-
-            <!-- Bathrooms -->
-            <div class="filter-section">
-                <div class="filter-title" data-i18n="filter_baths">Bathrooms</div>
-                <div class="filter-chips" id="filterBaths">
-                    <button class="filter-chip active" data-value="any" data-i18n="filter_any">Any</button>
-                    <button class="filter-chip" data-value="1">1+</button>
-                    <button class="filter-chip" data-value="2">2+</button>
-                    <button class="filter-chip" data-value="3">3+</button>
-                    <button class="filter-chip" data-value="4">4+</button>
-                </div>
-            </div>
-
-            <!-- Square Feet -->
-            <div class="filter-section">
-                <div class="filter-title" data-i18n="filter_sqft">Square Feet</div>
-                <div class="filter-row">
-                    <div class="form-group">
-                        <input type="number" class="form-input" id="filterSqftMin" placeholder="Min sqft"
-                            data-i18n-placeholder="sqft_min">
-                    </div>
-                    <div class="form-group">
-                        <input type="number" class="form-input" id="filterSqftMax" placeholder="Max sqft"
-                            data-i18n-placeholder="sqft_max">
-                    </div>
-                </div>
-            </div>
-
-            <!-- More Filters -->
-            <div class="filter-section">
-                <div class="filter-title" data-i18n="filter_more">More Filters</div>
-                <div style="display: flex; flex-direction: column; gap: var(--space-3);">
-                    <label class="form-checkbox">
-                        <input type="checkbox">
-                        <span data-i18n="filter_open_house">Open House</span>
+                <div class="filter-checkbox-list" id="filterType">
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" value="apartment" checked>
+                        <span class="custom-checkmark"></span>
+                        <span class="checkbox-label">Apartment</span>
                     </label>
-                    <label class="form-checkbox">
-                        <input type="checkbox">
-                        <span data-i18n="filter_virtual_tour">Virtual Tour</span>
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" value="duplex">
+                        <span class="custom-checkmark"></span>
+                        <span class="checkbox-label">Duplex</span>
                     </label>
-                    <label class="form-checkbox">
-                        <input type="checkbox">
-                        <span data-i18n="filter_pool">Pool</span>
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" value="villa">
+                        <span class="custom-checkmark"></span>
+                        <span class="checkbox-label">Villa</span>
                     </label>
-                    <label class="form-checkbox">
-                        <input type="checkbox">
-                        <span data-i18n="filter_garage">Garage</span>
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" value="twin-house">
+                        <span class="custom-checkmark"></span>
+                        <span class="checkbox-label">Twin House</span>
                     </label>
-                    <label class="form-checkbox">
-                        <input type="checkbox">
-                        <span data-i18n="filter_ac">Air Conditioning</span>
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" value="townhouse">
+                        <span class="custom-checkmark"></span>
+                        <span class="checkbox-label">Townhouse</span>
                     </label>
-                    <label class="form-checkbox">
-                        <input type="checkbox">
-                        <span data-i18n="filter_waterfront">Waterfront</span>
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" value="penthouse">
+                        <span class="custom-checkmark"></span>
+                        <span class="checkbox-label">Penthouse</span>
+                    </label>
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" value="chalet">
+                        <span class="custom-checkmark"></span>
+                        <span class="checkbox-label">Chalet</span>
                     </label>
                 </div>
             </div>
 
             <div class="sidebar-footer">
-                <button class="btn btn-primary w-full" data-i18n="filter_apply">Apply Filters</button>
+                <button class="sidebar-search-btn" id="sidebarSearchBtn">
+                    <i class="fas fa-search"></i> Search
+                </button>
             </div>
         </aside>
 
@@ -674,93 +621,92 @@
     </div>
 
     <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="index.html" class="logo">
-                        <img src="assets/images/logo.png" alt="Logo">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">
+                    <img src="assets/images/logo.png" alt="Logo">
+                </a>
+                <p data-i18n="footer_desc">Your trusted partner in finding the perfect home. We connect buyers, sellers,
+                    and renters with
+                    the best properties across the nation.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
                     </a>
-                    <p data-i18n="footer_desc">Your trusted partner in finding the perfect home. We connect buyers,
-                        sellers, and renters with
-                        the best properties across the nation.</p>
-                    <div class="footer-social">
-                        <a href="#" aria-label="Facebook">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Twitter">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-                                </path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Instagram">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="LinkedIn">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
-                                </path>
-                                <rect x="2" y="9" width="4" height="12"></rect>
-                                <circle cx="4" cy="4" r="2"></circle>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-
-                <div>
-                    <h4 class="footer-title" data-i18n="footer_buy">Buy</h4>
-                    <nav class="footer-links">
-                        <a href="search.html" data-i18n="footer_browse">Browse Homes</a>
-                        <a href="search.html?type=house" data-i18n="footer_houses">Houses for Sale</a>
-                        <a href="search.html?type=condo" data-i18n="footer_condos">Condos for Sale</a>
-                        <a href="search.html?type=townhouse" data-i18n="footer_townhouses">Townhouses</a>
-                        <a href="search.html?type=land" data-i18n="footer_land">Land for Sale</a>
-                    </nav>
-                </div>
-
-                <div>
-                    <h4 class="footer-title" data-i18n="footer_sell">Sell</h4>
-                    <nav class="footer-links">
-                        <a href="sell.html" data-i18n="footer_sell_home">Sell Your Home</a>
-                        <a href="sell.html#value" data-i18n="footer_value">Home Value Estimator</a>
-                        <a href="agents.html" data-i18n="footer_find_agent">Find an Agent</a>
-                        <a href="blog.html" data-i18n="footer_selling_tips">Selling Tips</a>
-                        <a href="help.html" data-i18n="footer_seller_resources">Seller Resources</a>
-                    </nav>
-                </div>
-
-                <div>
-                    <h4 class="footer-title" data-i18n="footer_company">Company</h4>
-                    <nav class="footer-links">
-                        <a href="about.html" data-i18n="footer_about">About Us</a>
-                        <a href="contact.html" data-i18n="footer_contact">Contact</a>
-                        <a href="blog.html" data-i18n="footer_blog">Blog</a>
-                        <a href="help.html" data-i18n="footer_help">Help Center</a>
-                        <a href="#" data-i18n="footer_careers">Careers</a>
-                    </nav>
+                    <a href="#" aria-label="Twitter">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                            </path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
                 </div>
             </div>
 
-            <div class="footer-bottom">
-                <p class="footer-copyright" data-i18n="footer_rights">&copy; 2024 Real Estate. All rights reserved.
-                </p>
-                <div class="footer-legal">
-                    <a href="#" data-i18n="footer_privacy">Privacy Policy</a>
-                    <a href="#" data-i18n="footer_terms">Terms of Service</a>
-                    <a href="#" data-i18n="footer_cookies">Cookie Policy</a>
-                </div>
+            <div>
+                <h4 class="footer-title" data-i18n="footer_buy">Buy</h4>
+                <nav class="footer-links">
+                    <a href="search.html" data-i18n="footer_browse">Browse Homes</a>
+                    <a href="search.html?type=house" data-i18n="footer_houses">Houses for Sale</a>
+                    <a href="search.html?type=condo" data-i18n="footer_condos">Condos for Sale</a>
+                    <a href="search.html?type=townhouse" data-i18n="footer_townhouses">Townhouses</a>
+                    <a href="search.html?type=land" data-i18n="footer_land">Land for Sale</a>
+                </nav>
+            </div>
+
+            <div>
+                <h4 class="footer-title" data-i18n="footer_sell">Sell</h4>
+                <nav class="footer-links">
+                    <a href="sell.html" data-i18n="footer_sell_home">Sell Your Home</a>
+                    <a href="sell.html#value" data-i18n="footer_value">Home Value Estimator</a>
+                    <a href="agents.html" data-i18n="footer_find_agent">Find an Agent</a>
+                    <a href="blog.html" data-i18n="footer_selling_tips">Selling Tips</a>
+                    <a href="help.html" data-i18n="footer_seller_resources">Seller Resources</a>
+                </nav>
+            </div>
+
+            <div>
+                <h4 class="footer-title" data-i18n="footer_company">Company</h4>
+                <nav class="footer-links">
+                    <a href="about.html" data-i18n="footer_about">About Us</a>
+                    <a href="contact.html" data-i18n="footer_contact">Contact</a>
+                    <a href="media-center.html" data-i18n="footer_media">Media Center</a>
+                    <a href="help.html" data-i18n="footer_help">Help Center</a>
+                    <a href="sitemap.html" data-i18n="footer_sitemap">Sitemap</a>
+                </nav>
             </div>
         </div>
-    </footer>
+
+        <div class="footer-bottom">
+            <p class="footer-copyright" data-i18n="footer_rights">&copy; 2024 Real Estate. All rights reserved.
+            </p>
+            <div class="footer-legal">
+                <a href="#" data-i18n="footer_privacy">Privacy Policy</a>
+                <a href="#" data-i18n="footer_terms">Terms of Service</a>
+                <a href="#" data-i18n="footer_cookies">Cookie Policy</a>
+            </div>
+        </div>
+    </div>
+</footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -776,7 +722,7 @@
 
     <script src="js/auth.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/i18n.js"></script>
+    <script src="js/i18n.js?v=poi"></script>
     <script src="js/search.js?v=newdesign"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
